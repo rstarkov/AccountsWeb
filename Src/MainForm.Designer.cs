@@ -1,6 +1,6 @@
 ﻿namespace AccountsWeb
 {
-    partial class MainForm
+    partial class TrayForm
     {
         /// <summary>
         /// Required designer variable.

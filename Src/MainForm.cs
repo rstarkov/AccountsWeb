@@ -15,9 +15,9 @@ using System.Diagnostics;
 
 namespace AccountsWeb
 {
-    public partial class MainForm: Form
+    public partial class TrayForm: Form
     {
-        public MainForm()
+        public TrayForm()
         {
             InitializeComponent();
             TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
@@ -80,49 +80,5 @@ namespace AccountsWeb
             }
         }
 
-    }
-
-    public class ReportAccountsByMonth
-    {
-        public DateTime DateFrom;
-        public DateTime DateTo;
-        public GncBook Book;
-
-        private IEnumerable<Tuple<DateTime, DateTime>> EnumMonths(DateTime from, DateTime to)
-        {
-            while (from <= to)
-            {
-                DateTime periodTo = from.AddDays(35);
-                periodTo = new DateTime(periodTo.Year, periodTo.Month, 1).AddDays(-1);
-                yield return new Tuple<DateTime, DateTime>(from, periodTo);
-                from = periodTo.AddDays(1);
-            }
-        }
-
-        public void Execute()
-        {
-            CsvTable table = new CsvTable();
-            table.AdvanceRight = true;
-            table.Add("Счет");
-            foreach (var interval in EnumMonths(DateFrom, DateTo))
-                table.Add(interval.E1.ToString("MMM yy"));
-            table.SetCursor(1, 0);
-            processAccount(table, Book.AccountRoot, 0);
-            table.SaveToFileXls("report.html");
-        }
-
-        private void processAccount(CsvTable table, GncAccount acct, int indent)
-        {
-            foreach (var acctChild in acct.EnumChildren())
-            {
-                table.Add("&nbsp;".Repeat(indent*4) + acctChild.Name);
-
-                foreach (var interval in EnumMonths(DateFrom, DateTo))
-                    table.Add(0);
-
-                table.SetCursor(table.CurRow+1, 0);
-                processAccount(table, acctChild, indent+1);
-            }
-        }
     }
 }
