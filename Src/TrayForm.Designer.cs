@@ -104,14 +104,14 @@
             this.miOpenInBrowser.Text = "&Open in browser";
             this.miOpenInBrowser.Click += new System.EventHandler(this.miOpenInBrowser_Click);
             // 
-            // MainForm
+            // TrayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(181, 122);
-            this.Name = "MainForm";
-            this.Text = "Form1";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Name = "TrayForm";
+            this.Text = "TrayForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TrayForm_FormClosed);
             this.TrayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

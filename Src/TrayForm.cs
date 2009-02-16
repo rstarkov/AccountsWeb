@@ -24,7 +24,7 @@ namespace AccountsWeb
             TrayIcon.Visible = true;
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void TrayForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Program.Server.StopListening(true);
             TrayIcon.Visible = false;
