@@ -9,6 +9,7 @@ using System.Linq;
 using RT.Util;
 using RT.Util.Dialogs;
 using RT.Util.Collections;
+using System.Text;
 
 namespace AccountsWeb
 {
@@ -192,6 +193,8 @@ namespace AccountsWeb
             // Default to the last 12 months
             var toDefault = DateTime.Now;
             var frDefault = toDefault - new TimeSpan(360, 0, 0, 0);
+            if (frDefault < Program.CurFile.Book.EarliestDate)
+                frDefault = Program.CurFile.Book.EarliestDate;
 
             var fy = GetAndValidate<int>(request.Get, "FrYr", frDefault.Year);
             var fm = GetAndValidate<int>(request.Get, "FrMo", frDefault.Month, x => x >= 1 && x <= 12, "between 1 and 12");
@@ -204,10 +207,18 @@ namespace AccountsWeb
             if (request.Get.ContainsKey("Acct"))
                 acct = Program.CurFile.Book.GetAccountByPath(request.Get["Acct"]);
 
-            var report = new ReportMonthlyTotals(fy, fm, ty, tm, maxDepth, acct, negate);
+            var report = new ReportMonthlyTotals(fy, fm, ty, tm, maxDepth, acct, negate, request);
             var acctrep = report.Generate();
 
-            return generatePage_Standard("Monthly totals", acctrep.GetContent(), "ReportAccounts.css", "MonthlyTotals.css");
+            var html = new DIV(
+                (acct == null)
+                    ? (object)""
+                    : new P(new A("View this account's page") { href = "/Account/" + acct.Path("/") }),
+                new P("All values below are in {0}, converted where necessary using ".Fmt(Program.CurFile.BaseCurrency), new A("exchange rates") { href = "/ExRates" }, "." ),
+                acctrep.GetContent()
+            );
+
+            return generatePage_Standard("Monthly totals", html, "ReportAccounts.css", "MonthlyTotals.css");
         }
 
         private HttpResponse response_ExRates(HttpRequest request)
@@ -261,6 +272,42 @@ namespace AccountsWeb
             }
         }
 
+    }
+
+    public static class Extensions
+    {
+        public static string SameUrlExcept(this HttpRequest request, Dictionary<string, string> qsAddOrReplace, List<string> qsRemove)
+        {
+            StringBuilder sb = new StringBuilder(request.UrlWithoutQuery);
+            char sep = '?';
+            foreach (var kvp in request.Get)
+            {
+                if (qsRemove != null && qsRemove.Contains(kvp.Key))
+                    continue;
+                sb.Append(sep);
+                sb.Append(kvp.Key.UrlEscape());
+                sb.Append("=");
+                if (qsAddOrReplace.ContainsKey(kvp.Key))
+                {
+                    sb.Append(qsAddOrReplace[kvp.Key].UrlEscape());
+                    qsAddOrReplace.Remove(kvp.Key);
+                }
+                else
+                {
+                    sb.Append(kvp.Value.UrlEscape());
+                }
+                sep = '&';
+            }
+            foreach (var kvp in qsAddOrReplace)
+            {
+                sb.Append(sep);
+                sb.Append(kvp.Key.UrlEscape());
+                sb.Append("=");
+                sb.Append(kvp.Value.UrlEscape());
+                sep = '&';
+            }
+            return sb.ToString();
+        }
     }
 
     public class HtmlPrinter
@@ -321,13 +368,15 @@ namespace AccountsWeb
         private ReportAccounts _report;
         private Dictionary<DateInterval, ReportAccounts.Col> _colMap;
         private Dictionary<GncAccount, ReportAccounts.Acct> _acctMap;
+        private HttpRequest _request;
 
-        public ReportMonthlyTotals(int fromYear, int fromMonth, int toYear, int toMonth, int maxDepth, GncAccount account, bool negate)
+        public ReportMonthlyTotals(int fromYear, int fromMonth, int toYear, int toMonth, int maxDepth, GncAccount account, bool negate, HttpRequest request)
         {
             _interval = new DateInterval(fromYear, fromMonth, 1, toYear, toMonth, DateTime.DaysInMonth(toYear, toMonth));
             _maxDepth = maxDepth;
             _account = account ?? Program.CurFile.Book.AccountRoot;
             _negate = negate;
+            _request = request;
         }
 
         public ReportAccounts Generate()
@@ -352,13 +401,15 @@ namespace AccountsWeb
 
         private void processAccount(GncAccount acct, ReportAccounts.Acct parent, int depth)
         {
-            var rAcct = new ReportAccounts.Acct(acct.Name, parent);
+            var rAcct = new ReportAccounts.Acct(acct.Name, parent, _request.SameUrlExcept(new Dictionary<string,string>() { {"Acct", acct.Path(":")} }, null));
             _acctMap.Add(acct, rAcct);
             _report.Accounts.Add(rAcct);
 
             foreach (var interval in _interval.EnumMonths())
             {
                 decimal tot = acct.GetTotal(interval, true, acct.Book.GetCommodity(acct.Book.BaseCurrencyId));
+                if (_negate)
+                    tot = -tot;
                 var value = tot == 0 ? "-" : "{0:# ###}".Fmt(tot);
                 _report[rAcct, _colMap[interval]] = new ReportAccounts.Val(value);
             }

@@ -36,3 +36,10 @@ tr.rowOdd td {
 tr.rowHeader td {
     white-space: pre;
 }
+a.nocolor {
+    color: inherit;
+}
+a:hover {
+    color: #00f;
+    background: #ccf;
+}

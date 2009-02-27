@@ -12,6 +12,7 @@ namespace AccountsWeb
         {
             public string Name;
             public Acct Parent;
+            public string Href;
 
             public Acct(string name)
             {
@@ -22,6 +23,12 @@ namespace AccountsWeb
                 : this(name)
             {
                 Parent = parent;
+            }
+
+            public Acct(string name, Acct parent, string href)
+                : this(name, parent)
+            {
+                Href = href;
             }
 
             public int Depth
@@ -123,7 +130,12 @@ namespace AccountsWeb
                 }
 
                 prn.OpenTag(new TR() { class_ = (rownum % 2 == 0 ? "rowEven" : "rowOdd") + " rowDepth" + curDepth });
-                prn.AddTag(new TD("\u2003\u2003".Repeat(curDepth) + acct.Name) { class_ = "cellAcct" });
+                prn.AddTag(new TD() { class_ = "cellAcct" }._(
+                    "\u2003\u2003".Repeat(curDepth),
+                    acct.Href == null
+                        ? (object)acct.Name
+                        : new A(acct.Name) { href = acct.Href, class_ = "nocolor" }
+                ));
                 foreach (var col in Cols)
                     prn.AddTag(new TD(this[acct, col].Text) { class_ = "cellNum" });
                 prn.CloseTag();
