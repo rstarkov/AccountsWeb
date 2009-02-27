@@ -12,30 +12,38 @@ namespace AccountsWeb
 {
     public class Settings
     {
-        public HttpServerOptions ServerOptions;
-        public string GnuCashFile;
+        [XmlIgnore]
+        public string SettingsFileName;
+        public string LastFileName;
+        public List<string> RecentFiles = new List<string>();
 
         public Settings()
         {
-            ServerOptions = new HttpServerOptions();
-            ServerOptions.Port = 1771;
         }
 
         public void SaveToFile(string filename)
         {
+            SettingsFileName = filename;
             XmlClassify.SaveObjectToXmlFile(this, filename);
+        }
+
+        public void SaveToFile()
+        {
+            SaveToFile(SettingsFileName);
         }
 
         public static Settings LoadFromFile(string filename)
         {
             if (!File.Exists(filename))
-                return new Settings();
+                return new Settings() { SettingsFileName = filename };
 
             while (true)
             {
                 try
                 {
-                    return XmlClassify.LoadObjectFromXmlFile<Settings>(filename);
+                    var settings = XmlClassify.LoadObjectFromXmlFile<Settings>(filename);
+                    settings.SettingsFileName = filename;
+                    return settings;
                 }
                 catch (Exception E)
                 {

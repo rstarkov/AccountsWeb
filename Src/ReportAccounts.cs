@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using RT.Servers;
-using RT.TagSoup.XhtmlTags;
-using RT.Util.Streams;
+using RT.TagSoup.HtmlTags;
 using RT.Util.ExtensionMethods;
+using RT.Util.Streams;
 
 namespace AccountsWeb
 {
@@ -104,10 +101,10 @@ namespace AccountsWeb
             }
         }
 
-        public HttpResponse Respond(HttpRequest request)
+        public HtmlTag GetContent()
         {
-            table tbl = new table();
-            tr tr = null;
+            HtmlPrinter prn = new HtmlPrinter(new TABLE());
+
             int rownum = 0;
             int nextHeader = 0;
             int lastDepth = int.MaxValue;
@@ -117,45 +114,25 @@ namespace AccountsWeb
 
                 if (nextHeader <= rownum && lastDepth > curDepth)
                 {
-                    tr = new tr(new td() { class_ = "cellTopLeft" }) { class_ = "rowHeader" };
+                    prn.OpenTag(new TR() { class_ = "rowHeader" });
+                    prn.AddTag(new TD() { class_ = "cellTopLeft" });
                     foreach (var col in Cols)
-                        tr.Add(new td(col.Title));
-                    tbl.Add(tr);
+                        prn.AddTag(new TD(col.Title));
+                    prn.CloseTag();
                     nextHeader = rownum + 30;
                 }
 
-                tr = new tr(new td("\u2003\u2003".Repeat(curDepth) + acct.Name) { class_ = "cellAcct" });
-                tr.class_ = (rownum % 2 == 0 ? "rowEven" : "rowOdd") + " rowDepth" + curDepth;
+                prn.OpenTag(new TR() { class_ = (rownum % 2 == 0 ? "rowEven" : "rowOdd") + " rowDepth" + curDepth });
+                prn.AddTag(new TD("\u2003\u2003".Repeat(curDepth) + acct.Name) { class_ = "cellAcct" });
                 foreach (var col in Cols)
-                    tr.Add(new td(this[acct, col].Text) { class_ = "cellNum" });
-                tbl.Add(tr);
+                    prn.AddTag(new TD(this[acct, col].Text) { class_ = "cellNum" });
+                prn.CloseTag();
 
                 lastDepth = curDepth;
                 rownum++;
             }
 
-            var html = new html(
-                new head(
-                    new title(ReportTitle),
-                    new link() { rel = "stylesheet", type = "text/css", href = "/Static/ReportAccounts.css" },
-                    ReportCss == null ? (object)"" : new link() { rel = "stylesheet", type = "text/css", href = "/Static/" + ReportCss }
-                ),
-                new body(tbl)
-            );
-
-            return new HttpResponse()
-            {
-                Status = HttpStatusCode._200_OK,
-                Headers = new HttpResponseHeaders() { ContentType = "text/html; charset=utf-8" },
-                Content = new DynamicContentStream(html.ToEnumerable()),
-            };
+            return prn.GetHtml();
         }
     }
-
-    /// columns:
-    /// - tag / month / cre,deb,tot
-    /// - month / tag / cre,deb,tot
-    /// 
-    /// tag: total
-    /// cre,deb: total
 }

@@ -1,0 +1,59 @@
+body {
+    font-family: "Segoe UI", "Verdana";
+    background: #fff;
+    color: #000;
+}
+
+h1 {
+    font-size: 150%;
+    padding: 0.2em 0.5em;
+    /* blue */
+    border: 1px solid #25f;
+    background: #acf;
+    /* green */
+    /*
+    border: 1px solid #0c0;
+    background: #cfa;
+    */
+}
+
+pre {
+    color: #b21;
+    padding-left: 2em;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px dotted #88a;
+    padding: 0.1em 0.3em;
+    vertical-align: top;
+}
+
+
+
+table.layoutMain {
+    width: 100%;
+    border-style: none;
+}
+
+td.layoutLeftPane {
+    width: 10em;
+    border-style: none;
+    border-right: 1px solid #aaf;
+}
+
+td.layoutLeftPane h2 {
+    font-size: 11pt;
+}
+
+td.layoutLeftPane ul {
+    padding-left: 1em;
+}
+
+td.layoutMainPane {
+    padding-left: 1em;
+    border-style: none;
+}

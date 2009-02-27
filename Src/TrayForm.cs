@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using GnuCashSharp;
-using RT.Util.Text;
-using RT.Util.ExtensionMethods;
-using RT.Util.Collections;
-using RT.Util.Dialogs;
 using System.Diagnostics;
+using System.Windows.Forms;
+using RT.Util.Dialogs;
+using RT.Util.ExtensionMethods;
+using RT.Util;
+using System.IO;
 
 namespace AccountsWeb
 {
@@ -26,20 +20,58 @@ namespace AccountsWeb
 
         private void TrayForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Program.Server.StopListening(true);
+            Program.Interface.StopServer();
             TrayIcon.Visible = false;
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            if (Program.CurFile == null)
+            {
+                TrayIcon.Text = "No file open";
+                TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
+            }
+            else if (Program.Interface.ServerRunning)
+            {
+                TrayIcon.Text = "{0}\nAccountsWeb server is running.".Fmt(PathUtil.ExtractNameAndExt(Program.CurFile.LoadedFromFile));
+                TrayIcon.Icon = Properties.Resources.gnucash_icon_16;
+            }
+            else
+            {
+                TrayIcon.Text = "{0}\nAccountsWeb server is stopped.".Fmt(PathUtil.ExtractNameAndExt(Program.CurFile.LoadedFromFile));
+                TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
+            }
         }
 
         private void TrayMenu_Opening(object sender, CancelEventArgs e)
         {
-            miStartStopServer.Text = Program.Server.IsListening ? "S&top server" : "S&tart server";
+            if (Program.CurFile == null)
+            {
+                miCurrentFileName.Text = "   <no file open>";
+                miOpenInBrowser.Enabled = false;
+                miReload.Enabled = false;
+                miSettings.Enabled = false;
+                miStartStopServer.Enabled = false;
+            }
+            else
+            {
+                miCurrentFileName.Text = "   " + PathUtil.ExtractNameAndExt(Program.CurFile.LoadedFromFile);
+                miOpenInBrowser.Enabled = true;
+                miReload.Enabled = true;
+                miSettings.Enabled = true;
+                miStartStopServer.Enabled = true;
+            }
+            miStartStopServer.Text = Program.Interface.ServerRunning ? "S&top server" : "S&tart server";
+            miOpenRecent.DropDownItems.Clear();
+            foreach (var filename in Program.Settings.RecentFiles)
+                miOpenRecent.DropDownItems.Add(filename, null, miOpenRecent_Click);
         }
 
         private void miOpenInBrowser_Click(object sender, EventArgs e)
         {
-            if (Program.Server.IsListening)
+            if (Program.Interface.ServerRunning)
             {
-                ProcessStartInfo si = new ProcessStartInfo("http://localhost:{0}".Fmt(Program.Server.Options.Port));
+                ProcessStartInfo si = new ProcessStartInfo("http://localhost:{0}".Fmt(Program.Interface.ServerPort));
                 si.UseShellExecute = true;
                 Process.Start(si);
             }
@@ -47,37 +79,82 @@ namespace AccountsWeb
                 DlgMessage.ShowInfo("Cannot open in browser because the server is not running. Start it first and try again.");
         }
 
-        private void miStartStopServer_Click(object sender, EventArgs e)
+        private void miReload_Click(object sender, EventArgs e)
         {
-            if (Program.Server.IsListening)
-                Program.StopServer();
-            else
-                Program.StartServer();
+            Program.CurFile.ReloadSession();
         }
 
         private void miSettings_Click(object sender, EventArgs e)
         {
-            DlgMessage.ShowInfo("Sorry, not yet implemented.");
+            ConfigForm.Show(Program.CurFile);
+        }
+
+        private void miStartStopServer_Click(object sender, EventArgs e)
+        {
+            if (Program.Interface.ServerRunning)
+                Program.Interface.StopServer();
+            else
+                Program.Interface.StartServer();
+        }
+
+        private void miNewFile_Click(object sender, EventArgs e)
+        {
+            if (dlgSaveFile.ShowDialog() != DialogResult.OK)
+                return;
+
+            Program.NewFile(dlgSaveFile.FileName);
+
+            ConfigForm.Show(Program.CurFile);
+        }
+
+        private void miOpenFile_Click(object sender, EventArgs e)
+        {
+            if (Program.Settings.LastFileName != null)
+                dlgOpenFile.InitialDirectory = PathUtil.ExtractParent(Program.Settings.LastFileName);
+
+            if (dlgOpenFile.ShowDialog() != DialogResult.OK)
+                return;
+
+            Program.OpenFile(dlgOpenFile.FileName);
+        }
+
+        private void miOpenRecent_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+
+            if (!File.Exists(item.Text))
+            {
+                var choice = DlgMessage.ShowQuestion("File \"{0}\" does not exist.\n\nWould you like to remove the file from the Recent menu?",
+                    "Remove from Recent", "Cancel");
+                if (choice == 0)
+                {
+                    Program.Settings.RecentFiles.Remove(item.Text);
+                    Program.Settings.SaveToFile();
+                }
+                return;
+            }
+
+            Program.OpenFile(item.Text);
+        }
+
+        private void miAbout_Click(object sender, EventArgs e)
+        {
+            if (Program.Interface.ServerRunning)
+            {
+                ProcessStartInfo si = new ProcessStartInfo("http://localhost:{0}/About".Fmt(Program.Interface.ServerPort));
+                si.UseShellExecute = true;
+                Process.Start(si);
+            }
+            else
+                DlgMessage.ShowInfo("Cannot open in browser because the server is not running. Start it first and try again.");
         }
 
         private void miExit_Click(object sender, EventArgs e)
         {
+            if (Program.Interface.ServerRunning)
+                Program.Interface.StopServer();
             Close();
             Application.Exit();
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            if (Program.Server.IsListening)
-            {
-                TrayIcon.Text = "AccountsWeb server is running";
-                TrayIcon.Icon = Properties.Resources.gnucash_icon_16;
-            }
-            else
-            {
-                TrayIcon.Text = "AccountsWeb server is stopped";
-                TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
-            }
         }
 
     }

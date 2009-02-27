@@ -1,0 +1,38 @@
+tr.rowHeader {
+    background: #58d;
+    color: #fff;
+}
+tr.rowHeader td {
+    border: 1px solid black;
+}
+tr.rowDepth0 {
+    border-top: 3px solid #000;
+}
+tr.rowDepth0 td.cellAcct {
+    font-weight: bold;
+}
+tr.rowDepth0 td {
+    color: #22f;
+}
+tr.rowDepth1 td {
+    color: #d22;
+}
+tr.rowDepth2 td {
+    color: #a2a;
+}
+tr.rowEven td {
+    background: #fff;
+}
+tr.rowOdd td {
+    background: #ddf;
+}
+.cellNum {
+    text-align: right;
+    white-space: nowrap;
+}
+.cellAcct {
+    white-space: nowrap;
+}
+tr.rowHeader td {
+    white-space: pre;
+}
