@@ -55,7 +55,6 @@ namespace AccountsWeb
         /// </summary>
         /// <remarks>
         /// <para>If successful, attempts to start the server.</para>
-        /// <para>Throws an exception if a file is already open.</para>
         /// <para>If there is an exception loading the GnuCash session, displays the message
         /// in a dialog box and does not open a file, but returns successfully.</para>
         /// <para>If the session opens successfully but has warnings, displays a dialog box
@@ -63,8 +62,7 @@ namespace AccountsWeb
         /// </remarks>
         public static void OpenFile(string filename)
         {
-            if (CurFile != null)
-                throw new RTException("Can't OpenFile because a file is already open.");
+            Program.CloseFile();
 
             try
             {
@@ -79,18 +77,6 @@ namespace AccountsWeb
             }
 
             Interface.StartServer();
-
-            //if (Interface.ServerRunning && CurFile.Session != null && CurFile.Session.EnumWarnings().Count() > 0)
-            //{
-            //    var choice = DlgMessage.ShowWarning("There are warnings related to the GnuCash file \"{0}\".\nWould you like to view them?".Fmt(filename),
-            //        "View warnings in browser", "Skip viewing warnings");
-            //    if (choice == 0)
-            //    {
-            //        ProcessStartInfo si = new ProcessStartInfo("http://localhost:{0}/Warnings".Fmt(Interface.ServerPort));
-            //        si.UseShellExecute = true;
-            //        Process.Start(si);
-            //    }
-            //}
 
             AddRecent(filename);
         }
@@ -114,15 +100,11 @@ namespace AccountsWeb
         /// Closes the currently open file.
         /// </summary>
         /// <remarks>
-        /// <para>Throws an exception if no file is open.</para>
         /// <para>Any unsaved changes will be discarded. This method does not display any
         /// prompts or dialogs to the user.</para>
         /// </remarks>
         public static void CloseFile()
         {
-            if (CurFile == null)
-                throw new RTException("Cannot CloseFile because no file is currently open.");
-
             CurFile = null;
         }
 

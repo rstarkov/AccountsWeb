@@ -53,11 +53,11 @@ namespace AccountsWeb
             }
 
             bool restartRequired =
-                _wrapper.ServerOptions.Port != port ||
-                _wrapper.GnuCashFile != txtGnuCashFile.Text;
+                _wrapper.ServerOptions.Port != port;
 
             bool reloadRequired =
-                _wrapper.BaseCurrency != txtBaseCurrency.Text;
+                _wrapper.BaseCurrency != txtBaseCurrency.Text ||
+                _wrapper.GnuCashFile != txtGnuCashFile.Text;
 
             _wrapper.ServerOptions.Port = port;
             _wrapper.GnuCashFile = txtGnuCashFile.Text;

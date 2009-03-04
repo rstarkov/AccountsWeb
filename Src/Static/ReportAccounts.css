@@ -5,6 +5,9 @@ tr.rowHeader {
 tr.rowHeader td {
     border: 1px solid black;
 }
+.rowEven {
+    background: #ccc;
+}
 tr.rowDepth0 {
     border-top: 3px solid #000;
 }
@@ -39,7 +42,5 @@ tr.rowHeader td {
 a.nocolor {
     color: inherit;
 }
-a:hover {
-    color: #00f;
-    background: #ccf;
+p.breadcrumbs {
 }

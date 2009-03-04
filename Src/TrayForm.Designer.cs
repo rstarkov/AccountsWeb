@@ -41,11 +41,11 @@
             this.miOpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.miOpenRecent = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.miExit = new System.Windows.Forms.ToolStripMenuItem();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.dlgSaveFile = new System.Windows.Forms.SaveFileDialog();
-            this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +54,7 @@
             this.TrayIcon.ContextMenuStrip = this.TrayMenu;
             this.TrayIcon.Text = "AccountsWeb";
             this.TrayIcon.Visible = true;
+            this.TrayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrayIcon_MouseClick);
             // 
             // TrayMenu
             // 
@@ -83,6 +84,7 @@
             // 
             // miOpenInBrowser
             // 
+            this.miOpenInBrowser.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.miOpenInBrowser.Name = "miOpenInBrowser";
             this.miOpenInBrowser.Size = new System.Drawing.Size(185, 22);
             this.miOpenInBrowser.Text = "Open in &browser";
@@ -139,6 +141,13 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
             // 
+            // miAbout
+            // 
+            this.miAbout.Name = "miAbout";
+            this.miAbout.Size = new System.Drawing.Size(185, 22);
+            this.miAbout.Text = "&About... (in browser)";
+            this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
+            // 
             // miExit
             // 
             this.miExit.Name = "miExit";
@@ -164,13 +173,6 @@
             this.dlgSaveFile.DefaultExt = "accweb";
             this.dlgSaveFile.Filter = "AccountsWeb files|*.accweb|All files|*.*";
             this.dlgSaveFile.Title = "Please choose where the new file should be saved";
-            // 
-            // miAbout
-            // 
-            this.miAbout.Name = "miAbout";
-            this.miAbout.Size = new System.Drawing.Size(185, 22);
-            this.miAbout.Text = "&About... (in browser)";
-            this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
             // 
             // TrayForm
             // 

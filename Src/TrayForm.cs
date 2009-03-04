@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
+using RT.Util;
 using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
-using RT.Util;
-using System.IO;
 
 namespace AccountsWeb
 {
@@ -33,12 +33,12 @@ namespace AccountsWeb
             }
             else if (Program.Interface.ServerRunning)
             {
-                TrayIcon.Text = "{0}\nAccountsWeb server is running.".Fmt(PathUtil.ExtractNameAndExt(Program.CurFile.LoadedFromFile));
+                TrayIcon.Text = "{0}\nAccountsWeb server is running.".Fmt(Program.CurFile.FileNameOnly);
                 TrayIcon.Icon = Properties.Resources.gnucash_icon_16;
             }
             else
             {
-                TrayIcon.Text = "{0}\nAccountsWeb server is stopped.".Fmt(PathUtil.ExtractNameAndExt(Program.CurFile.LoadedFromFile));
+                TrayIcon.Text = "{0}\nAccountsWeb server is stopped.".Fmt(Program.CurFile.FileNameOnly);
                 TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
             }
         }
@@ -55,7 +55,7 @@ namespace AccountsWeb
             }
             else
             {
-                miCurrentFileName.Text = "   " + PathUtil.ExtractNameAndExt(Program.CurFile.LoadedFromFile);
+                miCurrentFileName.Text = "   " + Program.CurFile.FileNameOnly;
                 miOpenInBrowser.Enabled = true;
                 miReload.Enabled = true;
                 miSettings.Enabled = true;
@@ -155,6 +155,12 @@ namespace AccountsWeb
                 Program.Interface.StopServer();
             Close();
             Application.Exit();
+        }
+
+        private void TrayIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                miOpenInBrowser_Click(sender, null);
         }
 
     }

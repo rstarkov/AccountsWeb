@@ -59,6 +59,14 @@
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GncFileWrapper.cs" />
+    <Compile Include="HtmlPrinter.cs" />
+    <Compile Include="Page.cs" />
+    <Compile Include="PageAbout.cs" />
+    <Compile Include="PageExRates.cs" />
+    <Compile Include="PageMain.cs" />
+    <Compile Include="PageMonthlyTotals.cs" />
+    <Compile Include="PageTrns.cs" />
+    <Compile Include="PageWarnings.cs" />
     <Compile Include="TrayForm.cs">
       <SubType>Form</SubType>
     </Compile>
