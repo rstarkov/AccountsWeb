@@ -7,6 +7,7 @@ using RT.TagSoup;
 using RT.TagSoup.HtmlTags;
 using RT.Util;
 using RT.Util.ExtensionMethods;
+using GnuCashSharp;
 
 namespace AccountsWeb
 {
@@ -17,12 +18,12 @@ namespace AccountsWeb
         public Page(HttpRequest request)
         {
             Request = request;
+            Program.CurFile.ReloadSessionIfNecessary();
         }
 
         public abstract string GetBaseUrl();
         public abstract string GetTitle();
-        public abstract IEnumerable<string> GetCss();
-        public abstract IEnumerable<Tag> GetBody();
+        public abstract object GetBody();
 
         public virtual bool IgnoreGlobalMessage
         {
@@ -43,37 +44,33 @@ namespace AccountsWeb
             {
                 head = new HEAD(
                     new TITLE("Message - AccountsWeb"),
-                    new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/Basic.css" },
-                    new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/Error.css" }
-                );
-            }
-            else if (fullscr)
-            {
-                head = new HEAD(
-                    new TITLE(GetTitle() + " - AccountsWeb"),
-                    new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/Basic.css" },
-                    new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/BasicFullScreen.css" },
-                    GetCss().Select(c => new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/" + c })
+                    new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/" + Program.CurFile.Skin }
                 );
             }
             else
             {
                 head = new HEAD(
                     new TITLE(GetTitle() + " - AccountsWeb"),
-                    new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/Basic.css" },
-                    GetCss().Select(c => new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/" + c })
+                    new LINK() { rel = "stylesheet", type = "text/css", href = "/Static/" + Program.CurFile.Skin }
                 );
             }
 
-            object[] content =
-                (globmsg) ? new object[] { new H1("AccountsWeb message"), globalMessageBody() }
-                          : new object[] { new H1(GetTitle()), GetBody() };
+            object[] content;
+            try
+            {
+                content = (globmsg) ? new object[] { new H1("AccountsWeb message"), globalMessageBody() }
+                                    : new object[] { new H1(GetTitle()), GetBody() };
+            }
+            catch (Exception e)
+            {
+                content = GenerateErrorContent("Exception", GenerateExceptionTrace(e));
+            }
 
             Tag body;
 
             if (fullscr && !globmsg)
             {
-                body = new BODY(
+                body = new BODY() { class_ = "full_screen" }._(
                     content
                 );
             }
@@ -87,7 +84,8 @@ namespace AccountsWeb
                             new UL(
                                 new LI(new A("Home") { href = "/" }),
                                 new LI(new A("Monthly totals") { href = "/MonthlyTotals" }),
-                                new LI(new A("Exch. rates") { href = "/ExRates" }),
+                                new LI(new A("Exchange rates") { href = "/ExRates" }),
+                                Program.CurFile.Session.EnumWarnings().Any() ? new LI(new A() { href = "/Warnings" }._(new IMG() { src = "/Static/warning_10.png" }, " Warnings")) : null,
                                 new LI(new A("About") { href = "/About" })
                             ),
                             new H2("Links"),
@@ -110,12 +108,60 @@ namespace AccountsWeb
             };
         }
 
+        public object[] GenerateExceptionTrace(Exception exception)
+        {
+            List<object> result = new List<object>();
+            while (exception != null)
+            {
+                result.Add(new H3(exception.GetType().FullName));
+                result.Add(new P(exception.Message));
+                result.Add(new UL() { class_ = "exception" }._(exception.StackTrace.Split('\n').Select(
+                    x => (object) new LI(x)
+                )));
+                exception = exception.InnerException;
+            }
+            return result.ToArray();
+        }
+
+        public object[] GenerateErrorContent(string title, object content)
+        {
+            return new object[]
+            {
+                new H1(title) { class_ = "error" },
+                new DIV(content) { class_ = "error" }
+            };
+        }
+
         public Tag globalMessageBody()
         {
             return new DIV(
                 new P("AccountsWeb cannot process your request due to the following error:"),
                 Program.CurFile.GlobalErrorMessage
             );
+        }
+
+        public Tag GenerateBreadCrumbs(HttpRequest request, GncAccount acct)
+        {
+            Tag breadcrumbs;
+            var path = acct == null ? null : acct.PathAsList();
+
+            var acct_link = (acct == Program.CurFile.Book.AccountRoot)
+                    ? (object) ""
+                    : new SPAN(" (", new A("account's page") { href = "/Account/" + acct.Path("/") }, ")");
+
+            if (acct == null || path.Count == 0)
+                breadcrumbs = new P() { class_ = "breadcrumbs" }._("> ", new SPAN("Root") { class_ = "breadcrumbs" }, acct_link);
+            else
+                breadcrumbs = new P() { class_ = "breadcrumbs" }._("> ",
+                    new A("Root") { class_ = "breadcrumbs", href = request.SameUrlExceptSetRest("/") }, " > ",
+                    path.Take(path.Count - 1).SelectMany(item => new object[] {
+                        new A(item.Name) { class_ = "breadcrumbs", href = request.SameUrlExceptSetRest("/" + item.Path("/")) },
+                        " : "
+                    }),
+                    new SPAN(path.Last().Name) { class_ = "breadcrumbs" },
+                    acct_link
+                );
+            return breadcrumbs;
         }
 
         public T GetValidated<T>(string varName, T varDefault)
@@ -136,6 +182,14 @@ namespace AccountsWeb
                 throw new ValidationException(varName, Request.Get[varName], mustBe);
 
             return value;
+        }
+
+        public GncAccount GetAccountFromRestUrl()
+        {
+            var acctpath = Request.RestUrlWithoutQuery.UrlUnescape().Replace("/", ":");
+            if (acctpath.StartsWith(":"))
+                acctpath = acctpath.Substring(1);
+            return Program.CurFile.Book.GetAccountByPath(acctpath);
         }
     }
 

@@ -25,14 +25,9 @@ namespace AccountsWeb
             return "Main";
         }
 
-        public override IEnumerable<string> GetCss()
+        public override object GetBody()
         {
-            yield break;
-        }
-
-        public override IEnumerable<Tag> GetBody()
-        {
-            yield return new UL(
+            return new UL(
                 new LI(new A("Monthly totals") { href = "/MonthlyTotals" })
             );
         }

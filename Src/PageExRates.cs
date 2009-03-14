@@ -25,12 +25,7 @@ namespace AccountsWeb
             return "Exchange Rates";
         }
 
-        public override IEnumerable<string> GetCss()
-        {
-            yield return "ExRates.css";
-        }
-
-        public override IEnumerable<Tag> GetBody()
+        public override object GetBody()
         {
             HtmlPrinter prn = new HtmlPrinter(new DIV());
 
@@ -39,18 +34,21 @@ namespace AccountsWeb
                 prn.AddTag(new H2(ccy.Identifier));
                 if (ccy.Identifier == Program.CurFile.Book.BaseCurrencyId)
                 {
-                    prn.AddTag(new P("This is the base currency"));
+                    prn.AddTag(new P("This is the base currency") { class_ = "info_msg" });
                 }
                 else
                 {
-                    prn.OpenTag(new TABLE());
+                    ReportTable tbl = new ReportTable();
+                    tbl.AddCol("Date");
+                    tbl.AddCol("Rate");
+                    tbl.AddCol("Inverse");
                     foreach (var pt in ccy.ExRate)
-                        prn.AddTag(new TR(new TD(pt.Key.ToShortDateString()), new TD(pt.Value.ToString())));
-                    prn.CloseTag();
+                        tbl.AddRow(pt.Key.ToShortDateString(), pt.Value.ToString("0.0000"), (1m / pt.Value).ToString("0.0000"));
+                    prn.AddTag(tbl.GetHtml());
                 }
             }
 
-            yield return prn.GetHtml();
+            return prn.GetHtml();
         }
     }
 }

@@ -67,6 +67,7 @@
     <Compile Include="PageMonthlyTotals.cs" />
     <Compile Include="PageTrns.cs" />
     <Compile Include="PageWarnings.cs" />
+    <Compile Include="ReportTable.cs" />
     <Compile Include="TrayForm.cs">
       <SubType>Form</SubType>
     </Compile>

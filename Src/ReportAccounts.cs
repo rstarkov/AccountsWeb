@@ -3,148 +3,105 @@ using RT.Servers;
 using RT.TagSoup.HtmlTags;
 using RT.Util.ExtensionMethods;
 using RT.Util.Streams;
+using RT.TagSoup;
+using GnuCashSharp;
+using RT.Util;
+using System.Linq;
 
 namespace AccountsWeb
 {
     public class ReportAccounts
     {
-        public class Acct
+        private GncAccount _baseAcct;
+        private HttpRequest _request;
+        private bool _autoAddAcct;
+        private bool _autoAddCol;
+
+        public ReportTable Table;
+
+        private Dictionary<GncAccount, ReportTable.Row> _rowMap;
+        private Dictionary<object, ReportTable.Col> _colMap;
+        private ReportTable.Col _colAcctName;
+
+        public ReportAccounts(GncAccount baseacct, HttpRequest request, bool autoAddAcct, bool autoAddCol)
         {
-            public string Name;
-            public Acct Parent;
-            public string Href;
-
-            public Acct(string name)
-            {
-                Name = name;
-            }
-
-            public Acct(string name, Acct parent)
-                : this(name)
-            {
-                Parent = parent;
-            }
-
-            public Acct(string name, Acct parent, string href)
-                : this(name, parent)
-            {
-                Href = href;
-            }
-
-            public int Depth
-            {
-                get
-                {
-                    int depth = 0;
-                    var acct = this;
-                    while (acct.Parent != null)
-                    {
-                        depth++;
-                        acct = acct.Parent;
-                    }
-                    return depth;
-                }
-            }
+            _baseAcct = baseacct;
+            _request = request;
+            _autoAddAcct = autoAddAcct;
+            _autoAddCol = autoAddCol;
+            Table = new ReportTable();
+            _rowMap = new Dictionary<GncAccount, ReportTable.Row>();
+            _colMap = new Dictionary<object, ReportTable.Col>();
+            _colAcctName = Table.AddCol("Account", "acct_name");
         }
 
-        public class Col
+        public void AddAcct(GncAccount acct)
         {
-            public string Title;
-            public Col Parent;
+            var row = Table.AddRow();
+            _rowMap.Add(acct, row);
 
-            public Col(string title)
-            {
-                Title = title;
-            }
+            row.Depth = acct.Depth - _baseAcct.Depth;
 
-            public Col(string title, Col parent)
-                : this(title)
-            {
-                Parent = parent;
-            }
+            string indent = "\u2003\u2003".Repeat(acct.Depth - _baseAcct.Depth - 1);
+            string name = (acct == _baseAcct) ? ("TOTAL: " + acct.Name) : acct.Name;
+            if (acct.EnumChildren().Any())
+                row.SetValue(_colAcctName, new object[] { indent, new A(name) { class_ = "nocolor", href = _request.SameUrlExceptSetRest("/" + acct.Path("/")) } });
+            else
+                row.SetValue(_colAcctName, indent + name);
         }
 
-        public class Val
+        public void AddCol(object colref)
         {
-            public string Text;
-            public string Href;
-
-            public Val(string text)
-            {
-                Text = text;
-            }
-
-            public Val(string text, string href)
-                : this(text)
-            {
-                Href = href;
-            }
+            _colMap.Add(colref, Table.AddCol(colref.ToString()));
         }
 
-        public List<Acct> Accounts = new List<Acct>();
-        public List<Col> Cols = new List<Col>();
-        public Dictionary<Acct, Dictionary<Col, Val>> Vals = new Dictionary<Acct, Dictionary<Col, Val>>();
-        public string ReportCss;
-        public string ReportTitle = "Accounts report";
-
-        public Val this[Acct acct, Col col]
+        public void AddCol(object colref, string title)
         {
-            get
-            {
-                if (!Vals.ContainsKey(acct))
-                    return null;
-                if (!Vals[acct].ContainsKey(col))
-                    return null;
-                return Vals[acct][col];
-            }
-            set
-            {
-                if (!Vals.ContainsKey(acct))
-                    Vals.Add(acct, new Dictionary<Col,Val>());
-                if (!Vals[acct].ContainsKey(col))
-                    Vals[acct].Add(col, value);
-                else
-                    Vals[acct][col] = value;
-            }
+            _colMap.Add(colref, Table.AddCol(title));
         }
 
-        public HtmlTag GetContent()
+        public void AddCol(object colref, string title, string cssclass)
         {
-            HtmlPrinter prn = new HtmlPrinter(new TABLE());
+            _colMap.Add(colref, Table.AddCol(title, cssclass));
+        }
 
-            int rownum = 0;
-            int nextHeader = 0;
-            int lastDepth = int.MaxValue;
-            foreach (var acct in Accounts)
-            {
-                int curDepth = acct.Depth;
+        public void SetValue(GncAccount acct, object colref, object content)
+        {
+            ensureAcct(acct);
+            ensureCol(colref);
+            _rowMap[acct].SetValue(_colMap[colref], content);
+        }
 
-                if (nextHeader <= rownum && lastDepth > curDepth)
-                {
-                    prn.OpenTag(new TR() { class_ = "rowHeader" });
-                    prn.AddTag(new TD() { class_ = "cellTopLeft" });
-                    foreach (var col in Cols)
-                        prn.AddTag(new TD(col.Title));
-                    prn.CloseTag();
-                    nextHeader = rownum + 30;
-                }
+        public void SetValue(GncAccount acct, object colref, object content, string cssclass)
+        {
+            ensureAcct(acct);
+            ensureCol(colref);
+            _rowMap[acct].SetValue(_colMap[colref], content, cssclass);
+        }
 
-                prn.OpenTag(new TR() { class_ = (rownum % 2 == 0 ? "rowEven" : "rowOdd") + " rowDepth" + curDepth });
-                prn.AddTag(new TD() { class_ = "cellAcct" }._(
-                    "\u2003\u2003".Repeat(curDepth),
-                    acct.Href == null
-                        ? (object)acct.Name
-                        : new A(acct.Name) { href = acct.Href, class_ = "nocolor" }
-                ));
-                foreach (var col in Cols)
-                    prn.AddTag(new TD(this[acct, col].Text) { class_ = "cellNum" });
-                prn.CloseTag();
+        private void ensureAcct(GncAccount acct)
+        {
+            if (_rowMap.ContainsKey(acct))
+                return;
+            if (_autoAddAcct)
+                AddAcct(acct);
+            else
+                throw new RTException("ReportAccounts: account \"{0}\" not yet defined and AutoAdd is disabled.".Fmt(acct.Path(":")));
+        }
 
-                lastDepth = curDepth;
-                rownum++;
-            }
+        private void ensureCol(object colref)
+        {
+            if (_colMap.ContainsKey(colref))
+                return;
+            if (_autoAddCol)
+                AddCol(colref);
+            else
+                throw new RTException("ReportAccounts: column \"{0}\" not yet defined and AutoAdd is disabled.".Fmt(colref));
+        }
 
-            return prn.GetHtml();
+        public Tag GetHtml()
+        {
+            return Table.GetHtml();
         }
     }
 }

@@ -1,0 +1,220 @@
+body {
+    font-family: "Segoe UI", "Verdana";
+    background: #fff;
+    color: #000;
+    padding: 0;
+    padding-bottom: 1em;
+    margin: 0;
+}
+
+body.full_screen {
+    padding: 0 1em;
+    padding-bottom: 1em;
+}
+
+h1 {
+    font-size: 150%;
+    border-bottom: 1px solid red;
+}
+
+img {
+    border: none;
+}
+
+body.full_screen_DISABLED h1 {
+    /* red */
+    border: 1px solid red;
+    background: #fca;
+    /* blue */
+    /*
+    border: 1px solid #25f;
+    background: #acf;
+    */
+    /* green */
+    /*
+    border: 1px solid #0c0;
+    background: #cfa;
+    */
+}
+
+p {
+}
+
+pre {
+    color: #b21;
+    padding-left: 2em;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    border: 1px dotted #88a;
+    padding: 0.1em 0.3em;
+    vertical-align: top;
+}
+
+a:hover {
+    color: #00f;
+    background: #ccf;
+    text-decoration: none;
+    border-top: 1px dotted blue;
+    border-bottom: 1px dotted blue;
+}
+
+
+table.layoutMain {
+    width: 100%;
+    border-style: none;
+    padding: 1em;
+    padding-top: 0;
+}
+
+td.layoutLeftPane {
+    width: 10em;
+    border-style: none;
+    border-right: 1px solid #aaf;
+    padding: 1em;
+    padding-top: 0;
+}
+
+p.filename {
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid #0c0;
+    background: #cfa;
+}
+
+td.layoutLeftPane h2 {
+    font-size: 11pt;
+    margin-top: 0.3em;
+    margin-bottom: 0.3em;
+    padding-left: 0.3em;
+    border: 1px solid #25f;
+    background: #acf;
+}
+
+td.layoutLeftPane ul {
+    font-size: 10pt;
+    margin-top: 0;
+    margin-bottom: 1.6em;
+    padding-left: 1em;
+}
+
+td.layoutMainPane {
+    padding-left: 1em;
+    border-style: none;
+}
+
+div.fullscrlink {
+    float: right;
+}
+
+span.breadcrumbs, a.breadcrumbs {
+    font-weight: bold;
+}
+
+p.info_msg {
+    font-style: italic;
+}
+
+/* Error/Exception */
+
+ul.exception {
+    font-family: "Consolas", "Courier New";
+    font-size: 10pt;
+}
+
+/* Filter info */
+
+div.filter_info {
+    padding: 0.3em;
+    border: 1px solid #ccc;
+    background: #eee;
+    margin-bottom: 1em;
+    font-size: 90%;
+}
+div.filter_info p {
+    margin: 0;
+}
+span.filter_hilite {
+    font-weight: bold;
+}
+
+/* ReportTable */
+
+tr.row_header {
+    background: #58d;
+    color: #fff;
+}
+tr.row_header td {
+    border: 1px solid black;
+    white-space: pre;
+}
+tr.row_even td {
+    background: #fff;
+}
+tr.row_odd td {
+    background: #ddf;
+}
+tr.row_depth_0 td {
+    border-top: 3px solid #000;
+    background: #fcc;
+}
+tr.row_depth_1 {
+    border-top: 3px solid #000;
+}
+tr.row_depth_1 td {
+    font-weight: bold;
+}
+tr.row_depth_1 td {
+    color: #22f;
+}
+tr.row_depth_2 td {
+    color: #d22;
+}
+tr.row_depth_3 td {
+    color: #a2a;
+}
+.table_num_zero, .table_num_pos, .table_num_neg {
+    text-align: right;
+    white-space: nowrap;
+}
+td.table_num_zero {
+    color: black !important;
+}
+td.table_num_pos, td.table_num_pos a {
+    color: black;
+}
+td.table_num_neg, td.table_num_neg a {
+    color: #c21;
+}
+.acct_name {
+    white-space: nowrap;
+}
+a.nocolor {
+    color: inherit;
+}
+p.breadcrumbs {
+}
+
+/* Currency names*/
+
+.ccy_name {
+    font-size: 70%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ccy_name_USD {
+    color: #2a4;
+}
+
+.ccy_name_UAH {
+    color: #00f;
+}
+
+.ccy_name_GBP {
+    color: #f00;
+}

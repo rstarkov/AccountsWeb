@@ -26,17 +26,13 @@ namespace AccountsWeb
             return "About AccountsWeb";
         }
 
-        public override IEnumerable<string> GetCss()
+        public override object GetBody()
         {
-            yield break;
-        }
-
-        public override IEnumerable<Tag> GetBody()
-        {
-            yield return new DIV(
+            return new object[]
+            {
                 new P("Version {0}".Fmt(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version)),
                 new P("Copyright (C) 2009 Roman Starkov")
-            );
+            };
         }
 
         public override bool IgnoreGlobalMessage

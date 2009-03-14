@@ -25,18 +25,13 @@ namespace AccountsWeb
             return "Warnings";
         }
 
-        public override IEnumerable<string> GetCss()
+        public override object GetBody()
         {
-            yield break;
-        }
-
-        public override IEnumerable<Tag> GetBody()
-        {
-            yield return new DIV(
+            return new object[] {
                 Program.CurFile.Session.EnumWarnings().Count() == 0
-                    ? (HtmlTag)new P("None")
-                    : (HtmlTag)new UL(Program.CurFile.Session.EnumWarnings().Select(str => new LI(str)))
-            );
+                    ? (Tag) new P("There were no warnings.") { class_ = "info_msg" }
+                    : (Tag) new UL(Program.CurFile.Session.EnumWarnings().Select(str => new LI(str)))
+            };
         }
     }
 }

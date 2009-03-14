@@ -14,7 +14,9 @@ namespace AccountsWeb
     {
         [XmlIgnore]
         public string SettingsFileName;
+
         public string LastFileName;
+
         public List<string> RecentFiles = new List<string>();
 
         public Settings()
