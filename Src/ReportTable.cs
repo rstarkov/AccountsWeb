@@ -44,9 +44,16 @@ namespace AccountsWeb
             return row;
         }
 
-        public Row AddRow(params object[] values)
+        public Row AddRow(string cssclass)
         {
-            var row = new Row();
+            var row = new Row(cssclass);
+            _rows.Add(row);
+            return row;
+        }
+
+        public Row AddRow(string cssclass, params object[] values)
+        {
+            var row = new Row(cssclass);
             _rows.Add(row);
             int i = 0;
             foreach (var col in _cols)
@@ -81,9 +88,10 @@ namespace AccountsWeb
                     nextHeader = rownum + 30;
                 }
 
-                string rowcss = rownum % 2 == 0 ? "row_even" : "row_odd";
-                if (row.Depth >= 0)
-                    rowcss +=  " row_depth_" + row.Depth;
+                string rowcss = MakeCssClass(
+                    row.CssClass,
+                    rownum % 2 == 0 ? "row_even" : "row_odd",
+                    row.Depth >= 0 ? " row_depth_" + row.Depth : null);
                 prn.OpenTag(new TR() { class_ = rowcss});
                 foreach (var col in _cols)
                 {
@@ -145,6 +153,12 @@ namespace AccountsWeb
                 Depth = -1;
             }
 
+            public Row(string cssclass)
+                : this()
+            {
+                CssClass = cssclass;
+            }
+
             public Val this[Col column]
             {
                 get { return _cells.Get(column, null); }
@@ -152,6 +166,7 @@ namespace AccountsWeb
             }
 
             public int Depth { get; set; }
+            public string CssClass { get; set; }
 
             public Val SetValue(Col column, object content)
             {

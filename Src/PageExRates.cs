@@ -43,7 +43,7 @@ namespace AccountsWeb
                     tbl.AddCol("Rate");
                     tbl.AddCol("Inverse");
                     foreach (var pt in ccy.ExRate)
-                        tbl.AddRow(pt.Key.ToShortDateString(), pt.Value.ToString("0.0000"), (1m / pt.Value).ToString("0.0000"));
+                        tbl.AddRow(null, pt.Key.ToShortDateString(), pt.Value.ToString("0.0000"), (1m / pt.Value).ToString("0.0000"));
                     prn.AddTag(tbl.GetHtml());
                 }
             }

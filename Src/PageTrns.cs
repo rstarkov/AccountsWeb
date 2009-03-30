@@ -41,18 +41,26 @@ namespace AccountsWeb
             
             _interval = new DateInterval(frDate.Date, toDate.Date + TimeSpan.FromDays(1) - TimeSpan.FromTicks(1));
             _account = GetAccountFromRestUrl();
-            _subaccts = GetValidated<bool>("SubAccts", false) && _account.EnumChildren().Any();
+            _subaccts = GetValidated("SubAccts", false);
+            var showBalance = GetValidated("ShowBal", false, val => !(val && _subaccts), "false when SubAccts is true");
+
+            _subaccts &= _account.EnumChildren().Any();
 
             ReportTable table = new ReportTable();
             var colDate = table.AddCol("Date");
             var colDesc = table.AddCol("Description");
             var colQty = table.AddCol("Qty");
             var colCcy = table.AddCol("Ccy");
+            var colBal = table.AddCol("Bal");
             var colAcct = table.AddCol("Account");
             var colInBase = table.AddCol("In " + Program.CurFile.Book.BaseCurrencyId);
 
             if (!_subaccts)
                 table.Cols.Remove(colAcct);
+            if (showBalance)
+                table.Cols.Remove(colInBase);
+            else
+                table.Cols.Remove(colBal);
 
             var splits = _account.EnumSplits(_subaccts);
             splits = splits.Where(split => split.Transaction.DatePosted >= frDate && split.Transaction.DatePosted <= toDate);
@@ -69,10 +77,18 @@ namespace AccountsWeb
                     : (trn.Description + " [" + split.Memo + "]"));
                 row.SetValue(colQty, split.Quantity.ToString(amtFmt), ReportTable.CssClassNumber(split.Quantity));
                 row.SetValue(colCcy, split.Account.Commodity, "ccy_name ccy_name_" + split.Account.Commodity);
-                row.SetValue(colInBase, split.Amount.ConvertTo(Program.CurFile.Book.BaseCurrency).Quantity.ToString(amtFmt), ReportTable.CssClassNumber(split.Quantity));
+                if (!showBalance)
+                    row.SetValue(colInBase, split.Amount.ConvertTo(Program.CurFile.Book.BaseCurrency).Quantity.ToString(amtFmt), ReportTable.CssClassNumber(split.Quantity));
+
+                if (showBalance)
+                    row.SetValue(colBal, split.AccountBalanceAfter.ToString(amtFmt), ReportTable.CssClassNumber(split.AccountBalanceAfter));
 
                 if (_subaccts)
                     row.SetValue(colAcct, generateAcctPath(split.Account));
+
+                if (split.IsBalsnap)
+                    try { row.CssClass = split.AccountBalanceAfter == split.Balsnap ? "balsnap_ok" : "balsnap_wrong"; }
+                    catch (GncBalsnapParseException) { row.CssClass = "balsnap_error"; }
             }
 
             HtmlPrinter filterInfo = new HtmlPrinter(new DIV() { class_ = "filter_info" });

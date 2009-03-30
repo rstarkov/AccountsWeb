@@ -177,6 +177,15 @@ tr.row_depth_2 td {
 tr.row_depth_3 td {
     color: #a2a;
 }
+tr.balsnap_ok td {
+    background: #7f7;
+}
+tr.balsnap_wrong td {
+    background: #f99;
+}
+tr.balsnap_error td {
+    background: #ff0;
+}
 .table_num_zero, .table_num_pos, .table_num_neg {
     text-align: right;
     white-space: nowrap;
