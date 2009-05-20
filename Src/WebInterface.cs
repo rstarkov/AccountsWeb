@@ -80,6 +80,7 @@ namespace AccountsWeb
             registerHandler(Server, req => new PageMonthlyTotals(req));
             registerHandler(Server, req => new PageTrns(req));
             registerHandler(Server, req => new PageWarnings(req));
+            registerHandler(Server, req => new PageLastBalsnap(req));
         }
 
         private void registerHandler(string path, HttpRequestHandler func)

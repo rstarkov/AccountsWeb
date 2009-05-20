@@ -227,3 +227,24 @@ p.breadcrumbs {
 .ccy_name_GBP {
     color: #f00;
 }
+
+/* Last balsnap */
+
+.lastbalsnap_never {
+    color: #888 !important;
+}
+
+.lastbalsnap_good, .lastbalsnap_zero {
+    color: #290 !important;
+    background: #cfa !important;
+}
+
+.lastbalsnap_medium {
+    color: #880 !important;
+    background: #ff0 !important;
+}
+
+.lastbalsnap_bad {
+    color: #800 !important;
+    background: #faa !important;
+}

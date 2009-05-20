@@ -84,6 +84,7 @@ namespace AccountsWeb
                             new UL(
                                 new LI(new A("Home") { href = "/" }),
                                 new LI(new A("Monthly totals") { href = "/MonthlyTotals" }),
+                                new LI(new A("Last balsnaps") { href = "/LastBalsnap" }),
                                 new LI(new A("Exchange rates") { href = "/ExRates" }),
                                 Program.CurFile.Session.EnumWarnings().Any() ? new LI(new A() { href = "/Warnings" }._(new IMG() { src = "/Static/warning_10.png" }, " Warnings")) : null,
                                 new LI(new A("About") { href = "/About" })
