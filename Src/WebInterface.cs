@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using GnuCashSharp;
-using RT.Servers;
-using RT.TagSoup.HtmlTags;
-using RT.Util.ExtensionMethods;
-using RT.Util.Streams;
 using System.Linq;
+using System.Text;
+using RT.Servers;
 using RT.Util;
 using RT.Util.Dialogs;
-using RT.Util.Collections;
-using System.Text;
-using RT.TagSoup;
+using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
 {
@@ -121,7 +116,7 @@ namespace AccountsWeb
                 }
                 else
                 {
-                    sb.Append(kvp.Value.UrlEscape());
+                    sb.Append(kvp.Value[0].UrlEscape());
                 }
                 sep = '&';
             }

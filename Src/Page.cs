@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using GnuCashSharp;
 using RT.Servers;
 using RT.TagSoup;
 using RT.TagSoup.HtmlTags;
 using RT.Util;
 using RT.Util.ExtensionMethods;
-using GnuCashSharp;
 
 namespace AccountsWeb
 {
@@ -176,11 +175,11 @@ namespace AccountsWeb
                 return varDefault;
 
             T value;
-            try { value = RConvert.Exact<T>(Request.Get[varName]); }
-            catch (RConvertException) { throw new ValidationException(varName, Request.Get[varName], "convertible to {0}".Fmt(typeof(T))); }
+            try { value = RConvert.Exact<T>(Request.Get[varName][0]); }
+            catch (RConvertException) { throw new ValidationException(varName, Request.Get[varName][0], "convertible to {0}".Fmt(typeof(T))); }
 
             if (!validator(value))
-                throw new ValidationException(varName, Request.Get[varName], mustBe);
+                throw new ValidationException(varName, Request.Get[varName][0], mustBe);
 
             return value;
         }
