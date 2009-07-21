@@ -59,8 +59,6 @@
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GncFileWrapper.cs" />
-    <Compile Include="HtmlPrinter.cs" />
-    <Compile Include="Page.cs" />
     <Compile Include="PageAbout.cs" />
     <Compile Include="PageExRates.cs" />
     <Compile Include="PageLastBalsnap.cs" />
@@ -68,7 +66,7 @@
     <Compile Include="PageMonthlyTotals.cs" />
     <Compile Include="PageTrns.cs" />
     <Compile Include="PageWarnings.cs" />
-    <Compile Include="ReportTable.cs" />
+    <Compile Include="Spinneret.cs" />
     <Compile Include="TrayForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,12 +104,15 @@
     </Compile>
     <Compile Include="ReportAccounts.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="WebInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\RT.Servers\Src\RT.Servers.csproj">
       <Project>{A7333C19-56A9-4A8E-A196-7648666EF26A}</Project>
       <Name>Servers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Spinneret\Src\Spinneret.csproj">
+      <Project>{E0EA5785-4ECC-4BD2-8C26-753B53203C4A}</Project>
+      <Name>Spinneret</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\RT.Util\Src\RT.Util.csproj">
       <Project>{8D0FE79C-AD8D-475C-9E6F-9CAE85365B5D}</Project>
@@ -132,7 +133,8 @@
     <None Include="Graphics\gnucash-icon-16-gray.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="todo.txt" />
+    <Content Include="Static\AccountsWeb-SnowWhite.css" />
+    <Content Include="Static\warning_10.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -142,4 +144,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>cd $(ProjectDir)
+xcopy /y /i $(ProjectDir)Static\* $(TargetDir)Static\</PostBuildEvent>
+  </PropertyGroup>
 </Project>

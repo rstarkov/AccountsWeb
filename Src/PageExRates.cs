@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using RT.Servers;
-using RT.TagSoup;
+using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
 
 namespace AccountsWeb
 {
-    public class PageExRates: Page
+    public class PageExRates: WebPage
     {
-        public PageExRates(HttpRequest request)
-            : base(request)
+        public PageExRates(HttpRequest request, WebInterface iface)
+            : base(request, iface)
         {
-        }
-
-        public override string GetBaseUrl()
-        {
-            return "/ExRates";
         }
 
         public override string GetTitle()
@@ -25,7 +17,7 @@ namespace AccountsWeb
             return "Exchange Rates";
         }
 
-        public override object GetBody()
+        public override object GetContent()
         {
             HtmlPrinter prn = new HtmlPrinter(new DIV());
 

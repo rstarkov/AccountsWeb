@@ -1,0 +1,95 @@
+@import "SnowWhite.css";
+
+span.breadcrumbs, a.breadcrumbs {
+    font-weight: bold;
+}
+
+/* Filter info */
+
+div.filter_info {
+    padding: 0.3em;
+    border: 1px solid #ccc;
+    background: #eee;
+    margin-bottom: 1em;
+    font-size: 90%;
+}
+div.filter_info p {
+    margin: 0;
+}
+span.filter_hilite {
+    font-weight: bold;
+}
+
+/* ReportTable Values */
+
+tr.balsnap_ok td {
+    background: #7f7;
+}
+tr.balsnap_wrong td {
+    background: #f99;
+}
+tr.balsnap_error td {
+    background: #ff0;
+}
+.table_num_zero, .table_num_pos, .table_num_neg {
+    text-align: right;
+    white-space: nowrap;
+}
+td.table_num_zero {
+    color: black !important;
+}
+td.table_num_pos, td.table_num_pos a {
+    color: black;
+}
+td.table_num_neg, td.table_num_neg a {
+    color: #c21;
+}
+.acct_name {
+    white-space: nowrap;
+}
+a.nocolor {
+    color: inherit;
+}
+p.breadcrumbs {
+}
+
+/* Currency names*/
+
+.ccy_name {
+    font-size: 70%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.ccy_name_USD {
+    color: #2a4;
+}
+
+.ccy_name_UAH {
+    color: #00f;
+}
+
+.ccy_name_GBP {
+    color: #f00;
+}
+
+/* Last balsnap */
+
+.lastbalsnap_never {
+    color: #888 !important;
+}
+
+.lastbalsnap_good, .lastbalsnap_zero {
+    color: #290 !important;
+    background: #cfa !important;
+}
+
+.lastbalsnap_medium {
+    color: #880 !important;
+    background: #ff0 !important;
+}
+
+.lastbalsnap_bad {
+    color: #800 !important;
+    background: #faa !important;
+}

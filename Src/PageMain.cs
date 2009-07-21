@@ -1,35 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RT.Servers;
-using RT.TagSoup;
+﻿using RT.Servers;
 using RT.TagSoup.HtmlTags;
 
 namespace AccountsWeb
 {
-    public class PageMain: Page
+    public class PageMain: WebPage
     {
-        public PageMain(HttpRequest request)
-            : base(request)
+        public PageMain(HttpRequest request, WebInterface iface)
+            : base(request, iface)
         {
-        }
-
-        public override string GetBaseUrl()
-        {
-            return "/";
         }
 
         public override string GetTitle()
         {
-            return "Main";
+            return "GnuCash AccountsWeb";
         }
 
-        public override object GetBody()
+        public override object GetContent()
         {
-            return new UL(
-                new LI(new A("Monthly totals") { href = "/MonthlyTotals" })
-            );
+            return new P("Welcome to AccountsWeb for GnuCash! Please select one of the links on the left.");
         }
     }
 }

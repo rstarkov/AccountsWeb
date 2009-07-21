@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using RT.Servers;
-using RT.TagSoup;
-using RT.TagSoup.HtmlTags;
 using GnuCashSharp;
+using RT.Servers;
+using RT.Spinneret;
+using RT.TagSoup.HtmlTags;
 using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
 {
-    public class PageMonthlyTotals: Page
+    public class PageMonthlyTotals: WebPage
     {
         private DateInterval _interval;
         private ReportAccounts _report;
@@ -18,14 +16,9 @@ namespace AccountsWeb
         private bool _negate;
         private GncAccount _account;
 
-        public PageMonthlyTotals(HttpRequest request)
-            : base(request)
+        public PageMonthlyTotals(HttpRequest request, WebInterface iface)
+            : base(request, iface)
         {
-        }
-
-        public override string GetBaseUrl()
-        {
-            return "/MonthlyTotals";
         }
 
         public override string GetTitle()
@@ -33,7 +26,7 @@ namespace AccountsWeb
             return "Monthly Totals";
         }
 
-        public override object GetBody()
+        public override object GetContent()
         {
             // Default to the last 12 months
             var toDefault = DateTime.Now;
@@ -41,12 +34,12 @@ namespace AccountsWeb
             if (frDefault < Program.CurFile.Book.EarliestDate)
                 frDefault = Program.CurFile.Book.EarliestDate;
 
-            var fy = GetValidated<int>("FrYr", frDefault.Year);
-            var fm = GetValidated<int>("FrMo", frDefault.Month, x => x >= 1 && x <= 12, "between 1 and 12");
-            var ty = GetValidated<int>("ToYr", toDefault.Year, x => x >= fy, "no smaller than the starting year, {0}".Fmt(fy));
-            var tm = GetValidated<int>("ToMo", toDefault.Month, x => x >= 1 && x <= 12 && (fy < ty || x >= fm), "between 1 and 12, and no smaller than the starting month, {0}".Fmt(fm));
-            _maxDepth = GetValidated<int>("MaxDepth", -1, x => x >= 0, "non-negative");
-            _negate = GetValidated<bool>("Neg", false);
+            var fy = Request.GetValidated<int>("FrYr", frDefault.Year);
+            var fm = Request.GetValidated<int>("FrMo", frDefault.Month, x => x >= 1 && x <= 12, "between 1 and 12");
+            var ty = Request.GetValidated<int>("ToYr", toDefault.Year, x => x >= fy, "no smaller than the starting year, {0}".Fmt(fy));
+            var tm = Request.GetValidated<int>("ToMo", toDefault.Month, x => x >= 1 && x <= 12 && (fy < ty || x >= fm), "between 1 and 12, and no smaller than the starting month, {0}".Fmt(fm));
+            _maxDepth = Request.GetValidated<int>("MaxDepth", -1, x => x >= 0, "non-negative");
+            _negate = Request.GetValidated<bool>("Neg", false);
             _interval = new DateInterval(fy, fm, 1, ty, tm, DateTime.DaysInMonth(ty, tm));
 
             _account = GetAccountFromRestUrl();

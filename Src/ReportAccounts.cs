@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using RT.Servers;
-using RT.TagSoup.HtmlTags;
-using RT.Util.ExtensionMethods;
-using RT.Util.Streams;
-using RT.TagSoup;
-using GnuCashSharp;
-using RT.Util;
 using System.Linq;
+using GnuCashSharp;
+using RT.Servers;
+using RT.Spinneret;
+using RT.TagSoup.HtmlTags;
+using RT.Util;
+using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
 {
@@ -99,7 +98,7 @@ namespace AccountsWeb
                 throw new RTException("ReportAccounts: column \"{0}\" not yet defined and AutoAdd is disabled.".Fmt(colref));
         }
 
-        public Tag GetHtml()
+        public object GetHtml()
         {
             return Table.GetHtml();
         }

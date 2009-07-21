@@ -1,14 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Forms;
 using GnuCashSharp;
-using RT.Servers;
 using RT.Util;
 using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
-using System.Linq;
-using System.Diagnostics;
-using RT.TagSoup.HtmlTags;
 
 namespace AccountsWeb
 {
@@ -76,7 +71,7 @@ namespace AccountsWeb
                 return;
             }
 
-            Interface.StartServer();
+            Interface.StartServer(Program.CurFile.ServerOptions);
 
             AddRecent(filename);
         }

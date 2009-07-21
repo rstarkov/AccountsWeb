@@ -94,7 +94,7 @@ namespace AccountsWeb
             if (Program.Interface.ServerRunning)
                 Program.Interface.StopServer();
             else
-                Program.Interface.StartServer();
+                Program.Interface.StartServer(Program.CurFile.ServerOptions);
         }
 
         private void miNewFile_Click(object sender, EventArgs e)

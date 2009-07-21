@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using RT.Util;
 using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
 
@@ -69,7 +62,7 @@ namespace AccountsWeb
             if (restartRequired)
             {
                 Program.Interface.StopServer();
-                Program.Interface.StartServer();
+                Program.Interface.StartServer(Program.CurFile.ServerOptions);
             }
 
             return true;

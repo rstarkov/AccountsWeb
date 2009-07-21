@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using RT.Servers;
-using RT.TagSoup;
+﻿using RT.Servers;
 using RT.TagSoup.HtmlTags;
 using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
 {
-    public class PageAbout: Page
+    public class PageAbout: WebPage
     {
-        public PageAbout(HttpRequest request)
-            : base(request)
+        public PageAbout(HttpRequest request, WebInterface iface)
+            : base(request, iface)
         {
-        }
-
-        public override string GetBaseUrl()
-        {
-            return "/About";
         }
 
         public override string GetTitle()
@@ -26,7 +16,7 @@ namespace AccountsWeb
             return "About AccountsWeb";
         }
 
-        public override object GetBody()
+        public override object GetContent()
         {
             return new object[]
             {

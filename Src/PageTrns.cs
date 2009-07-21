@@ -1,29 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using RT.TagSoup;
-using RT.Servers;
 using GnuCashSharp;
+using RT.Servers;
+using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
-using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
 {
-    public class PageTrns: Page
+    public class PageTrns: WebPage
     {
         GncAccount _account;
         DateInterval _interval;
         bool _subaccts;
 
-        public PageTrns(HttpRequest request)
-            : base(request)
+        public PageTrns(HttpRequest request, WebInterface iface)
+            : base(request, iface)
         {
-        }
-
-        public override string GetBaseUrl()
-        {
-            return "/Trns";
         }
 
         public override string GetTitle()
@@ -31,18 +24,18 @@ namespace AccountsWeb
             return "Transactions";
         }
 
-        public override object GetBody()
+        public override object GetContent()
         {
             var minDate = DateTime.MinValue;
             var maxDate = DateTime.MaxValue - TimeSpan.FromDays(1);
-            var frDate = GetValidated("Fr", minDate);
-            var toDate = GetValidated("To", maxDate, dt => dt >= frDate, "no earlier than the \"Fr\" date");
-            var amtFmt = GetValidated("AmtFmt", "#,0");
+            var frDate = Request.GetValidated("Fr", minDate);
+            var toDate = Request.GetValidated("To", maxDate, dt => dt >= frDate, "no earlier than the \"Fr\" date");
+            var amtFmt = Request.GetValidated("AmtFmt", "#,0");
             
             _interval = new DateInterval(frDate.Date, toDate.Date + TimeSpan.FromDays(1) - TimeSpan.FromTicks(1));
             _account = GetAccountFromRestUrl();
-            _subaccts = GetValidated("SubAccts", false);
-            var showBalance = GetValidated("ShowBal", false, val => !(val && _subaccts), "false when SubAccts is true");
+            _subaccts = Request.GetValidated("SubAccts", false);
+            var showBalance = Request.GetValidated("ShowBal", false, val => !(val && _subaccts), "false when SubAccts is true");
 
             _subaccts &= _account.EnumChildren().Any();
 

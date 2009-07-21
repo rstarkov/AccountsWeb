@@ -1,27 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using RT.Servers;
 using GnuCashSharp;
-using RT.Util.ExtensionMethods;
+using RT.Servers;
 using RT.TagSoup.HtmlTags;
 
 namespace AccountsWeb
 {
-    public class PageLastBalsnap : Page
+    public class PageLastBalsnap : WebPage
     {
         private ReportAccounts _report;
         private GncAccount _account;
 
-        public PageLastBalsnap(HttpRequest request)
-            : base(request)
+        public PageLastBalsnap(HttpRequest request, WebInterface iface)
+            : base(request, iface)
         {
-        }
-
-        public override string GetBaseUrl()
-        {
-            return "/LastBalsnap";
         }
 
         public override string GetTitle()
@@ -29,7 +21,7 @@ namespace AccountsWeb
             return "Last Balance Snapshot";
         }
 
-        public override object GetBody()
+        public override object GetContent()
         {
             _account = GetAccountFromRestUrl();
 

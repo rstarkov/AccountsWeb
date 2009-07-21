@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using RT.Servers;
 using RT.TagSoup;
 using RT.TagSoup.HtmlTags;
 
 namespace AccountsWeb
 {
-    public class PageWarnings: Page
+    public class PageWarnings: WebPage
     {
-        public PageWarnings(HttpRequest request)
-            : base(request)
+        public PageWarnings(HttpRequest request, WebInterface iface)
+            : base(request, iface)
         {
-        }
-
-        public override string GetBaseUrl()
-        {
-            return "/Warnings";
         }
 
         public override string GetTitle()
@@ -25,7 +17,7 @@ namespace AccountsWeb
             return "Warnings";
         }
 
-        public override object GetBody()
+        public override object GetContent()
         {
             return new object[] {
                 Program.CurFile.Session.EnumWarnings().Count() == 0
