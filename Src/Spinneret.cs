@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
@@ -68,11 +69,19 @@ namespace AccountsWeb
                 return base.GetPageHtml(page);
             else
             {
-                (page as WebPage).FullScreen = false;
-                return MakePage(page, "AccountsWeb message", new DIV(
-                    new P("AccountsWeb cannot process your request due to the following error:"),
-                    Program.CurFile.GlobalErrorMessage
-                ));
+                Tag content = new DIV(
+                        new P("AccountsWeb cannot process your request due to the following error:"),
+                        Program.CurFile.GlobalErrorMessage
+                    );
+                try
+                {
+                    (page as WebPage).FullScreen = false;
+                    return MakePage(page, "AccountsWeb message", content);
+                }
+                catch (Exception e)
+                {
+                    return new DIV(content, new P("Additionally, an exception has occurred:"), new RAWHTML(HttpServer.ExceptionAsString(e, true)));
+                }
             }
         }
 
@@ -88,7 +97,7 @@ namespace AccountsWeb
 
         protected override object GetNavPanelBottom(SpinneretPage page)
         {
-            if (Program.CurFile.Session.EnumWarnings().Any())
+            if (Program.CurFile.Session != null && Program.CurFile.Session.EnumWarnings().Any())
                 return new object[] {
                     new H2(new IMG() { src = "/Static/warning_10.png" }, " Warnings"),
                     new UL(new LI(new A("Warnings") { href = "/Warnings" }))
