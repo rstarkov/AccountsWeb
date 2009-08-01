@@ -33,7 +33,7 @@ namespace AccountsWeb
             var amtFmt = Request.GetValidated("AmtFmt", "#,0");
             
             _interval = new DateInterval(frDate.Date, toDate.Date + TimeSpan.FromDays(1) - TimeSpan.FromTicks(1));
-            _account = GetAccountFromRestUrl();
+            _account = GetAccount("Acct");
             _subaccts = Request.GetValidated("SubAccts", false);
             var showBalance = Request.GetValidated("ShowBal", false, val => !(val && _subaccts), "false when SubAccts is true");
 
@@ -97,7 +97,6 @@ namespace AccountsWeb
 
             return new object[]
             {
-                GenerateBreadCrumbs(Request, _account),
                 filterInfo.GetHtml(),
                 table.GetHtml()
             };
@@ -108,13 +107,13 @@ namespace AccountsWeb
             var path = acct.PathAsList(_account);
             for (int i = 0; i < path.Count - 1; i++)
             {
-                yield return new A(path[i].Name) { class_ = "nocolor", href = Request.SameUrlExceptSetRest("/" + path[i].Path("/")) };
+                yield return new A(path[i].Name) { class_ = "nocolor", href = Request.SameUrlExceptSet("Acct", path[i].Path(":")) };
                 yield return " : ";
             }
             if (path.Count > 0)
             {
                 var pathlast = path[path.Count - 1];
-                yield return new A(pathlast.Name) { class_ = "nocolor", href = Request.SameUrlExceptSetRest("/" + pathlast.Path("/")) };
+                yield return new A(pathlast.Name) { class_ = "nocolor", href = Request.SameUrlExceptSet("Acct", pathlast.Path(":")) };
             }
         }
     }

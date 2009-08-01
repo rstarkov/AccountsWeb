@@ -44,7 +44,7 @@ namespace AccountsWeb
             string indent = "\u2003\u2003".Repeat(acct.Depth - _baseAcct.Depth - 1);
             string name = (acct == _baseAcct) ? ("TOTAL: " + acct.Name) : acct.Name;
             if (acct.EnumChildren().Any())
-                row.SetValue(_colAcctName, new object[] { indent, new A(name) { class_ = "nocolor", href = _request.SameUrlExceptSetRest("/" + acct.Path("/")) } });
+                row.SetValue(_colAcctName, new object[] { indent, new A(name) { class_ = "nocolor", href = _request.SameUrlExceptSet("Acct", acct.Path(":")) } });
             else
                 row.SetValue(_colAcctName, indent + name);
         }

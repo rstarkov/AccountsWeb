@@ -23,7 +23,7 @@ namespace AccountsWeb
 
         public override object GetContent()
         {
-            _account = GetAccountFromRestUrl();
+            _account = GetAccount("Acct");
 
             _report = new ReportAccounts(_account, Request, true, true);
             processAccount(_account, 0);

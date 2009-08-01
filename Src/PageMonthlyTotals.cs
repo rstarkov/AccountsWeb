@@ -42,7 +42,7 @@ namespace AccountsWeb
             _negate = Request.GetValidated<bool>("Neg", false);
             _interval = new DateInterval(fy, fm, 1, ty, tm, DateTime.DaysInMonth(ty, tm));
 
-            _account = GetAccountFromRestUrl();
+            _account = GetAccount("Acct");
 
             _report = new ReportAccounts(_account, Request, true, false);
             foreach (var interval in _interval.EnumMonths())
@@ -50,7 +50,6 @@ namespace AccountsWeb
             processAccount(_account, 0);
 
             var html = new DIV(
-                GenerateBreadCrumbs(Request, _account),
                 _report.GetHtml(),
                 new P("All values above are in {0}, converted where necessary using ".Fmt(Program.CurFile.BaseCurrency), new A("exchange rates") { href = "/ExRates" }, ".")
             );
@@ -72,8 +71,8 @@ namespace AccountsWeb
                     if (tot > 0m && tot < 1m) tot = 1m;
                     if (tot < 0m && tot > -1m) tot = -1m;
                     _report.SetValue(acct, interval,
-                        new A("{0:#,#}".Fmt(tot)) { href = "/Trns/{0}?Fr={1}&To={2}{3}".Fmt(
-                            acct.Path("/"),
+                        new A("{0:#,#}".Fmt(tot)) { href = "/Trns?Acct={0}&Fr={1}&To={2}{3}".Fmt(
+                            acct.Path(":").UrlEscape(),
                             interval.Start.Date.ToIsoStringOptimal(),
                             interval.End.Date.ToIsoStringOptimal(),
                             acct.EnumChildren().Any() ? "&SubAccts=true" : "") },

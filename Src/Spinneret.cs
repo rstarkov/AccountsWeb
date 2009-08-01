@@ -5,7 +5,7 @@ using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup;
 using RT.TagSoup.HtmlTags;
-using RT.Util.ExtensionMethods;
+using RT.Util;
 
 namespace AccountsWeb
 {
@@ -22,36 +22,11 @@ namespace AccountsWeb
             get { return false; }
         }
 
-        public Tag GenerateBreadCrumbs(HttpRequest request, GncAccount acct)
+        public GncAccount GetAccount(string getArgName)
         {
-            Tag breadcrumbs;
-            var path = acct == null ? null : acct.PathAsList();
-
-            var acct_link = (acct == Program.CurFile.Book.AccountRoot)
-                    ? (object) ""
-                    : new SPAN(" (", new A("account's page") { href = "/Account/" + acct.Path("/") }, ")");
-
-            if (acct == null || path.Count == 0)
-                breadcrumbs = new P() { class_ = "breadcrumbs" }._("> ", new SPAN("Root") { class_ = "breadcrumbs" }, acct_link);
-            else
-                breadcrumbs = new P() { class_ = "breadcrumbs" }._("> ",
-                    new A("Root") { class_ = "breadcrumbs", href = request.SameUrlExceptSetRest("/") }, " > ",
-                    path.Take(path.Count - 1).SelectMany(item => new object[] {
-                        new A(item.Name) { class_ = "breadcrumbs", href = request.SameUrlExceptSetRest("/" + item.Path("/")) },
-                        " : "
-                    }),
-                    new SPAN(path.Last().Name) { class_ = "breadcrumbs" },
-                    acct_link
-                );
-            return breadcrumbs;
-        }
-
-        public GncAccount GetAccountFromRestUrl()
-        {
-            var acctpath = Request.RestUrlWithoutQuery.UrlUnescape().Replace("/", ":");
-            if (acctpath.StartsWith(":"))
-                acctpath = acctpath.Substring(1);
-            return Program.CurFile.Book.GetAccountByPath(acctpath);
+            var acct = Request.GetValidated(getArgName, "");
+            try { return Program.CurFile.Book.GetAccountByPath(acct); }
+            catch (RTException) { throw new ValidationException(getArgName, acct, "the name of an existing account"); }
         }
     }
 
