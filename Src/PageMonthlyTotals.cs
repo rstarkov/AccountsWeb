@@ -47,6 +47,8 @@ namespace AccountsWeb
             _report = new ReportAccounts(_account, Request, true, false);
             foreach (var interval in _interval.EnumMonths())
                 _report.AddCol(interval, interval.Start.ToString("MMM\nyy"));
+            if (_interval.EnumMonths().Count() > 1)
+                _report.AddCol("average", "Avg.", "aw-col-average");
             processAccount(_account, 0);
 
             var html = new DIV(
@@ -59,11 +61,16 @@ namespace AccountsWeb
 
         private void processAccount(GncAccount acct, int depth)
         {
+            decimal intervalTotal = 0;
+            int intervalCount = 0;
             foreach (var interval in _interval.EnumMonths())
             {
                 decimal tot = acct.GetTotal(interval, true, acct.Book.GetCommodity(acct.Book.BaseCurrencyId));
                 if (_negate)
                     tot = -tot;
+                intervalTotal += tot;
+                intervalCount++;
+
                 if (tot == 0)
                     _report.SetValue(acct, interval, "-", ReportTable.CssClassNumber(tot));
                 else
@@ -78,6 +85,16 @@ namespace AccountsWeb
                             acct.EnumChildren().Any() ? "&SubAccts=true" : "") },
                         ReportTable.CssClassNumber(tot));
                 }
+            }
+
+            if (intervalCount > 1)
+            {
+                intervalTotal = intervalTotal / intervalCount;
+                if (intervalTotal > 0m && intervalTotal < 1m) intervalTotal = 1m;
+                if (intervalTotal < 0m && intervalTotal > -1m) intervalTotal = -1m;
+                _report.SetValue(acct, "average",
+                    "{0:#,#}".Fmt(intervalTotal),
+                    ReportTable.CssClassNumber(intervalTotal));
             }
 
             if (depth < _maxDepth || _maxDepth == -1)

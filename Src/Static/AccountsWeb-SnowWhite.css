@@ -50,7 +50,8 @@ td.table_num_neg, td.table_num_neg a {
 a.nocolor {
     color: inherit;
 }
-p.breadcrumbs {
+td.aw-col-average {
+    border-left: 3px solid black;
 }
 
 /* Currency names*/
