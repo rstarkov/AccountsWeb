@@ -58,6 +58,7 @@
     <Compile Include="ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PageAddLink.cs" />
     <Compile Include="GncFileWrapper.cs" />
     <Compile Include="PageAbout.cs" />
     <Compile Include="PageExRates.cs" />
