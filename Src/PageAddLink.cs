@@ -15,22 +15,22 @@ namespace AccountsWeb
 
         public override string GetTitle()
         {
-            return "Add Link";
+            return Tr.PgAddLink.Title;
         }
 
         public override object GetContent()
         {
-            var url = Request.GetValidated<string>("Href", href => true, "specified");
+            var url = Request.GetValidated<string>("Href", href => true, Tr.PgAddLink.Validation_Href);
             var name = Request.Post["Name"].Value;
 
             if (name == null)
             {
                 return
                     new FORM() { method = method.post, action = "/AddLink?Href=" + url.UrlEscape() }._(
-                        "Enter a name for the new link: ",
+                        Tr.PgAddLink.Prompt,
                         new INPUT() { name = "Name", type = itype.text },
                         " ",
-                        new BUTTON("Create link") { type = btype.submit }
+                        new BUTTON(Tr.PgAddLink.CreateButton) { type = btype.submit }
                     );
             }
             else
@@ -39,8 +39,8 @@ namespace AccountsWeb
                 Program.CurFile.SaveToFile();
                 return new object[]
                 {
-                    new P("A new link named \"{0}\" has been created successfully!".Fmt(name)),
-                    new P(new A("Return to the linked page") { href = url })
+                    new P(Tr.PgAddLink.CreatedMessage.Fmt(name)),
+                    new P(new A(Tr.PgAddLink.CreatedReturnLink) { href = url })
                 };
             }
         }

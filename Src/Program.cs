@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using GnuCashSharp;
 using RT.Util;
 using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
+using RT.Util.Lingo;
 
 namespace AccountsWeb
 {
@@ -21,6 +23,9 @@ namespace AccountsWeb
         /// <summary>The form that is responsible for the tray icon and menu</summary>
         public static TrayForm TrayForm;
 
+        /// <summary>The currently used translation.</summary>
+        public static Translation Tr;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -31,6 +36,8 @@ namespace AccountsWeb
             Application.SetCompatibleTextRenderingDefault(false);
 
             Settings = Settings.LoadFromFile(PathUtil.AppPath + "AccountsWeb.xml");
+            Tr = Lingo.LoadTranslation<Translation>("AccountsWeb", ref Settings.Language);
+
             Interface = new WebInterface();
             TrayForm = new TrayForm();
 
@@ -67,7 +74,7 @@ namespace AccountsWeb
             catch (Exception e)
             {
                 CurFile = null;
-                DlgMessage.ShowWarning("Could not open AccountsWeb file.\nWrapper: \"{0}\"\nGnuCash: \"{1}\"\nError: {2}".Fmt(filename, CurFile == null ? "N/A" : (CurFile.GnuCashFile ?? "-"), e.Message));
+                DlgMessage.ShowWarning(Tr.Warning_CouldNotOpenAccountsWeb.Fmt(filename, CurFile == null ? Tr.Warning_AccWeb_NA.Translation : (CurFile.GnuCashFile ?? "-"), e.Message));
                 return;
             }
 
@@ -86,7 +93,7 @@ namespace AccountsWeb
         public static void SaveFile()
         {
             if (CurFile == null)
-                throw new RTException("Cannot SaveFile because no file is currently open.");
+                throw new RTException("Internal Error: Cannot SaveFile because no file is currently open.");
 
             CurFile.SaveToFile();
         }

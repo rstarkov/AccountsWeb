@@ -3,6 +3,7 @@ using System.Linq;
 using GnuCashSharp;
 using RT.Servers;
 using RT.TagSoup.HtmlTags;
+using RT.Util.Lingo;
 
 namespace AccountsWeb
 {
@@ -18,7 +19,7 @@ namespace AccountsWeb
 
         public override string GetTitle()
         {
-            return "Last Balance Snapshot";
+            return Tr.PgLastBalsnap.Title;
         }
 
         public override object GetContent()
@@ -36,17 +37,17 @@ namespace AccountsWeb
             var balsnaps = acct.EnumSplits(false).Where(spl => spl.IsBalsnap).ToArray();
 
             if (!balsnaps.Any())
-                _report.SetValue(acct, "Last", "never", "lastbalsnap_never");
+                _report.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastNever, "lastbalsnap_never");
             else
             {
                 var lastsnap = balsnaps.OrderBy(spl => spl.Transaction.DatePosted).Last();
                 var lastsplit = acct.EnumSplits(false).Last();
                 if (lastsnap.Balsnap == 0 && object.ReferenceEquals(lastsplit, lastsnap) && lastsnap.AccountBalanceAfter == 0)
-                    _report.SetValue(acct, "Last", "balance = 0", "lastbalsnap_zero");
+                    _report.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastZero, "lastbalsnap_zero");
                 else
                 {
                     int days = (int) (DateTime.Today - lastsnap.Transaction.DatePosted).TotalDays;
-                    _report.SetValue(acct, "Last", days + " days ago", makeCss(days));
+                    _report.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastNDaysAgo.Fmt(Tr.Language.GetNumberSystem(), days), makeCss(days));
                 }
             }
 

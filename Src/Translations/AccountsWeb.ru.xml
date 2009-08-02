@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<item>
+  <PgAbout>
+    <NavLink>
+      <Translation>О программе</Translation>
+      <Old>About</Old>
+    </NavLink>
+    <Title>
+      <Translation>О программе {0}</Translation>
+      <Old>About {0}</Old>
+    </Title>
+    <Version>
+      <Translation>Версия {0}</Translation>
+      <Old>Version {0}</Old>
+    </Version>
+  </PgAbout>
+  <PgAddLink>
+    <Title>
+      <Translation>Создать Ссылку</Translation>
+      <Old>Add Link</Old>
+    </Title>
+    <Prompt>
+      <Translation>Введите название для ссылки: </Translation>
+      <Old>Enter a name for the new link: </Old>
+    </Prompt>
+    <CreateButton>
+      <Translation>Создать ссылку</Translation>
+      <Old>Create link</Old>
+    </CreateButton>
+    <CreatedMessage>
+      <Translation>Новая ссылка под названием "{0}" успешно создана!</Translation>
+      <Old>A new link named "{0}" has been created successfully!</Old>
+    </CreatedMessage>
+    <CreatedReturnLink>
+      <Translation>Вернуться на страничку этой ссылки</Translation>
+      <Old>Return to the linked page</Old>
+    </CreatedReturnLink>
+    <Validation_Href>
+      <Translation>указан</Translation>
+      <Old>specified</Old>
+    </Validation_Href>
+  </PgAddLink>
+  <PgExRates>
+    <NavLink>
+      <Translation>Курсы</Translation>
+      <Old>Exchange rates</Old>
+    </NavLink>
+    <Title>
+      <Translation>Курсы Обмена</Translation>
+      <Old>Exchange Rates</Old>
+    </Title>
+    <BaseCurrencyMessage>
+      <Translation>Данная валюта является базовой.</Translation>
+      <Old>This is the base currency</Old>
+    </BaseCurrencyMessage>
+    <ColDate>
+      <Translation>Дата</Translation>
+      <Old>Date</Old>
+    </ColDate>
+    <ColRate>
+      <Translation>Курс</Translation>
+      <Old>Rate</Old>
+    </ColRate>
+    <ColRateInverse>
+      <Translation>Обратный курс</Translation>
+      <Old>Inverse</Old>
+    </ColRateInverse>
+  </PgExRates>
+  <PgLastBalsnap>
+    <NavLink>
+      <Translation>Сверки</Translation>
+      <Old>Last balsnaps</Old>
+    </NavLink>
+    <Title>
+      <Translation>Список последних сверок</Translation>
+      <Old>Last Balance Snapshot</Old>
+    </Title>
+    <ColLast>
+      <Translation>Сверка</Translation>
+      <Old>Last</Old>
+    </ColLast>
+    <LastNever>
+      <Translation>никогда</Translation>
+      <Old>never</Old>
+    </LastNever>
+    <LastZero>
+      <Translation>баланс = 0</Translation>
+      <Old>balance = 0</Old>
+    </LastZero>
+    <LastNDaysAgo>
+      <IsNumber>
+        <item>True</item>
+      </IsNumber>
+      <Translations>
+        <item>{0} день назад</item>
+        <item>{0} дня назад</item>
+        <item>{0} дней назад</item>
+      </Translations>
+      <Old>
+        <item>{0} day ago</item>
+        <item>{0} days ago</item>
+      </Old>
+    </LastNDaysAgo>
+  </PgLastBalsnap>
+  <PgMain>
+    <WelcomeMessage>
+      <Translation>Добро пожаловать! Щелкните на одну из ссылок в панели слева.</Translation>
+      <Old>Welcome to AccountsWeb for GnuCash! Please select one of the links on the left.</Old>
+    </WelcomeMessage>
+  </PgMain>
+  <PgMonthlyTotals>
+    <NavLink>
+      <Translation>Операции мес.</Translation>
+      <Old>Monthly totals</Old>
+    </NavLink>
+    <Title>
+      <Translation>Операции по месяцам</Translation>
+      <Old>Monthly Totals</Old>
+    </Title>
+    <CurAccount>
+      <Translation>Счет: </Translation>
+      <Old>Account: </Old>
+    </CurAccount>
+    <SubAcctsDepth>
+      <Translation>Отображать уровней под-счетов: </Translation>
+      <Old>Show subaccounts to depth: </Old>
+    </SubAcctsDepth>
+    <SubAcctsNone>
+      <Translation>Ни одного</Translation>
+      <Old>None</Old>
+    </SubAcctsNone>
+    <SubAcctsAll>
+      <Translation>Все</Translation>
+      <Old>All</Old>
+    </SubAcctsAll>
+    <ColAverage>
+      <Translation>Средн.</Translation>
+      <Old>Avg.</Old>
+    </ColAverage>
+    <MessageExRatesUsed>
+      <Translation>Все суммы в данной таблице указаны в валюте {0}. При необходимости используются {1}.</Translation>
+      <Old>All values above are in {0}, converted where necessary using {1}.</Old>
+    </MessageExRatesUsed>
+    <MessageExRatesUsedLink>
+      <Translation>курсы обмена валют</Translation>
+      <Old>exchange rates</Old>
+    </MessageExRatesUsedLink>
+    <Validation_Between1and12>
+      <Translation>между 1 и 12</Translation>
+      <Old>between 1 and 12</Old>
+    </Validation_Between1and12>
+    <Validation_NotSmallerYear>
+      <Translation>не менее чем начальный год, {0}</Translation>
+      <Old>no smaller than the starting year, {0}</Old>
+    </Validation_NotSmallerYear>
+    <Validation_Between1and12_NotSmallerMonth>
+      <Translation>между 1 и 12, и не мнее чем начальный месяц, {0}</Translation>
+      <Old>between 1 and 12, and no smaller than the starting month, {0}</Old>
+    </Validation_Between1and12_NotSmallerMonth>
+  </PgMonthlyTotals>
+  <PgTrns>
+    <NavLink>
+      <Translation>Проводки</Translation>
+      <Old>Transactions</Old>
+    </NavLink>
+    <Title>
+      <Translation>Проводки</Translation>
+      <Old>Transactions</Old>
+    </Title>
+    <ShowingAll>
+      <Translation>Отображаются все проводки.</Translation>
+      <Old>Showing all transactions.</Old>
+    </ShowingAll>
+    <ShowingOnOrBefore>
+      <Translation>Отображаются проводки за {0} либо ранее.</Translation>
+      <Old>Showing all transactions on or before {0}.</Old>
+    </ShowingOnOrBefore>
+    <ShowingOnOrAfter>
+      <Translation>Отображаются проводки за {0} либо позднее.</Translation>
+      <Old>Showing all transactions on or after {0}.</Old>
+    </ShowingOnOrAfter>
+    <ShowingBetween>
+      <Translation>Отображаются проводки между {0} и {1}, включительно.</Translation>
+      <Old>Showing transactions between {0} and {1}, inclusive.</Old>
+    </ShowingBetween>
+    <ShowingSubaccts>
+      <Translation>Отображать под-счета: </Translation>
+      <Old>Subaccounts shown: </Old>
+    </ShowingSubaccts>
+    <ShowingSubacctsYes>
+      <Translation>да</Translation>
+      <Old>yes</Old>
+    </ShowingSubacctsYes>
+    <ShowingSubacctsNo>
+      <Translation>нет</Translation>
+      <Old>no</Old>
+    </ShowingSubacctsNo>
+    <ColDate>
+      <Translation>Дата</Translation>
+      <Old>Date</Old>
+    </ColDate>
+    <ColDescription>
+      <Translation>Описание</Translation>
+      <Old>Description</Old>
+    </ColDescription>
+    <ColQuantity>
+      <Translation>Сумм.</Translation>
+      <Old>Qty</Old>
+    </ColQuantity>
+    <ColCurrency>
+      <Translation>Вал.</Translation>
+      <Old>Ccy</Old>
+    </ColCurrency>
+    <ColBalance>
+      <Translation>Бал.</Translation>
+      <Old>Bal</Old>
+    </ColBalance>
+    <ColAccount>
+      <Translation>Счет</Translation>
+      <Old>Account</Old>
+    </ColAccount>
+    <ColInBaseCcy>
+      <Translation>Сумм. в {0}</Translation>
+      <Old>In {0}</Old>
+    </ColInBaseCcy>
+    <Validation_NotBeforeFr>
+      <Translation>не ранее чем дата "Fr"</Translation>
+      <Old>no earlier than the "Fr" date</Old>
+    </Validation_NotBeforeFr>
+    <Validation_ShowBalVsSubAccts>
+      <Translation>"false" когда SubAccts равняется "true"</Translation>
+      <Old>false when SubAccts is true</Old>
+    </Validation_ShowBalVsSubAccts>
+  </PgTrns>
+  <PgWarnings>
+    <Title>
+      <Translation>Замечания</Translation>
+      <Old>Warnings</Old>
+    </Title>
+    <MessageNoWarnings>
+      <Translation>Замечания отсутствуют.</Translation>
+      <Old>There were no warnings.</Old>
+    </MessageNoWarnings>
+  </PgWarnings>
+  <Config>
+    <ConfigForm>
+      <Translation>Настройки AccountsWeb</Translation>
+      <Old>AccountsWeb Configuration</Old>
+    </ConfigForm>
+    <tabPaths>
+      <Translation>Общие</Translation>
+      <Old>General</Old>
+    </tabPaths>
+    <btnLanguage>
+      <Translation>Выбрать &amp;язык</Translation>
+      <Old>Select &amp;Language</Old>
+    </btnLanguage>
+    <lblBaseCurrency>
+      <Translation>&amp;Базовая валюта:</Translation>
+      <Old>&amp;Base currency:</Old>
+    </lblBaseCurrency>
+    <btnBrowseGnuCash>
+      <Translation>...</Translation>
+      <Old>...</Old>
+    </btnBrowseGnuCash>
+    <lblGnuCashFile>
+      <Translation>&amp;Путь к файлу GnuCash:</Translation>
+      <Old>&amp;GnuCash file location:</Old>
+    </lblGnuCashFile>
+    <tabGeneral>
+      <Translation>Сеть</Translation>
+      <Old>Network</Old>
+    </tabGeneral>
+    <lblListenPort>
+      <Translation>&amp;Порт сервера:</Translation>
+      <Old>Listen on &amp;port:</Old>
+    </lblListenPort>
+    <btnOK>
+      <Translation>ОК</Translation>
+      <Old>OK</Old>
+    </btnOK>
+    <btnCancel>
+      <Translation>Отмена</Translation>
+      <Old>Cancel</Old>
+    </btnCancel>
+    <Warning_PortValue>
+      <Translation>Поле "Порт сервера" должно содержать целое число от 1 до 65535.</Translation>
+      <Old>The "Port" field must contain an integer between 1 and 65535</Old>
+    </Warning_PortValue>
+    <OpenDialog_Title>
+      <Translation>Выберите файл GnuCash</Translation>
+      <Old>Select a GnuCash file</Old>
+    </OpenDialog_Title>
+  </Config>
+  <TrayForm>
+    <TrayForm>
+      <Translation>TrayForm</Translation>
+      <Old>TrayForm</Old>
+    </TrayForm>
+    <Tooltip_NoFileOpen>
+      <Translation>Нет открытого файла</Translation>
+      <Old>No file open</Old>
+    </Tooltip_NoFileOpen>
+    <Tooltip_Running>
+      <Translation>{0}
+Сервер AccountsWeb работает</Translation>
+      <Old>{0}
+AccountsWeb server is running.</Old>
+    </Tooltip_Running>
+    <Tooltip_Stopped>
+      <Translation>{0}
+Сервер AccountsWeb отключен.</Translation>
+      <Old>{0}
+AccountsWeb server is stopped.</Old>
+    </Tooltip_Stopped>
+    <Title_NoFileOpen>
+      <Translation>&lt;нет открытого файла&gt;</Translation>
+      <Old>&lt;no file open&gt;</Old>
+    </Title_NoFileOpen>
+    <Recent_DoesNotExist>
+      <Translation>Файл "{0}" не существует.
+
+Убрать ссылку на этот файл из меню "Открыть недавний"?</Translation>
+      <Old>File "{0}" does not exist.
+
+Would you like to remove the file from the Recent menu?</Old>
+    </Recent_DoesNotExist>
+    <Recent_Remove>
+      <Translation>&amp;Убрать из меню</Translation>
+      <Old>&amp;Remove from Recent</Old>
+    </Recent_Remove>
+    <Recent_Cancel>
+      <Translation>&amp;Отмена</Translation>
+      <Old>&amp;Cancel</Old>
+    </Recent_Cancel>
+    <miStartStop_Start>
+      <Translation>Запустить &amp;сервер</Translation>
+      <Old>S&amp;tart server</Old>
+    </miStartStop_Start>
+    <miStartStop_Stop>
+      <Translation>Остановить &amp;сервер</Translation>
+      <Old>S&amp;top server</Old>
+    </miStartStop_Stop>
+    <dlgOpenFile_Title>
+      <Translation>Укажите файл AccountsWeb</Translation>
+      <Old>Select an AccountsWeb file to open</Old>
+    </dlgOpenFile_Title>
+    <dlgSaveFile_Title>
+      <Translation>Укажите куда сохранить новый файл</Translation>
+      <Old>Choose a location to save the new file</Old>
+    </dlgSaveFile_Title>
+    <dlgFile_Filter>
+      <Translation>Файлы AccountsWeb|*.accweb|Все файлы|*.*</Translation>
+      <Old>AccountsWeb files|*.accweb|All files|*.*</Old>
+    </dlgFile_Filter>
+  </TrayForm>
+  <TrayMenu>
+    <miOpenInBrowser>
+      <Translation>От&amp;крыть в браузере</Translation>
+      <Old>Open in &amp;browser</Old>
+    </miOpenInBrowser>
+    <miReload>
+      <Translation>О&amp;бновить</Translation>
+      <Old>&amp;Reload</Old>
+    </miReload>
+    <miSettings>
+      <Translation>Н&amp;астройки...</Translation>
+      <Old>&amp;Settings...</Old>
+    </miSettings>
+    <miNewFile>
+      <Translation>&amp;Новый файл...</Translation>
+      <Old>&amp;New file...</Old>
+    </miNewFile>
+    <miOpenFile>
+      <Translation>&amp;Открыть файл...</Translation>
+      <Old>&amp;Open file...</Old>
+    </miOpenFile>
+    <miOpenRecent>
+      <Translation>О&amp;ткрыть недавний</Translation>
+      <Old>Open r&amp;ecent</Old>
+    </miOpenRecent>
+    <miAbout>
+      <Translation>О &amp;программе... (в браузере)</Translation>
+      <Old>&amp;About... (in browser)</Old>
+    </miAbout>
+    <miExit>
+      <Translation>&amp;Выход</Translation>
+      <Old>E&amp;xit</Old>
+    </miExit>
+  </TrayMenu>
+  <GncWrapper>
+    <DefaultBaseCurrency>
+      <Translation>USD</Translation>
+      <Old>USD</Old>
+    </DefaultBaseCurrency>
+    <DefaultBalsnapPrefix>
+      <Translation>СВЕРКА:</Translation>
+      <Old>BALANCE:</Old>
+    </DefaultBalsnapPrefix>
+    <DefaultExampleUserlink>
+      <Translation>Пример</Translation>
+      <Old>Example</Old>
+    </DefaultExampleUserlink>
+    <Error_FileNotConfigured>
+      <Translation>Путь к файлу GnuCash не указан. Настройте путь к данному файлу в окне "Настройки".</Translation>
+      <Old>The path to a GnuCash file is not configured. Please specify one in Settings.</Old>
+    </Error_FileNotConfigured>
+    <Error_FileNotFound>
+      <Translation>Файл GnuCash не найден.
+Имя файла: "{0}"</Translation>
+      <Old>GnuCash file cannot be found.
+File: "{0}"</Old>
+    </Error_FileNotFound>
+    <Error_CouldNotLoadFile>
+      <Translation>Не удалось загрузить файл GnuCash.
+Имя файла: "{0}".
+
+{1}</Translation>
+      <Old>Could not load GnuCash file.
+File: "{0}".
+
+{1}</Old>
+    </Error_CouldNotLoadFile>
+    <FileNameUnknown>
+      <Translation>неизвестно</Translation>
+      <Old>unknown</Old>
+    </FileNameUnknown>
+  </GncWrapper>
+  <Settings>
+    <CouldNotLoad>
+      <Translation>Не удалось загрузить настройки из файла "{0}".
+{1}</Translation>
+      <Old>Could not load settings from file {0}.
+{1}</Old>
+    </CouldNotLoad>
+    <CouldNotLoad_TryAgain>
+      <Translation>&amp;Повторить</Translation>
+      <Old>Try again</Old>
+    </CouldNotLoad_TryAgain>
+    <CouldNotLoad_ContinueWithDefault>
+      <Translation>&amp;Сбросить настройки и продолжить</Translation>
+      <Old>Continue with default settings</Old>
+    </CouldNotLoad_ContinueWithDefault>
+  </Settings>
+  <NavigationHeader>
+    <Translation>Навигация</Translation>
+    <Old>Navigation</Old>
+  </NavigationHeader>
+  <LinksHeader>
+    <Translation>Ссылки</Translation>
+    <Old>Links</Old>
+  </LinksHeader>
+  <AddLink>
+    <Translation>Создать ссылку</Translation>
+    <Old>Add link</Old>
+  </AddLink>
+  <Warning_CouldNotOpenAccountsWeb>
+    <Translation>Не удалось открыть файл AccountsWeb.
+Wrapper: "{0}"
+GnuCash: "{1}"
+Ошибка: {2}</Translation>
+    <Old>Could not open AccountsWeb file.
+Wrapper: "{0}"
+GnuCash: "{1}"
+Error: {2}</Old>
+  </Warning_CouldNotOpenAccountsWeb>
+  <Warning_AccWeb_NA>
+    <Translation>&lt;нет&gt;</Translation>
+    <Old>N/A</Old>
+  </Warning_AccWeb_NA>
+  <Warning_CannotOpenInBrowser>
+    <Translation>Запуск в браузере не возможен так как сервер не запущен. Выберите "Запустить сервер" и повторите попытку.</Translation>
+    <Old>Cannot open in browser because the server is not running. Start it first and try again.</Old>
+  </Warning_CannotOpenInBrowser>
+  <WarningsLink>
+    <Translation>Замечания</Translation>
+    <Old>Warnings</Old>
+  </WarningsLink>
+  <GlobalMessage>
+    <Title>
+      <Translation>Замечания</Translation>
+      <Old>Warning</Old>
+    </Title>
+    <Explanation>
+      <Translation>{0} не может обработать запрос в связи со следующей ошибкой:</Translation>
+      <Old>{0} cannot process your request due to the following error:</Old>
+    </Explanation>
+    <AlsoException>
+      <Translation>Кроме того, произошло исключение:</Translation>
+      <Old>Additionally, an exception has occurred:</Old>
+    </AlsoException>
+  </GlobalMessage>
+  <ReportTable_ColAccount>
+    <Translation>Счет</Translation>
+    <Old>Account</Old>
+  </ReportTable_ColAccount>
+  <ReportTable_GrandTotal>
+    <Translation>Итого: {0}</Translation>
+    <Old>TOTAL: {0}</Old>
+  </ReportTable_GrandTotal>
+  <Spinneret_Validation_AcctMustExist>
+    <Translation>названием существующего счета</Translation>
+    <Old>the name of an existing account</Old>
+  </Spinneret_Validation_AcctMustExist>
+  <Language>Russian</Language>
+</item>

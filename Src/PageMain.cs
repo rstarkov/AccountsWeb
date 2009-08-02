@@ -17,7 +17,7 @@ namespace AccountsWeb
 
         public override object GetContent()
         {
-            return new P("Welcome to AccountsWeb for GnuCash! Please select one of the links on the left.");
+            return new P(Tr.PgMain.WelcomeMessage);
         }
     }
 }

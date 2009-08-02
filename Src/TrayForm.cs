@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using RT.Util;
 using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
+using RT.Util.Lingo;
 
 namespace AccountsWeb
 {
@@ -16,6 +17,17 @@ namespace AccountsWeb
             InitializeComponent();
             TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
             TrayIcon.Visible = true;
+            Translate();
+        }
+
+        internal void Translate()
+        {
+            Lingo.TranslateControl(this, Program.Tr.TrayForm);
+            Lingo.TranslateControl(TrayMenu, Program.Tr.TrayMenu);
+            dlgOpenFile.Title = Program.Tr.TrayForm.dlgOpenFile_Title;
+            dlgOpenFile.Filter = Program.Tr.TrayForm.dlgFile_Filter;
+            dlgSaveFile.Title = Program.Tr.TrayForm.dlgSaveFile_Title;
+            dlgSaveFile.Filter = Program.Tr.TrayForm.dlgFile_Filter;
         }
 
         private void TrayForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -28,17 +40,17 @@ namespace AccountsWeb
         {
             if (Program.CurFile == null)
             {
-                TrayIcon.Text = "No file open";
+                TrayIcon.Text = Program.Tr.TrayForm.Tooltip_NoFileOpen;
                 TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
             }
             else if (Program.Interface.ServerRunning)
             {
-                TrayIcon.Text = "{0}\nAccountsWeb server is running.".Fmt(Program.CurFile.FileNameOnly);
+                TrayIcon.Text = Program.Tr.TrayForm.Tooltip_Running.Fmt(Program.CurFile.FileNameOnly);
                 TrayIcon.Icon = Properties.Resources.gnucash_icon_16;
             }
             else
             {
-                TrayIcon.Text = "{0}\nAccountsWeb server is stopped.".Fmt(Program.CurFile.FileNameOnly);
+                TrayIcon.Text = Program.Tr.TrayForm.Tooltip_Stopped.Fmt(Program.CurFile.FileNameOnly);
                 TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
             }
         }
@@ -47,7 +59,7 @@ namespace AccountsWeb
         {
             if (Program.CurFile == null)
             {
-                miCurrentFileName.Text = "   <no file open>";
+                miCurrentFileName.Text = "   " + Program.Tr.TrayForm.Title_NoFileOpen;
                 miOpenInBrowser.Enabled = false;
                 miReload.Enabled = false;
                 miSettings.Enabled = false;
@@ -61,7 +73,7 @@ namespace AccountsWeb
                 miSettings.Enabled = true;
                 miStartStopServer.Enabled = true;
             }
-            miStartStopServer.Text = Program.Interface.ServerRunning ? "S&top server" : "S&tart server";
+            miStartStopServer.Text = Program.Interface.ServerRunning ? Program.Tr.TrayForm.miStartStop_Stop : Program.Tr.TrayForm.miStartStop_Start;
             miOpenRecent.DropDownItems.Clear();
             foreach (var filename in Program.Settings.RecentFiles)
                 miOpenRecent.DropDownItems.Add(filename, null, miOpenRecent_Click);
@@ -76,7 +88,7 @@ namespace AccountsWeb
                 Process.Start(si);
             }
             else
-                DlgMessage.ShowInfo("Cannot open in browser because the server is not running. Start it first and try again.");
+                DlgMessage.ShowInfo(Program.Tr.Warning_CannotOpenInBrowser);
         }
 
         private void miReload_Click(object sender, EventArgs e)
@@ -124,8 +136,8 @@ namespace AccountsWeb
 
             if (!File.Exists(item.Text))
             {
-                var choice = DlgMessage.ShowQuestion("File \"{0}\" does not exist.\n\nWould you like to remove the file from the Recent menu?",
-                    "Remove from Recent", "Cancel");
+                var choice = DlgMessage.ShowQuestion(Program.Tr.TrayForm.Recent_DoesNotExist.Fmt(item.Text),
+                    Program.Tr.TrayForm.Recent_Remove, Program.Tr.TrayForm.Recent_Cancel);
                 if (choice == 0)
                 {
                     Program.Settings.RecentFiles.Remove(item.Text);
@@ -146,7 +158,7 @@ namespace AccountsWeb
                 Process.Start(si);
             }
             else
-                DlgMessage.ShowInfo("Cannot open in browser because the server is not running. Start it first and try again.");
+                DlgMessage.ShowInfo(Program.Tr.Warning_CannotOpenInBrowser);
         }
 
         private void miExit_Click(object sender, EventArgs e)

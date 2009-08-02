@@ -14,7 +14,7 @@ namespace AccountsWeb
 
         public override string GetTitle()
         {
-            return "Exchange Rates";
+            return Tr.PgExRates.Title;
         }
 
         public override object GetContent()
@@ -26,14 +26,14 @@ namespace AccountsWeb
                 prn.AddTag(new H2(ccy.Identifier));
                 if (ccy.Identifier == Program.CurFile.Book.BaseCurrencyId)
                 {
-                    prn.AddTag(new P("This is the base currency") { class_ = "info_msg" });
+                    prn.AddTag(new P(Tr.PgExRates.BaseCurrencyMessage) { class_ = "aw-info-msg" });
                 }
                 else
                 {
                     ReportTable tbl = new ReportTable();
-                    tbl.AddCol("Date");
-                    tbl.AddCol("Rate");
-                    tbl.AddCol("Inverse");
+                    tbl.AddCol(Tr.PgExRates.ColDate);
+                    tbl.AddCol(Tr.PgExRates.ColRate);
+                    tbl.AddCol(Tr.PgExRates.ColRateInverse);
                     foreach (var pt in ccy.ExRate)
                         tbl.AddRow(null, pt.Key.ToShortDateString(), pt.Value.ToString("0.0000"), (1m / pt.Value).ToString("0.0000"));
                     prn.AddTag(tbl.GetHtml());

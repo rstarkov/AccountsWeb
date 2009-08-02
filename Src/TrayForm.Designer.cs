@@ -72,7 +72,7 @@
             this.miAbout,
             this.miExit});
             this.TrayMenu.Name = "TrayMenu";
-            this.TrayMenu.Size = new System.Drawing.Size(186, 236);
+            this.TrayMenu.Size = new System.Drawing.Size(186, 258);
             this.TrayMenu.Opening += new System.ComponentModel.CancelEventHandler(this.TrayMenu_Opening);
             // 
             // miCurrentFileName
@@ -80,6 +80,7 @@
             this.miCurrentFileName.Enabled = false;
             this.miCurrentFileName.Name = "miCurrentFileName";
             this.miCurrentFileName.Size = new System.Drawing.Size(185, 22);
+            this.miCurrentFileName.Tag = "notranslate";
             this.miCurrentFileName.Text = "RomanGnuCash.xml:";
             // 
             // miOpenInBrowser
@@ -108,6 +109,7 @@
             // 
             this.miStartStopServer.Name = "miStartStopServer";
             this.miStartStopServer.Size = new System.Drawing.Size(185, 22);
+            this.miStartStopServer.Tag = "notranslate";
             this.miStartStopServer.Text = "S&tart server";
             this.miStartStopServer.Click += new System.EventHandler(this.miStartStopServer_Click);
             // 
@@ -164,15 +166,11 @@
             // dlgOpenFile
             // 
             this.dlgOpenFile.DefaultExt = "accweb";
-            this.dlgOpenFile.Filter = "AccountsWeb files|*.accweb|All files|*.*";
-            this.dlgOpenFile.Title = "Select an AccountsWeb file to open";
             this.dlgOpenFile.ValidateNames = false;
             // 
             // dlgSaveFile
             // 
             this.dlgSaveFile.DefaultExt = "accweb";
-            this.dlgSaveFile.Filter = "AccountsWeb files|*.accweb|All files|*.*";
-            this.dlgSaveFile.Title = "Please choose where the new file should be saved";
             // 
             // TrayForm
             // 

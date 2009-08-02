@@ -23,7 +23,7 @@ namespace AccountsWeb
 
         public override string GetTitle()
         {
-            return "Monthly Totals";
+            return Tr.PgMonthlyTotals.Title;
         }
 
         public override object GetContent()
@@ -37,9 +37,9 @@ namespace AccountsWeb
                 frDefault = earliest;
 
             var fy = Request.GetValidated<int>("FrYr", frDefault.Year);
-            var fm = Request.GetValidated<int>("FrMo", frDefault.Month, x => x >= 1 && x <= 12, "between 1 and 12");
-            var ty = Request.GetValidated<int>("ToYr", toDefault.Year, x => x >= fy, "no smaller than the starting year, {0}".Fmt(fy));
-            var tm = Request.GetValidated<int>("ToMo", toDefault.Month, x => x >= 1 && x <= 12 && (fy < ty || x >= fm), "between 1 and 12, and no smaller than the starting month, {0}".Fmt(fm));
+            var fm = Request.GetValidated<int>("FrMo", frDefault.Month, x => x >= 1 && x <= 12, Tr.PgMonthlyTotals.Validation_Between1and12);
+            var ty = Request.GetValidated<int>("ToYr", toDefault.Year, x => x >= fy, Tr.PgMonthlyTotals.Validation_NotSmallerYear.Fmt(fy));
+            var tm = Request.GetValidated<int>("ToMo", toDefault.Month, x => x >= 1 && x <= 12 && (fy < ty || x >= fm), Tr.PgMonthlyTotals.Validation_Between1and12_NotSmallerMonth.Fmt(fm));
             _maxDepth = Request.GetValidated<int>("MaxDepth", -1, x => x >= 0, "non-negative");
             _negate = Request.GetValidated<bool>("Neg", false);
             _interval = new DateInterval(fy, fm, 1, ty, tm, DateTime.DaysInMonth(ty, tm));
@@ -50,16 +50,16 @@ namespace AccountsWeb
             foreach (var interval in _interval.EnumMonths())
                 _report.AddCol(interval, interval.Start.ToString("MMM\nyy"));
             if (_interval.EnumMonths().Count() > 1)
-                _report.AddCol("average", "Avg.", "aw-col-average");
+                _report.AddCol("average", Tr.PgMonthlyTotals.ColAverage, "aw-col-average");
             processAccount(_account, 0);
 
             // MaxDepth UI
             var maxdepthUi = new P();
             {
-                maxdepthUi.Add("Show subaccounts to depth: ");
+                maxdepthUi.Add(Tr.PgMonthlyTotals.SubAcctsDepth);
                 for (int i = 0; i <= 5; i++)
                 {
-                    var label = i == 0 ? "None" : i.ToString();
+                    var label = i == 0 ? Tr.PgMonthlyTotals.SubAcctsNone.Translation : i.ToString();
                     if (_maxDepth == i)
                         maxdepthUi.Add(new SPAN(label) { class_ = "aw-current" });
                     else
@@ -67,16 +67,16 @@ namespace AccountsWeb
                     maxdepthUi.Add(" · ");
                 }
                 if (_maxDepth == -1)
-                    maxdepthUi.Add(new SPAN("All") { class_ = "aw-current" });
+                    maxdepthUi.Add(new SPAN(Tr.PgMonthlyTotals.SubAcctsAll) { class_ = "aw-current" });
                 else
-                    maxdepthUi.Add(new A("All") { href = Request.SameUrlExceptRemove("MaxDepth") });
+                    maxdepthUi.Add(new A(Tr.PgMonthlyTotals.SubAcctsAll) { href = Request.SameUrlExceptRemove("MaxDepth") });
             }
 
             var html = new DIV(
-                new P("Account: ", GetAccountBreadcrumbs("Acct", _account)),
+                new P(Tr.PgMonthlyTotals.CurAccount, GetAccountBreadcrumbs("Acct", _account)),
                 maxdepthUi,
                 _report.GetHtml(),
-                new P("All values above are in {0}, converted where necessary using ".Fmt(Program.CurFile.BaseCurrency), new A("exchange rates") { href = "/ExRates" }, ".")
+                new P(Tr.PgMonthlyTotals.MessageExRatesUsed.FmtEnumerable(Program.CurFile.BaseCurrency, new A(Tr.PgMonthlyTotals.MessageExRatesUsedLink) { href = "/ExRates" }))
             );
 
             return html;

@@ -19,6 +19,14 @@ namespace AccountsWeb
             Program.CurFile.ReloadSessionIfNecessary();
         }
 
+        internal Translation Tr
+        {
+            get
+            {
+                return Program.Tr;
+            }
+        }
+
         public virtual bool IgnoreGlobalMessage
         {
             get { return false; }
@@ -28,7 +36,7 @@ namespace AccountsWeb
         {
             var acct = Request.GetValidated(acctArgName, "");
             try { return Program.CurFile.Book.GetAccountByPath(acct); }
-            catch (RTException) { throw new ValidationException(acctArgName, acct, "the name of an existing account"); }
+            catch (RTException) { throw new ValidationException(acctArgName, acct, Tr.Spinneret_Validation_AcctMustExist); }
         }
 
         public IEnumerable<object> GetAccountBreadcrumbs(string acctArgName, GncAccount account)
@@ -36,10 +44,10 @@ namespace AccountsWeb
             var path = account == null ? null : account.PathAsList();
 
             if (account == null || path.Count == 0)
-                yield return new SPAN("Root") { class_ = "aw-breadcrumbs aw-current" };
+                yield return new SPAN(account.Book.AccountRoot.Name) { class_ = "aw-breadcrumbs aw-current" };
             else
             {
-                yield return new A("Root") { class_ = "aw-breadcrumbs", href = Request.SameUrlExceptSet(acctArgName, "") };
+                yield return new A(account.Book.AccountRoot.Name) { class_ = "aw-breadcrumbs", href = Request.SameUrlExceptSet(acctArgName, "") };
                 yield return " : ";
                 foreach (var item in path.Take(path.Count - 1))
                 {
@@ -66,17 +74,17 @@ namespace AccountsWeb
             else
             {
                 Tag content = new DIV(
-                        new P("AccountsWeb cannot process your request due to the following error:"),
+                        new P(Program.Tr.GlobalMessage.Explanation.Fmt("AccountsWeb")),
                         Program.CurFile.GlobalErrorMessage
                     );
                 try
                 {
                     (page as WebPage).FullScreen = false;
-                    return MakePage(page, "AccountsWeb message", content);
+                    return MakePage(page, Program.Tr.GlobalMessage.Title, content);
                 }
                 catch (Exception e)
                 {
-                    return new DIV(content, new P("Additionally, an exception has occurred:"), new RAWHTML(HttpServer.ExceptionAsString(e, true)));
+                    return new DIV(content, new P(Program.Tr.GlobalMessage.AlsoException), new RAWHTML(HttpServer.ExceptionAsString(e, true)));
                 }
             }
         }
@@ -93,7 +101,7 @@ namespace AccountsWeb
 
         protected override IEnumerable<A> GetFloatingLinks(SpinneretPage page)
         {
-            yield return new A("Add link") { href = "/AddLink?Href=" + page.Request.Url.UrlEscape() };
+            yield return new A(Program.Tr.AddLink) { href = "/AddLink?Href=" + page.Request.Url.UrlEscape() };
             foreach (var a in baseGetFloatingLinks(page))
                 yield return a;
         }
@@ -107,8 +115,8 @@ namespace AccountsWeb
         {
             if (Program.CurFile.Session != null && Program.CurFile.Session.EnumWarnings().Any())
                 return new object[] {
-                    new H2(new IMG() { src = "/Static/warning_10.png" }, " Warnings"),
-                    new UL(new LI(new A("Warnings") { href = "/Warnings" }))
+                    new H2(new IMG() { src = "/Static/warning_10.png" }, " ", Program.Tr.WarningsLink),
+                    new UL(new LI(new A(Program.Tr.WarningsLink) { href = "/Warnings" }))
                 };
             else
                 return null;
@@ -127,11 +135,11 @@ namespace AccountsWeb
             base.RegisterHandlers();
             RegisterPage("/", req => new PageMain(req, this));
             RegisterPage("/AddLink", req => new PageAddLink(req, this));
-            RegisterPage("/MonthlyTotals", "Navigation", "Monthly totals", req => new PageMonthlyTotals(req, this));
-            RegisterPage("/LastBalsnap", "Navigation", "Last balsnaps", req => new PageLastBalsnap(req, this));
-            RegisterPage("/ExRates", "Navigation", "Exchange rates", req => new PageExRates(req, this));
-            RegisterPage("/Trns", "Navigation", "Transactions", req => new PageTrns(req, this));
-            RegisterPage("/About", "Navigation", "About", req => new PageAbout(req, this));
+            RegisterPage("/MonthlyTotals", Program.Tr.NavigationHeader, Program.Tr.PgMonthlyTotals.NavLink, req => new PageMonthlyTotals(req, this));
+            RegisterPage("/LastBalsnap", Program.Tr.NavigationHeader, Program.Tr.PgLastBalsnap.NavLink, req => new PageLastBalsnap(req, this));
+            RegisterPage("/ExRates", Program.Tr.NavigationHeader, Program.Tr.PgExRates.NavLink, req => new PageExRates(req, this));
+            RegisterPage("/Trns", Program.Tr.NavigationHeader, Program.Tr.PgTrns.NavLink, req => new PageTrns(req, this));
+            RegisterPage("/About", Program.Tr.NavigationHeader, Program.Tr.PgAbout.NavLink, req => new PageAbout(req, this));
             RegisterPage("/Warnings", req => new PageWarnings(req, this));
         }
 
@@ -142,7 +150,7 @@ namespace AccountsWeb
                 if (Program.CurFile == null || Program.CurFile.UserLinks == null)
                     yield break;
                 foreach (var link in Program.CurFile.UserLinks)
-                    yield return new NavLink("Links", link.Name, link.Href);
+                    yield return new NavLink(Program.Tr.LinksHeader, link.Name, link.Href);
             }
         }
     }

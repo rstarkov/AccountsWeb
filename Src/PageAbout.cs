@@ -13,14 +13,14 @@ namespace AccountsWeb
 
         public override string GetTitle()
         {
-            return "About AccountsWeb";
+            return Tr.PgAbout.Title.Translation.Fmt("AccountsWeb");
         }
 
         public override object GetContent()
         {
             return new object[]
             {
-                new P("Version {0}".Fmt(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version)),
+                new P(Tr.PgAbout.Version.Fmt(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version)),
                 new P("Copyright (C) 2009 Roman Starkov")
             };
         }

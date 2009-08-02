@@ -4,17 +4,22 @@ using System.IO;
 using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
 using RT.Util.Xml;
+using RT.Util.Lingo;
+using RT.Util.Forms;
 
 namespace AccountsWeb
 {
-    public class Settings
+    internal class Settings
     {
         [XmlIgnore]
         public string SettingsFileName;
 
-        public string LastFileName;
+        internal string LastFileName;
+        internal List<string> RecentFiles = new List<string>();
+        internal Language Language = Translation.DefaultLanguage;
 
-        public List<string> RecentFiles = new List<string>();
+        internal ManagedForm.Settings ConfigFormSettings = new ManagedForm.Settings();
+        internal TranslationForm<Translation>.Settings TranslationFormSettings = new TranslationForm<Translation>.Settings();
 
         public Settings()
         {
@@ -46,8 +51,8 @@ namespace AccountsWeb
                 }
                 catch (Exception E)
                 {
-                    int choice = DlgMessage.ShowWarning("Could not load settings from file {0}.\n{1}".Fmt(filename, E.Message),
-                        "Try again", "Continue with default settings");
+                    int choice = DlgMessage.ShowWarning(Program.Tr.Settings.CouldNotLoad.Fmt(filename, E.Message),
+                        Program.Tr.Settings.CouldNotLoad_TryAgain, Program.Tr.Settings.CouldNotLoad_ContinueWithDefault);
                     if (choice == 1)
                         return new Settings();
                 }

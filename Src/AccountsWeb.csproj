@@ -68,6 +68,7 @@
     <Compile Include="PageTrns.cs" />
     <Compile Include="PageWarnings.cs" />
     <Compile Include="Spinneret.cs" />
+    <Compile Include="Translation.cs" />
     <Compile Include="TrayForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +148,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-xcopy /y /i $(ProjectDir)Static\* $(TargetDir)Static\</PostBuildEvent>
+xcopy /y /i $(ProjectDir)Static\* $(TargetDir)Static\
+xcopy /y /i $(ProjectDir)Translations\* $(TargetDir)Translations\</PostBuildEvent>
   </PropertyGroup>
 </Project>

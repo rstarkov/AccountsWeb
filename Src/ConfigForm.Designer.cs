@@ -31,18 +31,19 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabsMain = new System.Windows.Forms.TabControl();
             this.tabPaths = new System.Windows.Forms.TabPage();
+            this.btnLanguage = new System.Windows.Forms.Button();
+            this.txtBaseCurrency = new System.Windows.Forms.TextBox();
+            this.lblBaseCurrency = new System.Windows.Forms.Label();
             this.btnBrowseGnuCash = new System.Windows.Forms.Button();
             this.txtGnuCashFile = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblGnuCashFile = new System.Windows.Forms.Label();
             this.tabGeneral = new System.Windows.Forms.TabPage();
             this.txtListenPort = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblListenPort = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
-            this.txtBaseCurrency = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabsMain.SuspendLayout();
             this.tabPaths.SuspendLayout();
@@ -63,8 +64,8 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(445, 355);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(334, 330);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tabsMain
@@ -72,33 +73,70 @@
             this.tabsMain.Controls.Add(this.tabPaths);
             this.tabsMain.Controls.Add(this.tabGeneral);
             this.tabsMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabsMain.Location = new System.Drawing.Point(3, 3);
-            this.tabsMain.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.tabsMain.Location = new System.Drawing.Point(2, 3);
+            this.tabsMain.Margin = new System.Windows.Forms.Padding(2, 3, 2, 0);
             this.tabsMain.Name = "tabsMain";
             this.tabsMain.SelectedIndex = 0;
-            this.tabsMain.Size = new System.Drawing.Size(439, 309);
+            this.tabsMain.Size = new System.Drawing.Size(330, 286);
             this.tabsMain.TabIndex = 1;
             // 
             // tabPaths
             // 
+            this.tabPaths.Controls.Add(this.btnLanguage);
             this.tabPaths.Controls.Add(this.txtBaseCurrency);
-            this.tabPaths.Controls.Add(this.label1);
+            this.tabPaths.Controls.Add(this.lblBaseCurrency);
             this.tabPaths.Controls.Add(this.btnBrowseGnuCash);
             this.tabPaths.Controls.Add(this.txtGnuCashFile);
-            this.tabPaths.Controls.Add(this.label3);
-            this.tabPaths.Location = new System.Drawing.Point(4, 23);
+            this.tabPaths.Controls.Add(this.lblGnuCashFile);
+            this.tabPaths.Location = new System.Drawing.Point(4, 22);
+            this.tabPaths.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPaths.Name = "tabPaths";
-            this.tabPaths.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPaths.Size = new System.Drawing.Size(431, 282);
+            this.tabPaths.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.tabPaths.Size = new System.Drawing.Size(322, 260);
             this.tabPaths.TabIndex = 2;
             this.tabPaths.Text = "General";
             this.tabPaths.UseVisualStyleBackColor = true;
             // 
+            // btnLanguage
+            // 
+            this.btnLanguage.Location = new System.Drawing.Point(4, 103);
+            this.btnLanguage.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.btnLanguage.Name = "btnLanguage";
+            this.btnLanguage.Size = new System.Drawing.Size(152, 23);
+            this.btnLanguage.TabIndex = 6;
+            this.btnLanguage.Text = "Select &Language";
+            this.btnLanguage.UseVisualStyleBackColor = true;
+            this.btnLanguage.Click += new System.EventHandler(this.btnLanguage_Click);
+            // 
+            // txtBaseCurrency
+            // 
+            this.txtBaseCurrency.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtBaseCurrency.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtBaseCurrency.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
+            this.txtBaseCurrency.Location = new System.Drawing.Point(4, 65);
+            this.txtBaseCurrency.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.txtBaseCurrency.Name = "txtBaseCurrency";
+            this.txtBaseCurrency.Size = new System.Drawing.Size(86, 20);
+            this.txtBaseCurrency.TabIndex = 5;
+            this.txtBaseCurrency.Tag = "notranslate";
+            // 
+            // lblBaseCurrency
+            // 
+            this.lblBaseCurrency.AutoSize = true;
+            this.lblBaseCurrency.Location = new System.Drawing.Point(4, 49);
+            this.lblBaseCurrency.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblBaseCurrency.Name = "lblBaseCurrency";
+            this.lblBaseCurrency.Size = new System.Drawing.Size(78, 13);
+            this.lblBaseCurrency.TabIndex = 4;
+            this.lblBaseCurrency.Text = "&Base currency:";
+            // 
             // btnBrowseGnuCash
             // 
-            this.btnBrowseGnuCash.Location = new System.Drawing.Point(393, 23);
+            this.btnBrowseGnuCash.Location = new System.Drawing.Point(295, 21);
+            this.btnBrowseGnuCash.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnBrowseGnuCash.Name = "btnBrowseGnuCash";
-            this.btnBrowseGnuCash.Size = new System.Drawing.Size(32, 23);
+            this.btnBrowseGnuCash.Size = new System.Drawing.Size(24, 21);
             this.btnBrowseGnuCash.TabIndex = 3;
             this.btnBrowseGnuCash.Text = "...";
             this.btnBrowseGnuCash.UseVisualStyleBackColor = true;
@@ -106,51 +144,58 @@
             // 
             // txtGnuCashFile
             // 
-            this.txtGnuCashFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtGnuCashFile.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtGnuCashFile.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.txtGnuCashFile.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtGnuCashFile.Location = new System.Drawing.Point(6, 24);
+            this.txtGnuCashFile.Location = new System.Drawing.Point(4, 22);
+            this.txtGnuCashFile.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtGnuCashFile.Name = "txtGnuCashFile";
-            this.txtGnuCashFile.Size = new System.Drawing.Size(381, 22);
+            this.txtGnuCashFile.Size = new System.Drawing.Size(288, 20);
             this.txtGnuCashFile.TabIndex = 2;
+            this.txtGnuCashFile.Tag = "notranslate";
             // 
-            // label3
+            // lblGnuCashFile
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 7);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(144, 14);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "&GnuCash file location:";
+            this.lblGnuCashFile.AutoSize = true;
+            this.lblGnuCashFile.Location = new System.Drawing.Point(4, 6);
+            this.lblGnuCashFile.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblGnuCashFile.Name = "lblGnuCashFile";
+            this.lblGnuCashFile.Size = new System.Drawing.Size(110, 13);
+            this.lblGnuCashFile.TabIndex = 1;
+            this.lblGnuCashFile.Text = "&GnuCash file location:";
             // 
             // tabGeneral
             // 
             this.tabGeneral.Controls.Add(this.txtListenPort);
-            this.tabGeneral.Controls.Add(this.label2);
-            this.tabGeneral.Location = new System.Drawing.Point(4, 23);
+            this.tabGeneral.Controls.Add(this.lblListenPort);
+            this.tabGeneral.Location = new System.Drawing.Point(4, 22);
+            this.tabGeneral.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabGeneral.Name = "tabGeneral";
-            this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(431, 282);
+            this.tabGeneral.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.tabGeneral.Size = new System.Drawing.Size(322, 260);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "Network";
             this.tabGeneral.UseVisualStyleBackColor = true;
             // 
             // txtListenPort
             // 
-            this.txtListenPort.Location = new System.Drawing.Point(6, 24);
+            this.txtListenPort.Location = new System.Drawing.Point(4, 22);
+            this.txtListenPort.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.txtListenPort.Name = "txtListenPort";
-            this.txtListenPort.Size = new System.Drawing.Size(109, 22);
+            this.txtListenPort.Size = new System.Drawing.Size(83, 20);
             this.txtListenPort.TabIndex = 3;
+            this.txtListenPort.Tag = "notranslate";
             // 
-            // label2
+            // lblListenPort
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 7);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 14);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Listen on &port:";
+            this.lblListenPort.AutoSize = true;
+            this.lblListenPort.Location = new System.Drawing.Point(4, 6);
+            this.lblListenPort.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblListenPort.Name = "lblListenPort";
+            this.lblListenPort.Size = new System.Drawing.Size(74, 13);
+            this.lblListenPort.TabIndex = 2;
+            this.lblListenPort.Text = "Listen on &port:";
             // 
             // flowLayoutPanel1
             // 
@@ -158,17 +203,18 @@
             this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel1.Controls.Add(this.btnOK);
             this.flowLayoutPanel1.Controls.Add(this.btnCancel);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 318);
-            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 295);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(212, 31);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(158, 29);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(3, 3);
+            this.btnOK.Location = new System.Drawing.Point(2, 3);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(100, 25);
+            this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -177,9 +223,10 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(109, 3);
+            this.btnCancel.Location = new System.Drawing.Point(81, 3);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 25);
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -189,37 +236,15 @@
             // 
             this.dlgOpenFile.AddExtension = false;
             // 
-            // txtBaseCurrency
-            // 
-            this.txtBaseCurrency.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtBaseCurrency.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.txtBaseCurrency.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
-            this.txtBaseCurrency.Location = new System.Drawing.Point(6, 70);
-            this.txtBaseCurrency.Name = "txtBaseCurrency";
-            this.txtBaseCurrency.Size = new System.Drawing.Size(112, 22);
-            this.txtBaseCurrency.TabIndex = 5;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 53);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 14);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "&Base currency:";
-            // 
             // ConfigForm
             // 
             this.AcceptButton = this.btnOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 14F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(445, 355);
+            this.ClientSize = new System.Drawing.Size(334, 330);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = global::AccountsWeb.Properties.Resources.gnucash_icon;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ConfigForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AccountsWeb Configuration";
@@ -245,14 +270,15 @@
         private System.Windows.Forms.TabControl tabsMain;
         private System.Windows.Forms.TabPage tabGeneral;
         private System.Windows.Forms.TextBox txtListenPort;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblListenPort;
         private System.Windows.Forms.TabPage tabPaths;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblGnuCashFile;
         private System.Windows.Forms.TextBox txtGnuCashFile;
         private System.Windows.Forms.Button btnBrowseGnuCash;
         private System.Windows.Forms.OpenFileDialog dlgOpenFile;
         private System.Windows.Forms.TextBox txtBaseCurrency;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblBaseCurrency;
+        private System.Windows.Forms.Button btnLanguage;
 
     }
 }

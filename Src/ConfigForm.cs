@@ -2,20 +2,30 @@
 using System.Windows.Forms;
 using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
+using RT.Util.Forms;
+using RT.Util.Lingo;
 
 namespace AccountsWeb
 {
-    public partial class ConfigForm: Form
+    public partial class ConfigForm: ManagedForm
     {
         private static int _activeTab = 0;
         private static ConfigForm _instance = null;
+        private LanguageContextMenuHelper<Translation> _languageMenuHelper;
 
         private GncFileWrapper _wrapper;
 
         public ConfigForm(GncFileWrapper wrapper)
+            : base(Program.Settings.ConfigFormSettings)
         {
             _wrapper = wrapper;
             InitializeComponent();
+            translate();
+
+            _languageMenuHelper = new LanguageContextMenuHelper<Translation>(
+                "AccountsWeb", "AccountsWeb", Translation.DefaultLanguage,
+                Program.Settings.TranslationFormSettings, Icon, setLanguage);
+            _languageMenuHelper.TranslationEditingEnabled = true;
 
             tabsMain.SelectedIndex = _activeTab;
             SettingsToGui();
@@ -25,6 +35,23 @@ namespace AccountsWeb
         {
             _activeTab = tabsMain.SelectedIndex;
             _instance = null;
+        }
+
+        private void setLanguage(Translation translation)
+        {
+            Program.Tr = translation;
+            Program.Settings.Language = translation.Language;
+            translate();
+            Program.TrayForm.Translate();
+
+            Program.Interface.StopServer();
+            Program.Interface = new WebInterface();
+            Program.Interface.StartServer(Program.CurFile.ServerOptions);
+        }
+
+        private void translate()
+        {
+            Lingo.TranslateControl(this, Program.Tr.Config);
         }
 
         private void SettingsToGui()
@@ -41,7 +68,7 @@ namespace AccountsWeb
             {
                 tabsMain.SelectedTab = txtListenPort.ParentTab();
                 txtListenPort.Focus();
-                DlgMessage.ShowWarning("The \"Port\" field must contain an integer between 1 and 65535");
+                DlgMessage.ShowWarning(Program.Tr.Config.Warning_PortValue);
                 return false;
             }
 
@@ -97,10 +124,15 @@ namespace AccountsWeb
 
         private void btnBrowseGnuCash_Click(object sender, EventArgs e)
         {
-            dlgOpenFile.Title = "Select a GnuCash file";
+            dlgOpenFile.Title = Program.Tr.Config.OpenDialog_Title;
             if (dlgOpenFile.ShowDialog() != DialogResult.OK)
                 return;
             txtGnuCashFile.Text = dlgOpenFile.FileName;
+        }
+
+        private void btnLanguage_Click(object sender, EventArgs e)
+        {
+            _languageMenuHelper.ShowContextMenu(Program.Tr.Language, btnLanguage, new System.Drawing.Point(0, btnLanguage.Height));
         }
     }
 }

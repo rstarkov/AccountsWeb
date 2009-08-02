@@ -15,8 +15,7 @@ namespace AccountsWeb
         public string GnuCashFile;
         public HttpServerOptions ServerOptions;
         public string BaseCurrency;
-        public string BalsnapPrefix = "BALANCE:";
-        public string Skin;
+        public string BalsnapPrefix;
         public List<UserLink> UserLinks;
 
         /// <summary>
@@ -49,9 +48,9 @@ namespace AccountsWeb
         {
             ServerOptions = new HttpServerOptions();
             ServerOptions.Port = 1771;
-            BaseCurrency = "USD";
-            Skin = "SnowWhite.css";
-            UserLinks = new List<UserLink>() { new UserLink() { Name = "Example", Href = "/MonthlyTotals?MaxDepth=0" } };
+            BaseCurrency = Program.Tr.GncWrapper.DefaultBaseCurrency;
+            BalsnapPrefix = Program.Tr.GncWrapper.DefaultBalsnapPrefix;
+            UserLinks = new List<UserLink>() { new UserLink() { Name = Program.Tr.GncWrapper.DefaultExampleUserlink, Href = "/MonthlyTotals?MaxDepth=1" } };
         }
 
         public void SaveToFile(string filename)
@@ -85,9 +84,9 @@ namespace AccountsWeb
             GlobalErrorMessage = null;
 
             if (GnuCashFile == null || GnuCashFile == "")
-                GlobalErrorMessage = new P("The path to a GnuCash file is not configured. Please specify one in Settings.");
+                GlobalErrorMessage = new P(Program.Tr.GncWrapper.Error_FileNotConfigured);
             else if (!File.Exists(GnuCashFile))
-                GlobalErrorMessage = new P("GnuCash file cannot be found.\nFile: \"{0}\"".Fmt(GnuCashFile));
+                GlobalErrorMessage = new P(Program.Tr.GncWrapper.Error_FileNotFound.Translation.Fmt(GnuCashFile));
             else
             {
                 try
@@ -99,7 +98,7 @@ namespace AccountsWeb
                 catch (Exception E)
                 {
                     Session = null;
-                    GlobalErrorMessage = new P("Could not load GnuCash file.\nFile: \"{0}\".\n\n{1}".Fmt(GnuCashFile, E.Message));
+                    GlobalErrorMessage = new P(Program.Tr.GncWrapper.Error_CouldNotLoadFile.Fmt(GnuCashFile, E.Message));
                 }
             }
         }
@@ -123,7 +122,7 @@ namespace AccountsWeb
             get
             {
                 return Program.CurFile.LoadedFromFile == null
-                    ? "unknown"
+                    ? Program.Tr.GncWrapper.FileNameUnknown.Translation
                     : PathUtil.ExtractNameAndExt(Program.CurFile.LoadedFromFile);
             }
         }

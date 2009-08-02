@@ -31,7 +31,7 @@ namespace AccountsWeb
             Table = new ReportTable();
             _rowMap = new Dictionary<GncAccount, ReportTable.Row>();
             _colMap = new Dictionary<object, ReportTable.Col>();
-            _colAcctName = Table.AddCol("Account", "acct_name");
+            _colAcctName = Table.AddCol(Program.Tr.ReportTable_ColAccount, "acct_name");
         }
 
         public void AddAcct(GncAccount acct)
@@ -42,7 +42,7 @@ namespace AccountsWeb
             row.Depth = acct.Depth - _baseAcct.Depth;
 
             string indent = "\u2003\u2003".Repeat(acct.Depth - _baseAcct.Depth - 1);
-            string name = (acct == _baseAcct) ? ("TOTAL: " + acct.Name) : acct.Name;
+            string name = (acct == _baseAcct) ? (Program.Tr.ReportTable_GrandTotal.Fmt(acct.Name)) : acct.Name;
             if (acct.EnumChildren().Any())
                 row.SetValue(_colAcctName, new object[] { indent, new A(name) { class_ = "nocolor", href = _request.SameUrlExceptSet("Acct", acct.Path(":")) } });
             else

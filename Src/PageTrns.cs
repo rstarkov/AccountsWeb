@@ -5,6 +5,7 @@ using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
+using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
 {
@@ -21,7 +22,7 @@ namespace AccountsWeb
 
         public override string GetTitle()
         {
-            return "Transactions";
+            return Tr.PgTrns.Title;
         }
 
         public override object GetContent()
@@ -29,24 +30,24 @@ namespace AccountsWeb
             var minDate = DateTime.MinValue;
             var maxDate = DateTime.MaxValue - TimeSpan.FromDays(1);
             var frDate = Request.GetValidated("Fr", minDate);
-            var toDate = Request.GetValidated("To", maxDate, dt => dt >= frDate, "no earlier than the \"Fr\" date");
+            var toDate = Request.GetValidated("To", maxDate, dt => dt >= frDate, Tr.PgTrns.Validation_NotBeforeFr);
             var amtFmt = Request.GetValidated("AmtFmt", "#,0");
             
             _interval = new DateInterval(frDate.Date, toDate.Date + TimeSpan.FromDays(1) - TimeSpan.FromTicks(1));
             _account = GetAccount("Acct");
             _subaccts = Request.GetValidated("SubAccts", false);
-            var showBalance = Request.GetValidated("ShowBal", false, val => !(val && _subaccts), "false when SubAccts is true");
+            var showBalance = Request.GetValidated("ShowBal", false, val => !(val && _subaccts), Tr.PgTrns.Validation_ShowBalVsSubAccts);
 
             _subaccts &= _account.EnumChildren().Any();
 
             ReportTable table = new ReportTable();
-            var colDate = table.AddCol("Date");
-            var colDesc = table.AddCol("Description");
-            var colQty = table.AddCol("Qty");
-            var colCcy = table.AddCol("Ccy");
-            var colBal = table.AddCol("Bal");
-            var colAcct = table.AddCol("Account");
-            var colInBase = table.AddCol("In " + Program.CurFile.Book.BaseCurrencyId);
+            var colDate = table.AddCol(Tr.PgTrns.ColDate);
+            var colDesc = table.AddCol(Tr.PgTrns.ColDescription);
+            var colQty = table.AddCol(Tr.PgTrns.ColQuantity);
+            var colCcy = table.AddCol(Tr.PgTrns.ColCurrency);
+            var colBal = table.AddCol(Tr.PgTrns.ColBalance);
+            var colAcct = table.AddCol(Tr.PgTrns.ColAccount);
+            var colInBase = table.AddCol(Tr.PgTrns.ColInBaseCcy.Fmt(Program.CurFile.Book.BaseCurrencyId));
 
             if (!_subaccts)
                 table.Cols.Remove(colAcct);
@@ -86,14 +87,14 @@ namespace AccountsWeb
 
             HtmlPrinter filterInfo = new HtmlPrinter(new DIV() { class_ = "filter_info" });
             if (frDate == minDate && toDate == maxDate)
-                filterInfo.AddTag(new P("Showing all transactions."));
+                filterInfo.AddTag(new P(Tr.PgTrns.ShowingAll));
             else if (frDate == minDate)
-                filterInfo.AddTag(new P("Showing all transactions on or before ", new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" }, "."));
+                filterInfo.AddTag(new P(Tr.PgTrns.ShowingOnOrBefore.FmtEnumerable(new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" })));
             else if (toDate == maxDate)
-                filterInfo.AddTag(new P("Showing all transactions on or after ", new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" }, "."));
+                filterInfo.AddTag(new P(Tr.PgTrns.ShowingOnOrAfter.FmtEnumerable(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" })));
             else
-                filterInfo.AddTag(new P("Showing transactions between ", new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" }, " and ", new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" }, ", inclusive."));
-            filterInfo.AddTag(new P("Subaccounts shown: ", new SPAN(_subaccts ? "yes" : "no") { class_ = "filter_hilite" }));
+                filterInfo.AddTag(new P(Tr.PgTrns.ShowingBetween.FmtEnumerable(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" }, new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" })));
+            filterInfo.AddTag(new P(Tr.PgTrns.ShowingSubaccts, new SPAN(_subaccts ? Tr.PgTrns.ShowingSubacctsYes : Tr.PgTrns.ShowingSubacctsNo) { class_ = "filter_hilite" }));
 
             return new object[]
             {
