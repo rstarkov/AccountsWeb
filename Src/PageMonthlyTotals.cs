@@ -29,10 +29,12 @@ namespace AccountsWeb
         public override object GetContent()
         {
             // Default to the last 12 months
+            var earliest = Program.CurFile.Book.EarliestDate;
+            var latest = Program.CurFile.Book.LatestDate;
             var toDefault = DateTime.Now;
             var frDefault = toDefault - new TimeSpan(360, 0, 0, 0);
-            if (frDefault < Program.CurFile.Book.EarliestDate)
-                frDefault = Program.CurFile.Book.EarliestDate;
+            if (frDefault < earliest)
+                frDefault = earliest;
 
             var fy = Request.GetValidated<int>("FrYr", frDefault.Year);
             var fm = Request.GetValidated<int>("FrMo", frDefault.Month, x => x >= 1 && x <= 12, "between 1 and 12");
@@ -51,7 +53,28 @@ namespace AccountsWeb
                 _report.AddCol("average", "Avg.", "aw-col-average");
             processAccount(_account, 0);
 
+            // MaxDepth UI
+            var maxdepthUi = new P();
+            {
+                maxdepthUi.Add("Show subaccounts to depth: ");
+                for (int i = 0; i <= 5; i++)
+                {
+                    var label = i == 0 ? "None" : i.ToString();
+                    if (_maxDepth == i)
+                        maxdepthUi.Add(new SPAN(label) { class_ = "aw-current" });
+                    else
+                        maxdepthUi.Add(new A(label) { href = Request.SameUrlExceptSet("MaxDepth", i.ToString()) });
+                    maxdepthUi.Add(" · ");
+                }
+                if (_maxDepth == -1)
+                    maxdepthUi.Add(new SPAN("All") { class_ = "aw-current" });
+                else
+                    maxdepthUi.Add(new A("All") { href = Request.SameUrlExceptRemove("MaxDepth") });
+            }
+
             var html = new DIV(
+                new P("Account: ", GetAccountBreadcrumbs("Acct", _account)),
+                maxdepthUi,
                 _report.GetHtml(),
                 new P("All values above are in {0}, converted where necessary using ".Fmt(Program.CurFile.BaseCurrency), new A("exchange rates") { href = "/ExRates" }, ".")
             );

@@ -1,6 +1,15 @@
 @import "SnowWhite.css";
 
-span.breadcrumbs, a.breadcrumbs {
+.aw-current {
+    font-weight: bold;
+    border: 1px dotted #333;
+    background: #ccc;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+}
+
+/* Breadcrumbs */
+span.aw-breadcrumbs, a.aw-breadcrumbs {
     font-weight: bold;
 }
 
