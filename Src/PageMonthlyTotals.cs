@@ -49,8 +49,6 @@ namespace AccountsWeb
             _report = new ReportAccounts(_account, Request, true, false);
             foreach (var interval in _interval.EnumMonths())
                 _report.AddCol(interval, interval.Start.ToString("MMM\nyy"));
-            if (_interval.EnumMonths().Count() > 1)
-                _report.AddCol("average", Tr.PgMonthlyTotals.ColAverage, "aw-col-average");
             processAccount(_account, 0);
 
             // MaxDepth UI
@@ -86,13 +84,19 @@ namespace AccountsWeb
         {
             decimal intervalTotal = 0;
             int intervalCount = 0;
+            var earliest = acct.Book.EarliestDate;
+            var latest = acct.Book.LatestDate;
             foreach (var interval in _interval.EnumMonths())
             {
                 decimal tot = acct.GetTotal(interval, true, acct.Book.GetCommodity(acct.Book.BaseCurrencyId));
                 if (_negate)
                     tot = -tot;
-                intervalTotal += tot;
-                intervalCount++;
+                // Count only the full months for the purpose of averaging
+                if (interval.Start >= earliest && interval.End <= latest)
+                {
+                    intervalTotal += tot;
+                    intervalCount++;
+                }
 
                 if (tot == 0)
                     _report.SetValue(acct, interval, "-", ReportTable.CssClassNumber(tot));
@@ -112,6 +116,8 @@ namespace AccountsWeb
 
             if (intervalCount > 1)
             {
+                if (!_report.ContainsCol("average"))
+                    _report.AddCol("average", Tr.PgMonthlyTotals.ColAverage, "aw-col-average");
                 intervalTotal = intervalTotal / intervalCount;
                 if (intervalTotal > 0m && intervalTotal < 1m) intervalTotal = 1m;
                 if (intervalTotal < 0m && intervalTotal > -1m) intervalTotal = -1m;

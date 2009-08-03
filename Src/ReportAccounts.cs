@@ -64,6 +64,11 @@ namespace AccountsWeb
             _colMap.Add(colref, Table.AddCol(title, cssclass));
         }
 
+        public bool ContainsCol(object colref)
+        {
+            return _colMap.ContainsKey(colref);
+        }
+
         public void SetValue(GncAccount acct, object colref, object content)
         {
             ensureAcct(acct);
