@@ -2,10 +2,12 @@
 using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
+using System.Collections.Generic;
+using RT.TagSoup;
 
 namespace AccountsWeb
 {
-    public class PageExRates: WebPage
+    public class PageExRates : WebPage
     {
         public PageExRates(HttpRequest request, WebInterface iface)
             : base(request, iface)
@@ -19,14 +21,13 @@ namespace AccountsWeb
 
         public override object GetContent()
         {
-            HtmlPrinter prn = new HtmlPrinter(new DIV());
-
+            DIV div = new DIV();
             foreach (var ccy in Program.CurFile.Book.EnumCommodities().OrderBy(cmdty => cmdty.Identifier))
             {
-                prn.AddTag(new H2(ccy.Identifier));
+                div.Add(new H2(ccy.Identifier));
                 if (ccy.Identifier == Program.CurFile.Book.BaseCurrencyId)
                 {
-                    prn.AddTag(new P(Tr.PgExRates.BaseCurrencyMessage) { class_ = "aw-info-msg" });
+                    div.Add(new P(Tr.PgExRates.BaseCurrencyMessage) { class_ = "aw-info-msg" });
                 }
                 else
                 {
@@ -36,11 +37,11 @@ namespace AccountsWeb
                     tbl.AddCol(Tr.PgExRates.ColRateInverse);
                     foreach (var pt in ccy.ExRate)
                         tbl.AddRow(null, pt.Key.ToShortDateString(), pt.Value.ToString("0.0000"), (1m / pt.Value).ToString("0.0000"));
-                    prn.AddTag(tbl.GetHtml());
+                    div.Add(tbl.GetHtml());
                 }
             }
 
-            return prn.GetHtml();
+            return div;
         }
     }
 }

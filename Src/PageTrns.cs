@@ -6,10 +6,11 @@ using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
 using RT.Util.ExtensionMethods;
+using RT.TagSoup;
 
 namespace AccountsWeb
 {
-    public class PageTrns: WebPage
+    public class PageTrns : WebPage
     {
         GncAccount _account;
         DateInterval _interval;
@@ -32,7 +33,7 @@ namespace AccountsWeb
             var frDate = Request.GetValidated("Fr", minDate);
             var toDate = Request.GetValidated("To", maxDate, dt => dt >= frDate, Tr.PgTrns.Validation_NotBeforeFr);
             var amtFmt = Request.GetValidated("AmtFmt", "#,0");
-            
+
             _interval = new DateInterval(frDate.Date, toDate.Date + TimeSpan.FromDays(1) - TimeSpan.FromTicks(1));
             _account = GetAccount("Acct");
             _subaccts = Request.GetValidated("SubAccts", false);
@@ -85,20 +86,20 @@ namespace AccountsWeb
                     catch (GncBalsnapParseException) { row.CssClass = "balsnap_error"; }
             }
 
-            HtmlPrinter filterInfo = new HtmlPrinter(new DIV() { class_ = "filter_info" });
+            DIV filterInfo = new DIV() { class_ = "filter_info" };
             if (frDate == minDate && toDate == maxDate)
-                filterInfo.AddTag(new P(Tr.PgTrns.ShowingAll));
+                filterInfo.Add(new P(Tr.PgTrns.ShowingAll));
             else if (frDate == minDate)
-                filterInfo.AddTag(new P(Tr.PgTrns.ShowingOnOrBefore.FmtEnumerable(new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" })));
+                filterInfo.Add(new P(Tr.PgTrns.ShowingOnOrBefore.FmtEnumerable(new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" })));
             else if (toDate == maxDate)
-                filterInfo.AddTag(new P(Tr.PgTrns.ShowingOnOrAfter.FmtEnumerable(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" })));
+                filterInfo.Add(new P(Tr.PgTrns.ShowingOnOrAfter.FmtEnumerable(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" })));
             else
-                filterInfo.AddTag(new P(Tr.PgTrns.ShowingBetween.FmtEnumerable(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" }, new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" })));
-            filterInfo.AddTag(new P(Tr.PgTrns.ShowingSubaccts, new SPAN(_subaccts ? Tr.PgTrns.ShowingSubacctsYes : Tr.PgTrns.ShowingSubacctsNo) { class_ = "filter_hilite" }));
+                filterInfo.Add(new P(Tr.PgTrns.ShowingBetween.FmtEnumerable(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" }, new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" })));
+            filterInfo.Add(new P(Tr.PgTrns.ShowingSubaccts, new SPAN(_subaccts ? Tr.PgTrns.ShowingSubacctsYes : Tr.PgTrns.ShowingSubacctsNo) { class_ = "filter_hilite" }));
 
             return new object[]
             {
-                filterInfo.GetHtml(),
+                filterInfo,
                 table.GetHtml()
             };
         }
