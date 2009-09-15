@@ -149,7 +149,6 @@
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
 xcopy /y /i $(ProjectDir)Static\* $(TargetDir)Static\
-xcopy /y /i $(ProjectDir)Translations\* $(TargetDir)Translations\
-rd /s /q $(ProjectDir)obj</PostBuildEvent>
+xcopy /y /i $(ProjectDir)Translations\* $(TargetDir)Translations\</PostBuildEvent>
   </PropertyGroup>
 </Project>
