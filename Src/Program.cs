@@ -36,7 +36,7 @@ namespace AccountsWeb
             Application.SetCompatibleTextRenderingDefault(false);
 
             Settings = Settings.LoadFromFile(PathUtil.AppPath + "AccountsWeb.xml");
-            Tr = Lingo.LoadTranslation<Translation>("AccountsWeb", ref Settings.Language);
+            Tr = Lingo.LoadTranslationOrDefault<Translation>("AccountsWeb", ref Settings.Language);
 
             Interface = new WebInterface();
             TrayForm = new TrayForm();

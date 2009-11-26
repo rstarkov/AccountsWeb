@@ -57,9 +57,9 @@ namespace AccountsWeb
 
         private string makeCss(int days)
         {
-            if (days < 7)
+            if (days < 35)
                 return "lastbalsnap_good";
-            else if (days < 31)
+            else if (days < 90)
                 return "lastbalsnap_medium";
             else
                 return "lastbalsnap_bad";
