@@ -35,7 +35,7 @@ namespace AccountsWeb
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Settings = Settings.LoadFromFile(PathUtil.AppPath + "AccountsWeb.xml");
+            SettingsUtil.LoadSettings(out Settings);
             Tr = Lingo.LoadTranslationOrDefault<Translation>("AccountsWeb", ref Settings.Language);
 
             Interface = new WebInterface();
@@ -46,7 +46,7 @@ namespace AccountsWeb
 
             Application.Run();
 
-            Settings.SaveToFile(PathUtil.AppPath + "AccountsWeb.xml");
+            Settings.Save();
         }
 
         #region File loading / unloading
@@ -133,7 +133,7 @@ namespace AccountsWeb
                 Settings.RecentFiles.Remove(filename);
             Settings.RecentFiles.Insert(0, filename);
             Settings.LastFileName = filename;
-            Settings.SaveToFile();
+            Settings.SaveQuiet();
         }
 
         #endregion

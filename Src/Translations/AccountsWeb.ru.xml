@@ -108,6 +108,56 @@
       <Old>Welcome to AccountsWeb for GnuCash! Please select one of the links on the left.</Old>
     </WelcomeMessage>
   </PgMain>
+  <PgMonthly>
+    <NavLink>
+      <Translation>Операции мес.</Translation>
+      <Old>Monthly totals</Old>
+    </NavLink>
+    <Title>
+      <Translation>Операции по месяцам</Translation>
+      <Old>Monthly Totals</Old>
+    </Title>
+    <CurAccount>
+      <Translation>Счет: </Translation>
+      <Old>Account: </Old>
+    </CurAccount>
+    <SubAcctsDepth>
+      <Translation>Отображать уровней под-счетов: </Translation>
+      <Old>Show subaccounts to depth: </Old>
+    </SubAcctsDepth>
+    <SubAcctsNone>
+      <Translation>Ни одного</Translation>
+      <Old>None</Old>
+    </SubAcctsNone>
+    <SubAcctsAll>
+      <Translation>Все</Translation>
+      <Old>All</Old>
+    </SubAcctsAll>
+    <ColAverage>
+      <Translation>Средн.</Translation>
+      <Old>Avg.</Old>
+    </ColAverage>
+    <MessageExRatesUsed>
+      <Translation>Все суммы в данной таблице указаны в валюте {0}. При необходимости используются {1}.</Translation>
+      <Old>All values above are in {0}, converted where necessary using {1}.</Old>
+    </MessageExRatesUsed>
+    <MessageExRatesUsedLink>
+      <Translation>курсы обмена валют</Translation>
+      <Old>exchange rates</Old>
+    </MessageExRatesUsedLink>
+    <Validation_Between1and12>
+      <Translation>между 1 и 12</Translation>
+      <Old>between 1 and 12</Old>
+    </Validation_Between1and12>
+    <Validation_NotSmallerYear>
+      <Translation>не менее чем начальный год, {0}</Translation>
+      <Old>no smaller than the starting year, {0}</Old>
+    </Validation_NotSmallerYear>
+    <Validation_Between1and12_NotSmallerMonth>
+      <Translation>между 1 и 12, и не мнее чем начальный месяц, {0}</Translation>
+      <Old>between 1 and 12, and no smaller than the starting month, {0}</Old>
+    </Validation_Between1and12_NotSmallerMonth>
+  </PgMonthly>
   <PgMonthlyTotals>
     <NavLink>
       <Translation>Операции мес.</Translation>

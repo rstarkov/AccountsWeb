@@ -136,6 +136,7 @@ namespace AccountsWeb
             RegisterPage("/", req => new PageMain(req, this));
             RegisterPage("/AddLink", req => new PageAddLink(req, this));
             RegisterPage("/MonthlyTotals", Program.Tr.NavigationHeader, Program.Tr.PgMonthlyTotals.NavLink, req => new PageMonthlyTotals(req, this));
+            RegisterPage("/MonthlyBalances", Program.Tr.NavigationHeader, Program.Tr.PgMonthlyBalances.NavLink, req => new PageMonthlyBalances(req, this));
             RegisterPage("/LastBalsnap", Program.Tr.NavigationHeader, Program.Tr.PgLastBalsnap.NavLink, req => new PageLastBalsnap(req, this));
             RegisterPage("/ExRates", Program.Tr.NavigationHeader, Program.Tr.PgExRates.NavLink, req => new PageExRates(req, this));
             RegisterPage("/Trns", Program.Tr.NavigationHeader, Program.Tr.PgTrns.NavLink, req => new PageTrns(req, this));

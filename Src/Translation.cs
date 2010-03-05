@@ -18,8 +18,12 @@ namespace AccountsWeb
         PageLastBalsnap,
         [LingoGroup("Page: Main", null)]
         PageMain,
+        [LingoGroup("Page: Monthly (shared)", null)]
+        PageMonthly,
         [LingoGroup("Page: Monthly Totals", null)]
         PageMonthlyTotals,
+        [LingoGroup("Page: Monthly Balances", null)]
+        PageMonthlyBalances,
         [LingoGroup("Page: Transactions", null)]
         PageTrns,
         [LingoGroup("Page: Warnings", null)]
@@ -120,37 +124,52 @@ namespace AccountsWeb
         public PgMainTranslation PgMain = new PgMainTranslation();
 
         [LingoStringClass]
+        public class PgMonthlyTranslation
+        {
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString CurAccount = "Account: ";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString SubAcctsDepth = "Show subaccounts to depth: ";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString SubAcctsNone = "None";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString SubAcctsAll = "All";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString MessageExRatesUsed = "All values above are in {0}, converted where necessary using {1}.";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString MessageExRatesUsedLink = "exchange rates";
+
+            [LingoInGroup(TrGroup.PageMonthly)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_Between1and12 = "between 1 and 12";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_NotSmallerYear = "no smaller than the starting year, {0}";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_Between1and12_NotSmallerMonth = "between 1 and 12, and no smaller than the starting month, {0}";
+        }
+        public PgMonthlyTranslation PgMonthly = new PgMonthlyTranslation();
+
+        [LingoStringClass]
         public class PgMonthlyTotalsTranslation
         {
             public TrString NavLink = "Monthly totals";
             [LingoInGroup(TrGroup.PageMonthlyTotals)]
             public TrString Title = "Monthly Totals";
             [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            public TrString CurAccount = "Account: ";
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            public TrString SubAcctsDepth = "Show subaccounts to depth: ";
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            public TrString SubAcctsNone = "None";
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            public TrString SubAcctsAll = "All";
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
             public TrString ColAverage = "Avg.";
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            public TrString MessageExRatesUsed = "All values above are in {0}, converted where necessary using {1}.";
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            public TrString MessageExRatesUsedLink = "exchange rates";
-
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            [LingoInGroup(TrGroup.MustBeValidation)]
-            public TrString Validation_Between1and12 = "between 1 and 12";
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            [LingoInGroup(TrGroup.MustBeValidation)]
-            public TrString Validation_NotSmallerYear = "no smaller than the starting year, {0}";
-            [LingoInGroup(TrGroup.PageMonthlyTotals)]
-            [LingoInGroup(TrGroup.MustBeValidation)]
-            public TrString Validation_Between1and12_NotSmallerMonth = "between 1 and 12, and no smaller than the starting month, {0}";
         }
         public PgMonthlyTotalsTranslation PgMonthlyTotals = new PgMonthlyTotalsTranslation();
+
+        [LingoStringClass]
+        public class PgMonthlyBalancesTranslation
+        {
+            public TrString NavLink = "Monthly balances";
+            [LingoInGroup(TrGroup.PageMonthlyBalances)]
+            public TrString Title = "Monthly Balances";
+        }
+        public PgMonthlyBalancesTranslation PgMonthlyBalances = new PgMonthlyBalancesTranslation();
 
         [LingoStringClass]
         public class PgTrnsTranslation
@@ -210,9 +229,6 @@ namespace AccountsWeb
 
 
 
-#if DEBUG
-        [LingoDebug(@"..\..\users\rs\GnuCash\AccountsWeb\Translation.cs")]
-#endif
         [LingoStringClass]
         public class ConfigFormTranslation
         {
@@ -246,9 +262,6 @@ namespace AccountsWeb
         }
         public ConfigFormTranslation Config = new ConfigFormTranslation();
 
-#if DEBUG
-        [LingoDebug(@"..\..\users\rs\GnuCash\AccountsWeb\Translation.cs")]
-#endif
         [LingoStringClass]
         public class TrayFormTranslation
         {
@@ -286,9 +299,6 @@ namespace AccountsWeb
         }
         public TrayFormTranslation TrayForm = new TrayFormTranslation();
 
-#if DEBUG
-        [LingoDebug(@"..\..\users\rs\GnuCash\AccountsWeb\Translation.cs")]
-#endif
         [LingoStringClass]
         public class TrayMenuTranslation
         {
