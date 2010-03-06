@@ -23,9 +23,9 @@ namespace AccountsWeb
         protected override void ProcessAccount(GncAccount acct, int depth)
         {
             var earliest = acct.Book.EarliestDate;
-            foreach (var interval in Interval.EnumMonths())
+            foreach (var interval in EnumIntervals())
             {
-                decimal bal = acct.GetTotal(new DateInterval(earliest, interval.End), true, acct.Book.GetCommodity(acct.Book.BaseCurrencyId));
+                decimal bal = acct.GetBalance(interval.End, true, acct.Book.GetCommodity(acct.Book.BaseCurrencyId));
                 if (Negate)
                     bal = -bal;
 

@@ -47,6 +47,8 @@ namespace AccountsWeb
 
         public Translation() : base(DefaultLanguage) { }
 
+        public NumberSystem Ns { get { return Language.GetNumberSystem(); } }
+
         [LingoStringClass]
         public class PgAboutTranslation
         {
@@ -135,9 +137,27 @@ namespace AccountsWeb
             [LingoInGroup(TrGroup.PageMonthly)]
             public TrString SubAcctsAll = "All";
             [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString GroupMonthsCount = "Group months: ";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString PastYears = "Show past years: ";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString ViewModeTotals = "View totals";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString ViewModeBalances = "View balances";
+
+            [LingoInGroup(TrGroup.PageMonthly)]
             public TrString MessageExRatesUsed = "All values above are in {0}, converted where necessary using {1}.";
             [LingoInGroup(TrGroup.PageMonthly)]
             public TrString MessageExRatesUsedLink = "exchange rates";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            [LingoNotes("Only used when highlighting columns which don't cover exactly as many months as requested. Added after the actual number of months covered by a column.")]
+            public TrString MoSuffix = "mo";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            [LingoNotes("When displaying a range of months in a single column, is placed between the first month last month in the column title.")]
+            public TrString MonthGroupJoiner = "to";
+
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrStringNum YearsMonths = new TrStringNum(new[] { "{0} year + {1} month", "{0} years + {1} month", "{0} year + {1} months", "{0} years + {1} months" }, new[] { true, true });
 
             [LingoInGroup(TrGroup.PageMonthly)]
             [LingoInGroup(TrGroup.MustBeValidation)]
@@ -148,12 +168,19 @@ namespace AccountsWeb
             [LingoInGroup(TrGroup.PageMonthly)]
             [LingoInGroup(TrGroup.MustBeValidation)]
             public TrString Validation_Between1and12_NotSmallerMonth = "between 1 and 12, and no smaller than the starting month, {0}";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_1OrGreater = "1 or greater";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_NonNegative = "non-negative";
         }
         public PgMonthlyTranslation PgMonthly = new PgMonthlyTranslation();
 
         [LingoStringClass]
         public class PgMonthlyTotalsTranslation
         {
+            [LingoInGroup(TrGroup.PageMonthlyTotals)]
             public TrString NavLink = "Monthly totals";
             [LingoInGroup(TrGroup.PageMonthlyTotals)]
             public TrString Title = "Monthly Totals";
@@ -165,6 +192,7 @@ namespace AccountsWeb
         [LingoStringClass]
         public class PgMonthlyBalancesTranslation
         {
+            [LingoInGroup(TrGroup.PageMonthlyBalances)]
             public TrString NavLink = "Monthly balances";
             [LingoInGroup(TrGroup.PageMonthlyBalances)]
             public TrString Title = "Monthly Balances";
