@@ -68,6 +68,7 @@
     <Compile Include="PageWarnings.cs" />
     <Compile Include="Spinneret.cs" />
     <Compile Include="Translation.cs" />
+    <Compile Include="Translation.g.cs" />
     <Compile Include="TrayForm.cs">
       <SubType>Form</SubType>
     </Compile>

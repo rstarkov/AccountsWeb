@@ -41,7 +41,7 @@ namespace AccountsWeb
     }
 
     [LingoStringClass]
-    internal class Translation : TranslationBase
+    partial class Translation : TranslationBase
     {
         public static readonly Language DefaultLanguage = Language.EnglishUK;
 
@@ -253,139 +253,12 @@ namespace AccountsWeb
             [LingoInGroup(TrGroup.PageWarnings)]
             public TrString MessageNoWarnings = "There were no warnings.";
         }
+
         public PgWarningsTranslation PgWarnings = new PgWarningsTranslation();
-
-
-
-        [LingoStringClass]
-        public class ConfigFormTranslation
-        {
-            #region ConfigFormTranslation
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString ConfigForm = "AccountsWeb Configuration";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString tabPaths = "General";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString btnLanguage = "Select &Language";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString lblBaseCurrency = "&Base currency:";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString btnBrowseGnuCash = "...";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString lblGnuCashFile = "&GnuCash file location:";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString tabGeneral = "Network";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString lblListenPort = "Listen on &port:";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString btnOK = "OK";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString btnCancel = "Cancel";
-            #endregion
-
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString Warning_PortValue = "The \"Port\" field must contain an integer between 1 and 65535";
-            [LingoInGroup(TrGroup.SettingsDialog)]
-            public TrString OpenDialog_Title = "Select a GnuCash file";
-        }
         public ConfigFormTranslation Config = new ConfigFormTranslation();
-
-        [LingoStringClass]
-        public class TrayFormTranslation
-        {
-            #region TrayFormTranslation
-            [LingoInGroup(TrGroup.TrayMenu)]
-            [LingoNotes("NOT USED ANYWHERE")]
-            public TrString TrayForm = "TrayForm";
-            #endregion
-
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString Tooltip_NoFileOpen = "No file open";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString Tooltip_Running = "{0}\nAccountsWeb server is running.";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString Tooltip_Stopped = "{0}\nAccountsWeb server is stopped.";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString Title_NoFileOpen = "<no file open>";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString Recent_DoesNotExist = "File \"{0}\" does not exist.\n\nWould you like to remove the file from the Recent menu?";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString Recent_Remove = "&Remove from Recent";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString Recent_Cancel = "&Cancel";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miStartStop_Start = "S&tart server";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miStartStop_Stop = "S&top server";
-
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString dlgOpenFile_Title = "Select an AccountsWeb file to open";
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString dlgSaveFile_Title = "Choose a location to save the new file";
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString dlgFile_Filter = "AccountsWeb files|*.accweb|All files|*.*";
-        }
         public TrayFormTranslation TrayForm = new TrayFormTranslation();
-
-        [LingoStringClass]
-        public class TrayMenuTranslation
-        {
-            #region TrayMenuTranslation
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miOpenInBrowser = "Open in &browser";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miReload = "&Reload";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miSettings = "&Settings...";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miNewFile = "&New file...";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miOpenFile = "&Open file...";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miOpenRecent = "Open r&ecent";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miAbout = "&About... (in browser)";
-            [LingoInGroup(TrGroup.TrayMenu)]
-            public TrString miExit = "E&xit";
-            #endregion
-        }
         public TrayMenuTranslation TrayMenu = new TrayMenuTranslation();
-
-
-
-        [LingoStringClass]
-        public class GncWrapperTranslation
-        {
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString DefaultBaseCurrency = "USD";
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString DefaultBalsnapPrefix = "BALANCE:";
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString DefaultExampleUserlink = "Example";
-
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString Error_FileNotConfigured = "The path to a GnuCash file is not configured. Please specify one in Settings.";
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString Error_FileNotFound = "GnuCash file cannot be found.\nFile: \"{0}\"";
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString Error_CouldNotLoadFile = "Could not load GnuCash file.\nFile: \"{0}\".\n\n{1}";
-
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString FileNameUnknown = "unknown";
-        }
         public GncWrapperTranslation GncWrapper = new GncWrapperTranslation();
-
-        [LingoStringClass]
-        public class SettingsTranslation
-        {
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString CouldNotLoad = "Could not load settings from file {0}.\n{1}";
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString CouldNotLoad_TryAgain = "Try again";
-            [LingoInGroup(TrGroup.Misc)]
-            public TrString CouldNotLoad_ContinueWithDefault = "Continue with default settings";
-        }
-        public SettingsTranslation Settings = new SettingsTranslation();
 
         [LingoInGroup(TrGroup.Misc)]
         public TrString NavigationHeader = "Navigation";
@@ -426,5 +299,63 @@ namespace AccountsWeb
         [LingoInGroup(TrGroup.Misc)]
         [LingoInGroup(TrGroup.MustBeValidation)]
         public TrString Spinneret_Validation_AcctMustExist = "the name of an existing account";
+    }
+
+    partial class ConfigFormTranslation
+    {
+        [LingoInGroup(TrGroup.SettingsDialog)]
+        public TrString Warning_PortValue = "The \"Port\" field must contain an integer between 1 and 65535";
+        [LingoInGroup(TrGroup.SettingsDialog)]
+        public TrString OpenDialog_Title = "Select a GnuCash file";
+    }
+
+    partial class TrayFormTranslation
+    {
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString Tooltip_NoFileOpen = "No file open";
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString Tooltip_Running = "{0}\nAccountsWeb server is running.";
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString Tooltip_Stopped = "{0}\nAccountsWeb server is stopped.";
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString Title_NoFileOpen = "<no file open>";
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString Recent_DoesNotExist = "File \"{0}\" does not exist.\n\nWould you like to remove the file from the Recent menu?";
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString Recent_Remove = "&Remove from Recent";
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString Recent_Cancel = "&Cancel";
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString miStartStop_Start = "S&tart server";
+        [LingoInGroup(TrGroup.TrayMenu)]
+        public TrString miStartStop_Stop = "S&top server";
+
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString dlgOpenFile_Title = "Select an AccountsWeb file to open";
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString dlgSaveFile_Title = "Choose a location to save the new file";
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString dlgFile_Filter = "AccountsWeb files|*.accweb|All files|*.*";
+    }
+
+    [LingoStringClass]
+    class GncWrapperTranslation
+    {
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString DefaultBaseCurrency = "USD";
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString DefaultBalsnapPrefix = "BALANCE:";
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString DefaultExampleUserlink = "Example";
+
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString Error_FileNotConfigured = "The path to a GnuCash file is not configured. Please specify one in Settings.";
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString Error_FileNotFound = "GnuCash file cannot be found.\nFile: \"{0}\"";
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString Error_CouldNotLoadFile = "Could not load GnuCash file.\nFile: \"{0}\".\n\n{1}";
+
+        [LingoInGroup(TrGroup.Misc)]
+        public TrString FileNameUnknown = "unknown";
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using GnuCashSharp;
 using RT.Util;
@@ -43,6 +44,18 @@ namespace AccountsWeb
 
             if (Settings.LastFileName != null)
                 OpenFile(Settings.LastFileName);
+
+#if DEBUG
+            var defaultTr = new Translation();
+            using (var tempConfigForm = new ConfigForm(new GncFileWrapper()))
+            using (var g = new Lingo.TranslationFileGenerator(PathUtil.AppPathCombine("../../users/rs/GnuCash/AccountsWeb/Translation.g.cs")))
+            {
+                g.TranslateControl(TrayForm, defaultTr.TrayForm);
+                g.TranslateControl(TrayForm.TrayMenu, defaultTr.TrayMenu);
+                g.TranslateControl(tempConfigForm, defaultTr.Config);
+            }
+            Lingo.WarnOfUnusedStrings(typeof(Translation), Assembly.GetEntryAssembly());
+#endif
 
             Application.Run();
 

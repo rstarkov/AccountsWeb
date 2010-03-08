@@ -10,7 +10,7 @@ using RT.Util.Lingo;
 
 namespace AccountsWeb
 {
-    public partial class TrayForm: Form
+    partial class TrayForm: Form
     {
         public TrayForm()
         {

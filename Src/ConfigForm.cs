@@ -7,7 +7,7 @@ using RT.Util.Lingo;
 
 namespace AccountsWeb
 {
-    public partial class ConfigForm: ManagedForm
+    partial class ConfigForm: ManagedForm
     {
         private static int _activeTab = 0;
         private static ConfigForm _instance = null;
