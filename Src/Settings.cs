@@ -9,9 +9,6 @@ namespace AccountsWeb
     [Settings("AccountsWeb", SettingsKind.UserSpecific)]
     class Settings : SettingsBase
     {
-        [XmlIgnore]
-        public string SettingsFileName;
-
         public string LastFileName;
         public List<string> RecentFiles = new List<string>();
         public Language Language = Translation.DefaultLanguage;
