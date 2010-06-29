@@ -13,6 +13,8 @@ namespace AccountsWeb
         public List<string> RecentFiles = new List<string>();
         public Language Language = Translation.DefaultLanguage;
 
+        public Dictionary<string, string> ReconcileRegexes = new Dictionary<string, string>() { { "Example", "^regex$" } };
+
         public ManagedForm.Settings ConfigFormSettings = new ManagedForm.Settings();
         public TranslationForm<Translation>.Settings TranslationFormSettings = new TranslationForm<Translation>.Settings();
     }

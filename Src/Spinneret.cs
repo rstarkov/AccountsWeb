@@ -140,6 +140,7 @@ namespace AccountsWeb
             RegisterPage("/LastBalsnap", Program.Tr.NavigationHeader, Program.Tr.PgLastBalsnap.NavLink, req => new PageLastBalsnap(req, this));
             RegisterPage("/ExRates", Program.Tr.NavigationHeader, Program.Tr.PgExRates.NavLink, req => new PageExRates(req, this));
             RegisterPage("/Trns", Program.Tr.NavigationHeader, Program.Tr.PgTrns.NavLink, req => new PageTrns(req, this));
+            RegisterPage("/Reconcile", Program.Tr.NavigationHeader, Program.Tr.PgReconcile.NavLink, req => new PageReconcile(req, this));
             RegisterPage("/About", Program.Tr.NavigationHeader, Program.Tr.PgAbout.NavLink, req => new PageAbout(req, this));
             RegisterPage("/Warnings", req => new PageWarnings(req, this));
         }

@@ -299,6 +299,72 @@
       <Old>false when SubAccts is true</Old>
     </Validation_ShowBalVsSubAccts>
   </PgTrns>
+  <PgReconcile>
+    <NavLink>
+      <Translation>Сверка</Translation>
+      <Old>Reconcile</Old>
+    </NavLink>
+    <Title>
+      <Translation>Сверка</Translation>
+      <Old>Reconcile</Old>
+    </Title>
+    <BtnReconcile>
+      <Translation>Сверить</Translation>
+      <Old>Reconcile</Old>
+    </BtnReconcile>
+    <BtnDelete>
+      <Translation>Удалить</Translation>
+      <Old>Delete</Old>
+    </BtnDelete>
+    <FormUseExistingPreset>
+      <Translation>Использовать формат: </Translation>
+      <Old>Use existing preset: </Old>
+    </FormUseExistingPreset>
+    <FormCreateModifyPreset>
+      <Translation>Создать/изменить формат: </Translation>
+      <Old>Create/modify preset: </Old>
+    </FormCreateModifyPreset>
+    <Validation_ReconcilePreset>
+      <Translation>Формат сверки</Translation>
+      <Old>Reconcile preset</Old>
+    </Validation_ReconcilePreset>
+    <Validation_ReconcilePresetMsg>
+      <Translation>составлен из имени и регулярного выражения, разделенных двоеточием</Translation>
+      <Old>composed of a name and a regex separated by a colon</Old>
+    </Validation_ReconcilePresetMsg>
+    <Validation_RequireDrOrCr>
+      <Translation>имеет и дебет и кредит, либо ни дебет ни кредит.</Translation>
+      <Old>have both dr and cr, or neither cr nor dr.</Old>
+    </Validation_RequireDrOrCr>
+    <HeaderParsedStatement>
+      <Translation>Документ сверки</Translation>
+      <Old>Parsed statement</Old>
+    </HeaderParsedStatement>
+    <HeaderReconciledTransactions>
+      <Translation>Сверенные операции</Translation>
+      <Old>Reconciled transactions</Old>
+    </HeaderReconciledTransactions>
+    <ColAcctDate>
+      <Translation encoding="c-literal">Дата в\r\nучете</Translation>
+      <Old encoding="c-literal">Acct\nDate</Old>
+    </ColAcctDate>
+    <ColStmtDate>
+      <Translation encoding="c-literal">Дата в\r\nдокум.</Translation>
+      <Old encoding="c-literal">Stmt\nDate</Old>
+    </ColStmtDate>
+    <ColComment>
+      <Translation>Комментарий</Translation>
+      <Old>Comment</Old>
+    </ColComment>
+    <ColAmount>
+      <Translation>Сумма</Translation>
+      <Old>Amt</Old>
+    </ColAmount>
+    <ColBalance>
+      <Translation>Баланс</Translation>
+      <Old>Bal</Old>
+    </ColBalance>
+  </PgReconcile>
   <PgWarnings>
     <Title>
       <Translation>Замечания</Translation>
@@ -310,6 +376,14 @@
     </MessageNoWarnings>
   </PgWarnings>
   <Config>
+    <Warning_PortValue>
+      <Translation>Поле "Порт сервера" должно содержать целое число от 1 до 65535.</Translation>
+      <Old>The "Port" field must contain an integer between 1 and 65535</Old>
+    </Warning_PortValue>
+    <OpenDialog_Title>
+      <Translation>Выберите файл GnuCash</Translation>
+      <Old>Select a GnuCash file</Old>
+    </OpenDialog_Title>
     <ConfigForm>
       <Translation>Настройки AccountsWeb</Translation>
       <Old>AccountsWeb Configuration</Old>
@@ -350,20 +424,8 @@
       <Translation>Отмена</Translation>
       <Old>Cancel</Old>
     </btnCancel>
-    <Warning_PortValue>
-      <Translation>Поле "Порт сервера" должно содержать целое число от 1 до 65535.</Translation>
-      <Old>The "Port" field must contain an integer between 1 and 65535</Old>
-    </Warning_PortValue>
-    <OpenDialog_Title>
-      <Translation>Выберите файл GnuCash</Translation>
-      <Old>Select a GnuCash file</Old>
-    </OpenDialog_Title>
   </Config>
   <TrayForm>
-    <TrayForm>
-      <Translation>TrayForm</Translation>
-      <Old>TrayForm</Old>
-    </TrayForm>
     <Tooltip_NoFileOpen>
       <Translation>Нет открытого файла</Translation>
       <Old>No file open</Old>
@@ -412,6 +474,10 @@
       <Translation>Файлы AccountsWeb|*.accweb|Все файлы|*.*</Translation>
       <Old>AccountsWeb files|*.accweb|All files|*.*</Old>
     </dlgFile_Filter>
+    <TrayForm>
+      <Translation>TrayForm</Translation>
+      <Old>TrayForm</Old>
+    </TrayForm>
   </TrayForm>
   <TrayMenu>
     <miOpenInBrowser>
@@ -477,20 +543,6 @@
       <Old>unknown</Old>
     </FileNameUnknown>
   </GncWrapper>
-  <Settings>
-    <CouldNotLoad>
-      <Translation encoding="c-literal">Не удалось загрузить настройки из файла "{0}".\n{1}</Translation>
-      <Old encoding="c-literal">Could not load settings from file {0}.\n{1}</Old>
-    </CouldNotLoad>
-    <CouldNotLoad_TryAgain>
-      <Translation>&amp;Повторить</Translation>
-      <Old>Try again</Old>
-    </CouldNotLoad_TryAgain>
-    <CouldNotLoad_ContinueWithDefault>
-      <Translation>&amp;Сбросить настройки и продолжить</Translation>
-      <Old>Continue with default settings</Old>
-    </CouldNotLoad_ContinueWithDefault>
-  </Settings>
   <NavigationHeader>
     <Translation>Навигация</Translation>
     <Old>Navigation</Old>

@@ -26,6 +26,8 @@ namespace AccountsWeb
         PageMonthlyBalances,
         [LingoGroup("Page: Transactions", null)]
         PageTrns,
+        [LingoGroup("Page: Reconcile", null)]
+        PageReconcile,
         [LingoGroup("Page: Warnings", null)]
         PageWarnings,
 
@@ -244,6 +246,50 @@ namespace AccountsWeb
             public TrString Validation_ShowBalVsSubAccts = "false when SubAccts is true";
         }
         public PgTrnsTranslation PgTrns = new PgTrnsTranslation();
+
+        [LingoStringClass]
+        public class PgReconcileTranslation
+        {
+            // TODO: example (default regex in settings)
+
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString NavLink = "Reconcile";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString Title = "Reconcile";
+
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString BtnReconcile = "Reconcile";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString BtnDelete = "Delete";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString FormUseExistingPreset = "Use existing preset: ";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString FormCreateModifyPreset = "Create/modify preset: ";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_ReconcilePreset = "Reconcile preset";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_ReconcilePresetMsg = "composed of a name and a regex separated by a colon";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_RequireDrOrCr = "have both dr and cr, or neither cr nor dr.";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString HeaderParsedStatement = "Parsed statement";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString HeaderReconciledTransactions = "Reconciled transactions";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString ColAcctDate = "Acct\nDate";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString ColStmtDate = "Stmt\nDate";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString ColComment = "Comment";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString ColAmount = "Amt";
+            [LingoInGroup(TrGroup.PageReconcile)]
+            public TrString ColBalance = "Bal";
+        }
+        public PgReconcileTranslation PgReconcile = new PgReconcileTranslation();
 
         [LingoStringClass]
         public class PgWarningsTranslation

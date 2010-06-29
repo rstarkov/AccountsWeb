@@ -107,3 +107,45 @@ td.aw-col-average {
     color: #800 !important;
     background: #faa !important;
 }
+
+/* Reconcile */
+
+div.reconcile-parsed {
+    font-family: monospace;
+}
+
+div.reconcile-parsed p {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+div.reconcile-parsed p.reconcile-nomatch {
+    color: #d88;
+}
+
+div.reconcile-parsed p.reconcile-match {
+    color: #2a2;
+}
+
+td.reconcile-num
+{
+    text-align: right;
+    white-space: nowrap;
+}
+
+td.reconcile-match-perfect {
+    color: #8b8;
+}
+
+td.reconcile-match-uncertain {
+    color: #000;
+}
+
+td.reconcile-match-none {
+    color: #f00;
+}
+
+td.reconcile-balance-match {
+    color: #00f !important;
+    font-weight: bold !important;
+}

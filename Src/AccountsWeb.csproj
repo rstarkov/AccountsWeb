@@ -52,6 +52,7 @@
     <Compile Include="ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PageReconcile.cs" />
     <Compile Include="PageMonthly.cs" />
     <Compile Include="PageMonthlyBalances.cs" />
     <Compile Include="PageAddLink.cs" />
