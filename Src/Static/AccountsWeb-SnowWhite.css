@@ -110,6 +110,11 @@ td.aw-col-average {
 
 /* Reconcile */
 
+div.reconcile-accts p {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
 div.reconcile-parsed {
     font-family: monospace;
 }
