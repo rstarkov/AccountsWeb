@@ -38,7 +38,9 @@ namespace AccountsWeb
 
             // Default to the last N months such that we see M whole groups, where M = number of groups per year + 1
             var earliest = Program.CurFile.Book.EarliestDate;
-            var toDefault = DateTime.Today == DateTime.Today.EndOfMonth() ? DateTime.Today : DateTime.Today.AddMonths(-1).EndOfMonth().AssumeUtc();
+            var toDefault =GroupMonths == 1  // exclude current month iff it's incomplete for all groupings other than single month
+                ? DateTime.Today.EndOfMonth().AssumeUtc()
+                : DateTime.Today == DateTime.Today.EndOfMonth() ? DateTime.Today : DateTime.Today.AddMonths(-1).EndOfMonth().AssumeUtc();
             var frDefault = toDefault.AddMonths(1 - pastGroups * GroupMonths).StartOfMonth().AssumeUtc();
             if (frDefault < earliest)
                 frDefault = earliest;
