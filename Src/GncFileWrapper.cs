@@ -14,6 +14,7 @@ namespace AccountsWeb
     {
         public string GnuCashFile;
         public HttpServerOptions ServerOptions;
+        public FileSystemOptions FileSystemOptions;
         public string BaseCurrency;
         public string BalsnapPrefix;
         public List<UserLink> UserLinks;

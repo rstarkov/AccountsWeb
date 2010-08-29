@@ -7,7 +7,7 @@ using RT.Util.Lingo;
 
 namespace AccountsWeb
 {
-    partial class ConfigForm: ManagedForm
+    partial class ConfigForm : ManagedForm
     {
         private static int _activeTab = 0;
         private static ConfigForm _instance = null;
@@ -46,7 +46,7 @@ namespace AccountsWeb
 
             Program.Interface.StopServer();
             Program.Interface = new WebInterface();
-            Program.Interface.StartServer(Program.CurFile.ServerOptions);
+            Program.Interface.StartServer(Program.CurFile.ServerOptions, Program.CurFile.FileSystemOptions);
         }
 
         private void translate()
@@ -89,7 +89,7 @@ namespace AccountsWeb
             if (restartRequired)
             {
                 Program.Interface.StopServer();
-                Program.Interface.StartServer(Program.CurFile.ServerOptions);
+                Program.Interface.StartServer(Program.CurFile.ServerOptions, Program.CurFile.FileSystemOptions);
             }
 
             return true;

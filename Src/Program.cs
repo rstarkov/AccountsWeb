@@ -91,7 +91,7 @@ namespace AccountsWeb
                 return;
             }
 
-            Interface.StartServer(Program.CurFile.ServerOptions);
+            Interface.StartServer(Program.CurFile.ServerOptions, Program.CurFile.FileSystemOptions);
 
             AddRecent(filename);
         }

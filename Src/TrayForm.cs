@@ -10,7 +10,7 @@ using RT.Util.Lingo;
 
 namespace AccountsWeb
 {
-    partial class TrayForm: Form
+    partial class TrayForm : Form
     {
         public TrayForm()
         {
@@ -106,7 +106,7 @@ namespace AccountsWeb
             if (Program.Interface.ServerRunning)
                 Program.Interface.StopServer();
             else
-                Program.Interface.StartServer(Program.CurFile.ServerOptions);
+                Program.Interface.StartServer(Program.CurFile.ServerOptions, Program.CurFile.FileSystemOptions);
         }
 
         private void miNewFile_Click(object sender, EventArgs e)
@@ -132,7 +132,7 @@ namespace AccountsWeb
 
         private void miOpenRecent_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            ToolStripMenuItem item = (ToolStripMenuItem) sender;
 
             if (!File.Exists(item.Text))
             {

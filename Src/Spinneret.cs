@@ -84,7 +84,7 @@ namespace AccountsWeb
                 }
                 catch (Exception e)
                 {
-                    return new DIV(content, new P(Program.Tr.GlobalMessage.AlsoException), new RAWHTML(HttpServer.ExceptionAsString(e, true)));
+                    return new DIV(content, new P(Program.Tr.GlobalMessage.AlsoException), new RAWHTML(HttpResponse.ExceptionAsString(e, true)));
                 }
             }
         }
@@ -130,9 +130,9 @@ namespace AccountsWeb
             Layout = new WebLayout(this);
         }
 
-        public override void RegisterHandlers()
+        public override void RegisterHandlers(FileSystemOptions fsOptions)
         {
-            base.RegisterHandlers();
+            base.RegisterHandlers(fsOptions);
             RegisterPage("/", req => new PageMain(req, this));
             RegisterPage("/AddLink", req => new PageAddLink(req, this));
             RegisterPage("/MonthlyTotals", Program.Tr.NavigationHeader, Program.Tr.PgMonthlyTotals.NavLink, req => new PageMonthlyTotals(req, this));
