@@ -201,11 +201,11 @@ namespace AccountsWeb
                                 bool done = false;
                                 if (val.InAccount.Count == val.InStatement.Count)
                                 {
-                                    var diffs = val.InStatement.Select(spl => spl.Timestamp).Zip(val.InAccount.Select(spl => spl.Transaction.DatePosted))
-                                        .Select(tup => Math.Abs((tup.Item1 - tup.Item2).TotalDays));
+                                    var diffs = val.InStatement.Select(spl => spl.Timestamp)
+                                        .Zip(val.InAccount.Select(spl => spl.Transaction.DatePosted), (item1, item2) => Math.Abs((item1 - item2).TotalDays));
                                     if (diffs.Max() <= 2)
                                     {
-                                        entries.AddRange(val.InAccount.Zip(val.InStatement).Select(tup => new entry { Amount = kvp.Key, InAccount = tup.Item1, InStatement = tup.Item2 }));
+                                        entries.AddRange(val.InAccount.Zip(val.InStatement, (inAccount, inStatement) => new entry { Amount = kvp.Key, InAccount = inAccount, InStatement = inStatement }));
                                         done = true;
                                     }
                                 }
