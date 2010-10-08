@@ -49,6 +49,7 @@ namespace AccountsWeb
         {
             ServerOptions = new HttpServerOptions();
             ServerOptions.Port = 1771;
+            FileSystemOptions = new FileSystemOptions();
             BaseCurrency = Program.Tr.GncWrapper.DefaultBaseCurrency;
             BalsnapPrefix = Program.Tr.GncWrapper.DefaultBalsnapPrefix;
             UserLinks = new List<UserLink>() { new UserLink() { Name = Program.Tr.GncWrapper.DefaultExampleUserlink, Href = "/MonthlyTotals?MaxDepth=1" } };

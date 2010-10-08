@@ -301,12 +301,12 @@ namespace AccountsWeb
                                     // Verify that the InStatement entries up to now and the statement splits up to the matching split are exactly the same set.
                                     var balanceContributingStmtStmt = statementSplits.TakeWhile(spl => spl != matchingBalanceSplit).Concat(matchingBalanceSplit).ToList();
                                     var balanceContributingStmtAcct = entries.TakeWhile(e => e != entry).Concat(entry).Where(e => e.InStatement != null).Select(e => e.InStatement).ToList();
-                                    if (balanceContributingStmtStmt.Count != balanceContributingStmtAcct.Count)
-                                        continue;
-                                    if (balanceContributingStmtAcct.Any(spl => !balanceContributingStmtStmt.Contains(spl)))
-                                        continue;
-                                    if (balanceContributingStmtStmt.Any(spl => !balanceContributingStmtAcct.Contains(spl)))
-                                        continue;
+                                    //if (balanceContributingStmtStmt.Count != balanceContributingStmtAcct.Count)
+                                    //    continue;
+                                    //if (balanceContributingStmtAcct.Any(spl => !balanceContributingStmtStmt.Contains(spl)))
+                                    //    continue;
+                                    //if (balanceContributingStmtStmt.Any(spl => !balanceContributingStmtAcct.Contains(spl)))
+                                    //    continue;
                                     matchingBalance = true;
                                     break;
                                 }
