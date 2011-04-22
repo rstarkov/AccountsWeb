@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
 using RT.Util.ExtensionMethods;
-using RT.TagSoup;
-using System.Text.RegularExpressions;
-using RT.Util.Streams;
-using System.IO;
+using System.Globalization;
 
 namespace AccountsWeb
 {
@@ -376,6 +374,20 @@ namespace AccountsWeb
 
         private DateTime parseapproxDate(Group match)
         {
+            DateTime result;
+            if (DateTime.TryParseExact(match.Value, new[]
+                {
+                    "d M", "dd M",
+                    "d MM", "dd MM",
+                    "d MMM", "dd MMM",
+                    "d MMMM", "dd MMMM",
+                }, null, DateTimeStyles.None, out result))
+            {
+                var curYear = new DateTime(DateTime.Today.Year, result.Month, result.Day);
+                var prevYear = new DateTime(DateTime.Today.Year - 1, result.Month, result.Day);
+                return Math.Abs((curYear - DateTime.Today).TotalDays) <= Math.Abs((prevYear - DateTime.Today).TotalDays)
+                    ? curYear : prevYear;
+            }
             return DateTime.Parse(match.Value);
         }
 
