@@ -36,30 +36,34 @@ namespace AccountsWeb
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            SettingsUtil.LoadSettings(out Settings);
-            Tr = Lingo.LoadTranslationOrDefault<Translation>("AccountsWeb", ref Settings.Language);
+            EqatecAnalytics.Settings = new EqatecAnalyticsSettings("E5204827FD9E422ABA13C49141BBF533");
+            EqatecAnalytics.RunMain(() =>
+            {
+                SettingsUtil.LoadSettings(out Settings);
+                Tr = Lingo.LoadTranslationOrDefault<Translation>("AccountsWeb", ref Settings.Language);
 
-            Interface = new WebInterface();
-            TrayForm = new TrayForm();
+                Interface = new WebInterface();
+                TrayForm = new TrayForm();
 
-            if (Settings.LastFileName != null)
-                OpenFile(Settings.LastFileName);
+                if (Settings.LastFileName != null)
+                    OpenFile(Settings.LastFileName);
 
 #if DEBUG
-            var defaultTr = new Translation();
-            using (var tempConfigForm = new ConfigForm(new GncFileWrapper()))
-            using (var g = new Lingo.TranslationFileGenerator(PathUtil.AppPathCombine("../../users/rs/GnuCash/AccountsWeb/Translation.g.cs")))
-            {
-                g.TranslateControl(TrayForm, defaultTr.TrayForm);
-                g.TranslateControl(TrayForm.TrayMenu, defaultTr.TrayMenu);
-                g.TranslateControl(tempConfigForm, defaultTr.Config);
-            }
-            Lingo.WarnOfUnusedStrings(typeof(Translation), Assembly.GetEntryAssembly());
+                var defaultTr = new Translation();
+                using (var tempConfigForm = new ConfigForm(new GncFileWrapper()))
+                using (var g = new Lingo.TranslationFileGenerator(PathUtil.AppPathCombine("../../users/rs/GnuCash/AccountsWeb/Translation.g.cs")))
+                {
+                    g.TranslateControl(TrayForm, defaultTr.TrayForm);
+                    g.TranslateControl(TrayForm.TrayMenu, defaultTr.TrayMenu);
+                    g.TranslateControl(tempConfigForm, defaultTr.Config);
+                }
+                Lingo.WarnOfUnusedStrings(typeof(Translation), Assembly.GetEntryAssembly());
 #endif
 
-            Application.Run();
+                Application.Run();
 
-            Settings.Save();
+                Settings.Save();
+            });
         }
 
         #region File loading / unloading

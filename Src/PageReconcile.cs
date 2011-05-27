@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
+using RT.Util;
 using RT.Util.ExtensionMethods;
-using System.Globalization;
 
 namespace AccountsWeb
 {
@@ -18,6 +19,7 @@ namespace AccountsWeb
         public PageReconcile(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageReconcile.Load");
         }
 
         public override string GetTitle()

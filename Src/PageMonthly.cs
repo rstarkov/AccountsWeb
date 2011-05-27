@@ -64,7 +64,7 @@ namespace AccountsWeb
                     capt += "\n({0:0.#} {1})".Fmt(months, Tr.PgMonthly.MoSuffix);
                 Report.AddCol(interval, capt);
             }
-            ProcessAccount(Account, 0);
+            doAccount(Account, 0);
 
             // MaxDepth UI
             var maxdepthUi = new List<object>();
@@ -141,6 +141,14 @@ namespace AccountsWeb
             );
 
             return html;
+        }
+
+        private void doAccount(GncAccount account, int depth)
+        {
+            ProcessAccount(account, depth);
+            if (depth < MaxDepth || MaxDepth == -1)
+                foreach (var acctChild in account.EnumChildren())
+                    doAccount(acctChild, depth + 1);
         }
 
         protected abstract void ProcessAccount(GncAccount account, int depth);

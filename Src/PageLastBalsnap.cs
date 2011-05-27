@@ -3,6 +3,7 @@ using System.Linq;
 using GnuCashSharp;
 using RT.Servers;
 using RT.TagSoup.HtmlTags;
+using RT.Util;
 using RT.Util.Lingo;
 
 namespace AccountsWeb
@@ -15,6 +16,7 @@ namespace AccountsWeb
         public PageLastBalsnap(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageLastBalsnap.Load");
         }
 
         public override string GetTitle()

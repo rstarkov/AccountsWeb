@@ -3,6 +3,7 @@ using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
+using RT.Util;
 using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
@@ -12,6 +13,7 @@ namespace AccountsWeb
         public PageMonthlyTotals(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageMonthlyTotals.Load");
         }
 
         public override string GetTitle()
@@ -68,10 +70,6 @@ namespace AccountsWeb
                     "{0:#,#}".Fmt(intervalTotal),
                     ReportTable.CssClassNumber(intervalTotal));
             }
-
-            if (depth < MaxDepth || MaxDepth == -1)
-                foreach (var acctChild in acct.EnumChildren())
-                    ProcessAccount(acctChild, depth + 1);
         }
     }
 }

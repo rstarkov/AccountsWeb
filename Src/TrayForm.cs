@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using RT.Util;
+using RT.Util.Controls;
 using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
 using RT.Util.Lingo;
@@ -15,6 +16,7 @@ namespace AccountsWeb
         public TrayForm()
         {
             InitializeComponent();
+            TrayMenu.Renderer = new NativeToolStripRenderer();
             TrayIcon.Icon = Properties.Resources.gnucash_icon_16_gray;
             TrayIcon.Visible = true;
             Translate();
@@ -83,34 +85,48 @@ namespace AccountsWeb
         {
             if (Program.Interface.ServerRunning)
             {
+                EqatecAnalytics.Monitor.TrackFeature("TrayMenu.OpenInBrowser");
                 ProcessStartInfo si = new ProcessStartInfo("http://localhost:{0}".Fmt(Program.Interface.ServerPort));
                 si.UseShellExecute = true;
                 Process.Start(si);
             }
             else
+            {
+                EqatecAnalytics.Monitor.TrackFeature("TrayMenu.OpenInBrowserCannot");
                 DlgMessage.ShowInfo(Program.Tr.Warning_CannotOpenInBrowser);
+            }
         }
 
         private void miReload_Click(object sender, EventArgs e)
         {
+            EqatecAnalytics.Monitor.TrackFeature("TrayMenu.Reload");
             Program.CurFile.ReloadSession();
         }
 
         private void miSettings_Click(object sender, EventArgs e)
         {
+            EqatecAnalytics.Monitor.TrackFeature("TrayMenu.Settings");
             ConfigForm.Show(Program.CurFile);
         }
 
         private void miStartStopServer_Click(object sender, EventArgs e)
         {
             if (Program.Interface.ServerRunning)
+            {
+                EqatecAnalytics.Monitor.TrackFeature("TrayMenu.StopServer");
                 Program.Interface.StopServer();
+            }
             else
+            {
+                EqatecAnalytics.Monitor.TrackFeature("TrayMenu.StartServer");
                 Program.Interface.StartServer(Program.CurFile.ServerOptions, Program.CurFile.FileSystemOptions);
+            }
         }
 
         private void miNewFile_Click(object sender, EventArgs e)
         {
+            EqatecAnalytics.Monitor.TrackFeature("TrayMenu.NewFile");
+
             if (dlgSaveFile.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -121,6 +137,8 @@ namespace AccountsWeb
 
         private void miOpenFile_Click(object sender, EventArgs e)
         {
+            EqatecAnalytics.Monitor.TrackFeature("TrayMenu.OpenFile");
+
             if (Program.Settings.LastFileName != null)
                 dlgOpenFile.InitialDirectory = PathUtil.ExtractParent(Program.Settings.LastFileName);
 
@@ -132,6 +150,7 @@ namespace AccountsWeb
 
         private void miOpenRecent_Click(object sender, EventArgs e)
         {
+            EqatecAnalytics.Monitor.TrackFeature("TrayMenu.OpenRecent");
             ToolStripMenuItem item = (ToolStripMenuItem) sender;
 
             if (!File.Exists(item.Text))
@@ -151,6 +170,7 @@ namespace AccountsWeb
 
         private void miAbout_Click(object sender, EventArgs e)
         {
+            EqatecAnalytics.Monitor.TrackFeature("TrayMenu.About");
             if (Program.Interface.ServerRunning)
             {
                 ProcessStartInfo si = new ProcessStartInfo("http://localhost:{0}/About".Fmt(Program.Interface.ServerPort));
@@ -163,6 +183,7 @@ namespace AccountsWeb
 
         private void miExit_Click(object sender, EventArgs e)
         {
+            EqatecAnalytics.Monitor.TrackFeature("TrayMenu.Exit");
             if (Program.Interface.ServerRunning)
                 Program.Interface.StopServer();
             Close();
@@ -171,6 +192,7 @@ namespace AccountsWeb
 
         private void TrayIcon_MouseClick(object sender, MouseEventArgs e)
         {
+            EqatecAnalytics.Monitor.TrackFeature("TrayMenu.ClickIcon");
             if (e.Button == MouseButtons.Left)
                 miOpenInBrowser_Click(sender, null);
         }

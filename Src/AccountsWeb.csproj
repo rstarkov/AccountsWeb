@@ -29,6 +29,10 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EQATEC.Analytics.Monitor, Version=2.0.41.0, Culture=neutral, PublicKeyToken=213c7c68adb58a17, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ThirdParty\EQATEC.Analytics.Monitor.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -40,6 +44,8 @@
     <Compile Include="ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PageAccountsValue.cs" />
+    <Compile Include="PageBalancesAt.cs" />
     <Compile Include="PageReconcile.cs" />
     <Compile Include="PageMonthly.cs" />
     <Compile Include="PageMonthlyBalances.cs" />
@@ -50,6 +56,7 @@
     <Compile Include="PageLastBalsnap.cs" />
     <Compile Include="PageMain.cs" />
     <Compile Include="PageMonthlyTotals.cs" />
+    <Compile Include="PageTotalsBetween.cs" />
     <Compile Include="PageTrns.cs" />
     <Compile Include="PageWarnings.cs" />
     <Compile Include="Spinneret.cs" />
@@ -105,6 +112,10 @@
     <ProjectReference Include="..\..\RT.TagSoup\Src\RT.TagSoup.csproj">
       <Project>{8F80D916-8999-45D8-ACB2-FFA7E2698FD6}</Project>
       <Name>TagSoup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Lib\EQATEC.Analytics\WrapEqatecAnalytics.csproj">
+      <Project>{925037D2-7001-453A-BC80-2B892AADBC41}</Project>
+      <Name>WrapEqatecAnalytics</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\RT.Util\Src\RT.Util.csproj">
       <Project>{8D0FE79C-AD8D-475C-9E6F-9CAE85365B5D}</Project>

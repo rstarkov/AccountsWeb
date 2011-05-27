@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using RT.Servers;
+﻿using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
+using RT.Util;
 using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
@@ -11,6 +11,7 @@ namespace AccountsWeb
         public PageAddLink(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageAddLink.Load");
         }
 
         public override string GetTitle()

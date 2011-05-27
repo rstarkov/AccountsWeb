@@ -28,6 +28,10 @@ namespace AccountsWeb
         PageTrns,
         [LingoGroup("Page: Reconcile", null)]
         PageReconcile,
+        [LingoGroup("Page: Balances at", null)]
+        PageBalancesAt,
+        [LingoGroup("Page: Totals between", null)]
+        PageTotalsBetween,
         [LingoGroup("Page: Warnings", null)]
         PageWarnings,
 
@@ -290,6 +294,30 @@ namespace AccountsWeb
             public TrString ColBalance = "Bal";
         }
         public PgReconcileTranslation PgReconcile = new PgReconcileTranslation();
+
+        [LingoStringClass]
+        public class PgBalancesAtTranslation
+        {
+            [LingoInGroup(TrGroup.PageBalancesAt)]
+            public TrString NavLink = "Balances as of";
+            [LingoInGroup(TrGroup.PageBalancesAt)]
+            public TrString Title = "Balances as of date";
+            [LingoInGroup(TrGroup.PageBalancesAt), LingoNotes("Use \"{0}\" for where the date goes. ")]
+            public TrString ColCaptionFmt = "Balance as of {0}";
+        }
+        public PgBalancesAtTranslation PgBalancesAt = new PgBalancesAtTranslation();
+
+        [LingoStringClass]
+        public class PgTotalsBetweenTranslation
+        {
+            [LingoInGroup(TrGroup.PageTotalsBetween)]
+            public TrString NavLink = "Totals between";
+            [LingoInGroup(TrGroup.PageTotalsBetween)]
+            public TrString Title = "Totals between";
+            [LingoInGroup(TrGroup.PageTotalsBetween), LingoNotes("Use \"{0}\" for the \"from\" date, \"{1}\" for \"to\". ")]
+            public TrString ColCaptionFmt = "Total between {0} and {1}";
+        }
+        public PgTotalsBetweenTranslation PgTotalsBetween = new PgTotalsBetweenTranslation();
 
         [LingoStringClass]
         public class PgWarningsTranslation

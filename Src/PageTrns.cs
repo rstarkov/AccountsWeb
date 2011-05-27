@@ -5,8 +5,7 @@ using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
-using RT.Util.ExtensionMethods;
-using RT.TagSoup;
+using RT.Util;
 
 namespace AccountsWeb
 {
@@ -19,6 +18,7 @@ namespace AccountsWeb
         public PageTrns(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageTrns.Load");
         }
 
         public override string GetTitle()

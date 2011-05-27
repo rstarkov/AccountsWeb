@@ -365,6 +365,34 @@
       <Old>Bal</Old>
     </ColBalance>
   </PgReconcile>
+  <PgBalancesAt>
+    <NavLink>
+      <Translation>Баланс на</Translation>
+      <Old>Balances as of</Old>
+    </NavLink>
+    <Title>
+      <Translation>Баланс на указанную дату</Translation>
+      <Old>Balances as of date</Old>
+    </Title>
+    <ColCaptionFmt>
+      <Translation>Баланс на {0}</Translation>
+      <Old>Balance as of {0}</Old>
+    </ColCaptionFmt>
+  </PgBalancesAt>
+  <PgTotalsBetween>
+    <NavLink>
+      <Translation>Сумма между</Translation>
+      <Old>Totals between</Old>
+    </NavLink>
+    <Title>
+      <Translation>Сумма между датами</Translation>
+      <Old>Totals between</Old>
+    </Title>
+    <ColCaptionFmt>
+      <Translation>Сумма между {0} и {1}</Translation>
+      <Old>Total between {0} and {1}</Old>
+    </ColCaptionFmt>
+  </PgTotalsBetween>
   <PgWarnings>
     <Title>
       <Translation>Замечания</Translation>
@@ -443,8 +471,8 @@
       <Old>&lt;no file open&gt;</Old>
     </Title_NoFileOpen>
     <Recent_DoesNotExist>
-      <Translation encoding="c-literal">Файл "{0}" не существует.\n\nУбрать ссылку на этот файл из меню "Открыть недавний"?</Translation>
-      <Old encoding="c-literal">File "{0}" does not exist.\n\nWould you like to remove the file from the Recent menu?</Old>
+      <Translation encoding="c-literal">Файл \"{0}\" не существует.\n\nУбрать ссылку на этот файл из меню \"Открыть недавний\"?</Translation>
+      <Old encoding="c-literal">File \"{0}\" does not exist.\n\nWould you like to remove the file from the Recent menu?</Old>
     </Recent_DoesNotExist>
     <Recent_Remove>
       <Translation>&amp;Убрать из меню</Translation>
@@ -531,12 +559,12 @@
       <Old>The path to a GnuCash file is not configured. Please specify one in Settings.</Old>
     </Error_FileNotConfigured>
     <Error_FileNotFound>
-      <Translation encoding="c-literal">Файл GnuCash не найден.\nИмя файла: "{0}"</Translation>
-      <Old encoding="c-literal">GnuCash file cannot be found.\nFile: "{0}"</Old>
+      <Translation encoding="c-literal">Файл GnuCash не найден.\nИмя файла: \"{0}\"</Translation>
+      <Old encoding="c-literal">GnuCash file cannot be found.\nFile: \"{0}\"</Old>
     </Error_FileNotFound>
     <Error_CouldNotLoadFile>
-      <Translation encoding="c-literal">Не удалось загрузить файл GnuCash.\nИмя файла: "{0}".\n\n{1}</Translation>
-      <Old encoding="c-literal">Could not load GnuCash file.\nFile: "{0}".\n\n{1}</Old>
+      <Translation encoding="c-literal">Не удалось загрузить файл GnuCash.\nИмя файла: \"{0}\".\n\n{1}</Translation>
+      <Old encoding="c-literal">Could not load GnuCash file.\nFile: \"{0}\".\n\n{1}</Old>
     </Error_CouldNotLoadFile>
     <FileNameUnknown>
       <Translation>неизвестно</Translation>
@@ -556,8 +584,8 @@
     <Old>Add link</Old>
   </AddLink>
   <Warning_CouldNotOpenAccountsWeb>
-    <Translation encoding="c-literal">Не удалось открыть файл AccountsWeb.\nWrapper: "{0}"\nGnuCash: "{1}"\nОшибка: {2}</Translation>
-    <Old encoding="c-literal">Could not open AccountsWeb file.\nWrapper: "{0}"\nGnuCash: "{1}"\nError: {2}</Old>
+    <Translation encoding="c-literal">Не удалось открыть файл AccountsWeb.\nWrapper: \"{0}\"\nGnuCash: \"{1}\"\nОшибка: {2}</Translation>
+    <Old encoding="c-literal">Could not open AccountsWeb file.\nWrapper: \"{0}\"\nGnuCash: \"{1}\"\nError: {2}</Old>
   </Warning_CouldNotOpenAccountsWeb>
   <Warning_AccWeb_NA>
     <Translation>&lt;нет&gt;</Translation>

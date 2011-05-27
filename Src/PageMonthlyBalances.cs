@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using GnuCashSharp;
+﻿using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
-using RT.TagSoup.HtmlTags;
+using RT.Util;
 using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
@@ -13,6 +11,7 @@ namespace AccountsWeb
         public PageMonthlyBalances(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageMonthlyBalances.Load");
         }
 
         public override string GetTitle()
@@ -40,10 +39,6 @@ namespace AccountsWeb
                         ReportTable.CssClassNumber(bal));
                 }
             }
-
-            if (depth < MaxDepth || MaxDepth == -1)
-                foreach (var acctChild in acct.EnumChildren())
-                    ProcessAccount(acctChild, depth + 1);
         }
     }
 }

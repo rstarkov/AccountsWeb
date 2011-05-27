@@ -141,6 +141,8 @@ namespace AccountsWeb
             RegisterPage("/ExRates", Program.Tr.NavigationHeader, Program.Tr.PgExRates.NavLink, req => new PageExRates(req, this));
             RegisterPage("/Trns", Program.Tr.NavigationHeader, Program.Tr.PgTrns.NavLink, req => new PageTrns(req, this));
             RegisterPage("/Reconcile", Program.Tr.NavigationHeader, Program.Tr.PgReconcile.NavLink, req => new PageReconcile(req, this));
+            RegisterPage("/BalancesAt", Program.Tr.NavigationHeader, Program.Tr.PgBalancesAt.NavLink, req => new PageBalancesAt(req, this));
+            RegisterPage("/TotalsBetween", Program.Tr.NavigationHeader, Program.Tr.PgTotalsBetween.NavLink, req => new PageTotalsBetween(req, this));
             RegisterPage("/About", Program.Tr.NavigationHeader, Program.Tr.PgAbout.NavLink, req => new PageAbout(req, this));
             RegisterPage("/Warnings", req => new PageWarnings(req, this));
         }

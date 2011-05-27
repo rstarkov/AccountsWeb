@@ -2,8 +2,7 @@
 using RT.Servers;
 using RT.Spinneret;
 using RT.TagSoup.HtmlTags;
-using System.Collections.Generic;
-using RT.TagSoup;
+using RT.Util;
 
 namespace AccountsWeb
 {
@@ -12,6 +11,7 @@ namespace AccountsWeb
         public PageExRates(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageExRates.Load");
         }
 
         public override string GetTitle()

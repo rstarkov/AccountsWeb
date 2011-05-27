@@ -1,5 +1,6 @@
 ﻿using RT.Servers;
 using RT.TagSoup.HtmlTags;
+using RT.Util;
 
 namespace AccountsWeb
 {
@@ -8,6 +9,7 @@ namespace AccountsWeb
         public PageMain(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageMain.Load");
         }
 
         public override string GetTitle()

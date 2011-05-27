@@ -2,6 +2,7 @@
 using RT.Servers;
 using RT.TagSoup;
 using RT.TagSoup.HtmlTags;
+using RT.Util;
 
 namespace AccountsWeb
 {
@@ -10,6 +11,7 @@ namespace AccountsWeb
         public PageWarnings(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
+            EqatecAnalytics.Monitor.TrackFeature("PageWarnings.Load");
         }
 
         public override string GetTitle()
