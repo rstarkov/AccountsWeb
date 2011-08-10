@@ -40,9 +40,6 @@ namespace RT.Util
         /// <param name="main">A method which executes the core of the application.</param>
         public static int RunMain(Func<int> main)
         {
-            if (Settings == null)
-                throw new ArgumentException("EqatecAnalytics.Settings must not be null.");
-
             Thread.CurrentThread.Name = "Main";
 
 #if !DEBUG
@@ -56,7 +53,7 @@ namespace RT.Util
             };
 #endif
 
-            Monitor = AnalyticsMonitorFactory.Create(Settings.Settings);
+            Monitor = Settings == null ? new DummyMonitor() : AnalyticsMonitorFactory.Create(Settings.Settings);
             if (CheckMayStart == null || CheckMayStart())
             {
                 Monitor.Start();
@@ -89,5 +86,25 @@ namespace RT.Util
             }
 #endif
         }
+    }
+
+    sealed class DummyMonitor : IAnalyticsMonitor
+    {
+        public void ForceSync() { }
+        public void SendLog(string messageFormat, params object[] args) { }
+        public void SendLog(string logMessage) { }
+        public IInstallationSettings SetInstallationInfo(string installationId) { return null; }
+        public void Start() { }
+        public void Stop() { }
+        public void TrackException(Exception exception, string format, params object[] args) { }
+        public void TrackException(Exception exception, string message) { }
+        public void TrackException(Exception exception) { }
+        public void TrackFeature(string featureName) { }
+        public void TrackFeatureCancel(string featureName) { }
+        public void TrackFeatureStart(string featureName) { }
+        public void TrackFeatureStop(string featureName) { }
+        public void TrackFeatureValue(string featureName, long trackedValue) { }
+        public event EventHandler<VersionAvailableEventArgs> VersionAvailable;
+        public void Dispose() { }
     }
 }
