@@ -11,7 +11,7 @@ namespace AccountsWeb
     {
         private static int _activeTab = 0;
         private static ConfigForm _instance = null;
-        private LanguageContextMenuHelper<Translation> _languageMenuHelper;
+        private LanguageMenuHelper<Translation> _languageMenuHelper;
 
         private GncFileWrapper _wrapper;
 
@@ -22,9 +22,9 @@ namespace AccountsWeb
             InitializeComponent();
             translate();
 
-            _languageMenuHelper = new LanguageContextMenuHelper<Translation>(
+            _languageMenuHelper = new LanguageMenuHelper<Translation>(
                 "AccountsWeb", "AccountsWeb", Translation.DefaultLanguage,
-                Program.Settings.TranslationFormSettings, Icon, setLanguage);
+                Program.Settings.TranslationFormSettings, Icon, setLanguage, () => Program.Settings.Language);
             _languageMenuHelper.TranslationEditingEnabled = true;
 
             tabsMain.SelectedIndex = _activeTab;
@@ -132,7 +132,7 @@ namespace AccountsWeb
 
         private void btnLanguage_Click(object sender, EventArgs e)
         {
-            _languageMenuHelper.ShowContextMenu(Program.Tr.Language, btnLanguage, new System.Drawing.Point(0, btnLanguage.Height));
+            _languageMenuHelper.ShowContextMenu(btnLanguage, new System.Drawing.Point(0, btnLanguage.Height));
         }
     }
 }
