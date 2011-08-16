@@ -104,7 +104,6 @@ namespace RT.Util
         public void TrackFeatureStart(string featureName) { }
         public void TrackFeatureStop(string featureName) { }
         public void TrackFeatureValue(string featureName, long trackedValue) { }
-        public event EventHandler<VersionAvailableEventArgs> VersionAvailable;
         public void Dispose() { }
     }
 }
