@@ -337,9 +337,10 @@ namespace AccountsWeb
                 new BR(),
                 Tr.PgReconcile.FormUseExistingPreset,
                 new SELECT() { name = "rec_preset_regex", style = "min-width: 30em" }._(
-                Program.Settings.ReconcileRegexes.Select(kvp => new OPTION(kvp.Key + ": " + kvp.Value) { selected = kvp.Key == regexName ? "selected" : null })
+                    Program.Settings.ReconcileRegexes.Select(kvp => new OPTION(kvp.Key + ": " + kvp.Value) { selected = kvp.Key == regexName })
                 ),
-                new INPUT() { type = itype.submit, name = "rec_preset", value = Tr.PgReconcile.BtnReconcile }, new INPUT() { type = itype.submit, name = "rec_preset", value = Tr.PgReconcile.BtnDelete },
+                new INPUT() { type = itype.submit, name = "rec_preset", value = Tr.PgReconcile.BtnReconcile },
+                new INPUT() { type = itype.submit, name = "rec_preset", value = Tr.PgReconcile.BtnDelete },
 
                 new BR(),
                 Tr.PgReconcile.FormCreateModifyPreset,
