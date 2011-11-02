@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
-using RT.TagSoup.HtmlTags;
+using RT.TagSoup;
 using RT.Util;
 using RT.Util.ExtensionMethods;
 

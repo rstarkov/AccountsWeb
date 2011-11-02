@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using GnuCashSharp;
 using RT.Servers;
-using RT.TagSoup.HtmlTags;
+using RT.TagSoup;
 using RT.Util;
 using RT.Util.ExtensionMethods;
 using RT.Util.Xml;

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using RT.Servers;
 using RT.Spinneret;
-using RT.TagSoup.HtmlTags;
+using RT.TagSoup;
 using RT.Util;
 
 namespace AccountsWeb

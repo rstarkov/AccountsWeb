@@ -1,5 +1,5 @@
 ﻿using RT.Servers;
-using RT.TagSoup.HtmlTags;
+using RT.TagSoup;
 using RT.Util;
 using RT.Util.ExtensionMethods;
 
