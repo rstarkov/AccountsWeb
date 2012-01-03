@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
@@ -36,6 +37,15 @@ namespace AccountsWeb
         protected override decimal GetAccountValue(GncAccount account, int depth)
         {
             return account.GetTotal(new DateInterval(_dateFr, _dateTo), true, account.Book.BaseCurrency);
+        }
+
+        protected override string GetAccountValueUrl(GncAccount account)
+        {
+            return "/Trns?Acct={0}&Fr={1}&To={2}{3}".Fmt(
+                  account.Path(":").UrlEscape(),
+                  _dateFr.ToIsoStringOptimal(),
+                  _dateTo.ToIsoStringOptimal(),
+                  account.EnumChildren().Any() ? "&SubAccts=true" : "");
         }
     }
 }

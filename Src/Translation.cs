@@ -226,6 +226,8 @@ namespace AccountsWeb
             public TrString ShowingSubacctsYes = "yes";
             [LingoInGroup(TrGroup.PageTrns)]
             public TrString ShowingSubacctsNo = "no";
+            [LingoInGroup(TrGroup.PageTrns)]
+            public TrString ThisAccount = "this";
 
             [LingoInGroup(TrGroup.PageTrns)]
             public TrString ColDate = "Date";

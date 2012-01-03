@@ -107,15 +107,22 @@ namespace AccountsWeb
         private IEnumerable<object> generateAcctPath(GncAccount acct)
         {
             var path = acct.PathAsList(_account);
-            for (int i = 0; i < path.Count - 1; i++)
+            if (path.Count == 0)
             {
-                yield return new A(path[i].Name) { class_ = "nocolor", href = Request.SameUrlExceptSet("Acct", path[i].Path(":")) };
-                yield return " : ";
+                yield return new I(Tr.PgTrns.ThisAccount);
             }
-            if (path.Count > 0)
+            else
             {
-                var pathlast = path[path.Count - 1];
-                yield return new A(pathlast.Name) { class_ = "nocolor", href = Request.SameUrlExceptSet("Acct", pathlast.Path(":")) };
+                for (int i = 0; i < path.Count - 1; i++)
+                {
+                    yield return new A(path[i].Name) { class_ = "nocolor", href = Request.SameUrlExceptSet("Acct", path[i].Path(":")) };
+                    yield return " : ";
+                }
+                if (path.Count > 0)
+                {
+                    var pathlast = path[path.Count - 1];
+                    yield return new A(pathlast.Name) { class_ = "nocolor", href = Request.SameUrlExceptSet("Acct", pathlast.Path(":")) };
+                }
             }
         }
     }

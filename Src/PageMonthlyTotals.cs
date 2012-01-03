@@ -44,8 +44,6 @@ namespace AccountsWeb
                     Report.SetValue(acct, interval, "-", ReportTable.CssClassNumber(tot));
                 else
                 {
-                    if (tot > 0m && tot < 1m) tot = 1m;
-                    if (tot < 0m && tot > -1m) tot = -1m;
                     Report.SetValue(acct, interval,
                         new A("{0:#,#}".Fmt(tot))
                         {

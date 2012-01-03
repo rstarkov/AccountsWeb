@@ -70,10 +70,12 @@ namespace AccountsWeb
                 Report.SetValue(account, GetColumnCaption(), "-", ReportTable.CssClassNumber(tot));
             else
             {
-                if (tot > 0m && tot < 1m) tot = 1m;
-                if (tot < 0m && tot > -1m) tot = -1m;
+                object content = ("{0:" + _amtFmt + "}").Fmt(tot);
+                var url = GetAccountValueUrl(account);
+                if (url != null)
+                    content = new A(content) { href = url };
                 Report.SetValue(account, GetColumnCaption(),
-                    ("{0:" + _amtFmt + "}").Fmt(tot),
+                    content,
                     ReportTable.CssClassNumber(tot));
             }
 
@@ -84,6 +86,7 @@ namespace AccountsWeb
 
         protected virtual void InitRequestOptions() { }
         protected abstract decimal GetAccountValue(GncAccount account, int depth);
+        protected virtual string GetAccountValueUrl(GncAccount account) { return null; }
     }
 
 }
