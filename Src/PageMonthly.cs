@@ -124,12 +124,12 @@ namespace AccountsWeb
             if (this is PageMonthlyTotals)
                 modeUi.Add(new SPAN(Tr.PgMonthly.ViewModeTotals) { class_ = "aw-current" });
             else
-                modeUi.Add(new A(Tr.PgMonthly.ViewModeTotals) { href = "/MonthlyTotals" + (Request.Query == null ? "" : ("?" + Request.Query)) });
+                modeUi.Add(new A(Tr.PgMonthly.ViewModeTotals) { href = "/MonthlyTotals" + Request.Query });
             modeUi.Add(" · ");
             if (this is PageMonthlyBalances)
                 modeUi.Add(new SPAN(Tr.PgMonthly.ViewModeBalances) { class_ = "aw-current" });
             else
-                modeUi.Add(new A(Tr.PgMonthly.ViewModeBalances) { href = "/MonthlyBalances" + (Request.Query == null ? "" : ("?" + Request.Query)) });
+                modeUi.Add(new A(Tr.PgMonthly.ViewModeBalances) { href = "/MonthlyBalances" + Request.Query });
 
             var html = new DIV(
                 new P(Tr.PgMonthly.CurAccount, GetAccountBreadcrumbs("Acct", Account)),
