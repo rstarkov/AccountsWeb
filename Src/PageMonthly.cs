@@ -134,7 +134,7 @@ namespace AccountsWeb
             var html = new DIV(
                 new P(Tr.PgMonthly.CurAccount, GetAccountBreadcrumbs("Acct", Account)),
                 new P(maxdepthUi),
-                new P(groupMonthsUi, new RAWHTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), yearsUi),
+                new P(groupMonthsUi, new RawTag("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), yearsUi),
                 new P(modeUi),
                 Report.GetHtml(),
                 new P(Tr.PgMonthly.MessageExRatesUsed.FmtEnumerable(Program.CurFile.BaseCurrency, new A(Tr.PgMonthly.MessageExRatesUsedLink) { href = "/ExRates" }))
