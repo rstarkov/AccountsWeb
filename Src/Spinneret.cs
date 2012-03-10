@@ -12,7 +12,7 @@ namespace AccountsWeb
 {
     public abstract class WebPage : SpinneretPage
     {
-        public WebPage(HttpRequest request, WebInterface iface)
+        public WebPage(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
             Program.CurFile.ReloadSessionIfNecessary();

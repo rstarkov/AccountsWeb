@@ -16,7 +16,7 @@ namespace AccountsWeb
     {
         private GncAccount _account;
 
-        public PageReconcile(HttpRequest request, WebInterface iface)
+        public PageReconcile(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageReconcile.Load");

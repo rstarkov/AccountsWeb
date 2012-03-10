@@ -12,7 +12,7 @@ namespace AccountsWeb
     public class ReportAccounts
     {
         private GncAccount _baseAcct;
-        private HttpRequest _request;
+        private UrlPathRequest _request;
         private bool _autoAddAcct;
         private bool _autoAddCol;
 
@@ -22,7 +22,7 @@ namespace AccountsWeb
         private Dictionary<object, ReportTable.Col> _colMap;
         private ReportTable.Col _colAcctName;
 
-        public ReportAccounts(GncAccount baseacct, HttpRequest request, bool autoAddAcct, bool autoAddCol)
+        public ReportAccounts(GncAccount baseacct, UrlPathRequest request, bool autoAddAcct, bool autoAddCol)
         {
             _baseAcct = baseacct;
             _request = request;

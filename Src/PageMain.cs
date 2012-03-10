@@ -4,9 +4,9 @@ using RT.Util;
 
 namespace AccountsWeb
 {
-    public class PageMain: WebPage
+    public class PageMain : WebPage
     {
-        public PageMain(HttpRequest request, WebInterface iface)
+        public PageMain(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageMain.Load");

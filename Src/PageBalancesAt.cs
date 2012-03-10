@@ -11,7 +11,7 @@ namespace AccountsWeb
     {
         DateTime _date;
 
-        public PageBalancesAt(HttpRequest request, WebInterface iface)
+        public PageBalancesAt(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageBalancesAt.Load");

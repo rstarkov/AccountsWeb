@@ -18,7 +18,7 @@ namespace AccountsWeb
         protected bool Negate;
         protected GncAccount Account;
 
-        public PageMonthly(HttpRequest request, WebInterface iface)
+        public PageMonthly(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
         }

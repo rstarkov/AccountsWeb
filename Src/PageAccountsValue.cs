@@ -14,7 +14,7 @@ namespace AccountsWeb
         protected int MaxDepth;
         protected GncAccount Account;
 
-        public PageAccountsValue(HttpRequest request, WebInterface iface)
+        public PageAccountsValue(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
         }

@@ -7,7 +7,7 @@ namespace AccountsWeb
 {
     public class PageAbout: WebPage
     {
-        public PageAbout(HttpRequest request, WebInterface iface)
+        public PageAbout(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageAbout.Load");

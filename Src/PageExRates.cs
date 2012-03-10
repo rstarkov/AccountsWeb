@@ -8,7 +8,7 @@ namespace AccountsWeb
 {
     public class PageExRates : WebPage
     {
-        public PageExRates(HttpRequest request, WebInterface iface)
+        public PageExRates(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageExRates.Load");

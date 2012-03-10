@@ -15,7 +15,7 @@ namespace AccountsWeb
         DateInterval _interval;
         bool _subaccts;
 
-        public PageTrns(HttpRequest request, WebInterface iface)
+        public PageTrns(UrlPathRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageTrns.Load");
