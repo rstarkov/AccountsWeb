@@ -83,7 +83,13 @@ namespace AccountsWeb
                 }
                 catch (Exception e)
                 {
-                    return new DIV(content, new P(Program.Tr.GlobalMessage.AlsoException), new RawTag(HttpResponse.ExceptionAsString(e, true)));
+                    return new DIV(content, new P(Program.Tr.GlobalMessage.AlsoException),
+                        e.SelectChain(ex => ex.InnerException)
+                        .Select(ex => new DIV { class_ = "exception" }._(
+                            new H3(ex.GetType().FullName),
+                            new P(ex.Message),
+                            new PRE(ex.StackTrace)
+                        )).InsertBetween(new HR()));
                 }
             }
         }
