@@ -106,7 +106,7 @@ namespace AccountsWeb
 
         protected override IEnumerable<A> GetFloatingLinks(SpinneretPage page)
         {
-            yield return new A(Program.Tr.AddLink) { href = "/AddLink?Href=" + page.Request.Url.UrlEscape() };
+            yield return new A(Program.Tr.AddLink) { href = "/AddLink?Href=" + page.Request.OriginalUrl.UrlEscape() };
             foreach (var a in baseGetFloatingLinks(page))
                 yield return a;
         }
