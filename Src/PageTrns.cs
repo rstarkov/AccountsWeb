@@ -15,7 +15,7 @@ namespace AccountsWeb
         DateInterval _interval;
         bool _subaccts;
 
-        public PageTrns(UrlPathRequest request, WebInterface iface)
+        public PageTrns(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageTrns.Load");
@@ -115,13 +115,13 @@ namespace AccountsWeb
             {
                 for (int i = 0; i < path.Count - 1; i++)
                 {
-                    yield return new A(path[i].Name) { class_ = "nocolor", href = Request.SameUrlExceptSet("Acct", path[i].Path(":")) };
+                    yield return new A(path[i].Name) { class_ = "nocolor", href = Request.Url.WithQuery("Acct", path[i].Path(":")).ToHref() };
                     yield return " : ";
                 }
                 if (path.Count > 0)
                 {
                     var pathlast = path[path.Count - 1];
-                    yield return new A(pathlast.Name) { class_ = "nocolor", href = Request.SameUrlExceptSet("Acct", pathlast.Path(":")) };
+                    yield return new A(pathlast.Name) { class_ = "nocolor", href = Request.Url.WithQuery("Acct", pathlast.Path(":")).ToHref() };
                 }
             }
         }

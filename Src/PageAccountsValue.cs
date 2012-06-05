@@ -14,7 +14,7 @@ namespace AccountsWeb
         protected int MaxDepth;
         protected GncAccount Account;
 
-        public PageAccountsValue(UrlPathRequest request, WebInterface iface)
+        public PageAccountsValue(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
         }
@@ -44,13 +44,13 @@ namespace AccountsWeb
                     if (MaxDepth == i)
                         maxdepthUi.Add(new SPAN(label) { class_ = "aw-current" });
                     else
-                        maxdepthUi.Add(new A(label) { href = Request.SameUrlExceptSet("MaxDepth", i.ToString()) });
+                        maxdepthUi.Add(new A(label) { href = Request.Url.WithQuery("MaxDepth", i.ToString()).ToHref() });
                     maxdepthUi.Add(" · ");
                 }
                 if (MaxDepth == -1)
                     maxdepthUi.Add(new SPAN(Tr.PgMonthly.SubAcctsAll) { class_ = "aw-current" });
                 else
-                    maxdepthUi.Add(new A(Tr.PgMonthly.SubAcctsAll) { href = Request.SameUrlExceptRemove("MaxDepth") });
+                    maxdepthUi.Add(new A(Tr.PgMonthly.SubAcctsAll) { href = Request.Url.WithoutQuery("MaxDepth").ToHref() });
             }
 
             var html = new DIV(

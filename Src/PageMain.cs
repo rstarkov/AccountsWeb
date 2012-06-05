@@ -6,7 +6,7 @@ namespace AccountsWeb
 {
     public class PageMain : WebPage
     {
-        public PageMain(UrlPathRequest request, WebInterface iface)
+        public PageMain(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageMain.Load");

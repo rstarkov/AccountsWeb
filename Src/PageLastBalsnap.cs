@@ -13,7 +13,7 @@ namespace AccountsWeb
         private ReportAccounts _report;
         private GncAccount _account;
 
-        public PageLastBalsnap(UrlPathRequest request, WebInterface iface)
+        public PageLastBalsnap(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageLastBalsnap.Load");

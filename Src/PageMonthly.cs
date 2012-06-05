@@ -18,7 +18,7 @@ namespace AccountsWeb
         protected bool Negate;
         protected GncAccount Account;
 
-        public PageMonthly(UrlPathRequest request, WebInterface iface)
+        public PageMonthly(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
         }
@@ -76,13 +76,13 @@ namespace AccountsWeb
                     if (MaxDepth == i)
                         maxdepthUi.Add(new SPAN(label) { class_ = "aw-current" });
                     else
-                        maxdepthUi.Add(new A(label) { href = Request.SameUrlExceptSet("MaxDepth", i.ToString()) });
+                        maxdepthUi.Add(new A(label) { href = Request.Url.WithQuery("MaxDepth", i.ToString()).ToHref() });
                     maxdepthUi.Add(" · ");
                 }
                 if (MaxDepth == -1)
                     maxdepthUi.Add(new SPAN(Tr.PgMonthly.SubAcctsAll) { class_ = "aw-current" });
                 else
-                    maxdepthUi.Add(new A(Tr.PgMonthly.SubAcctsAll) { href = Request.SameUrlExceptRemove("MaxDepth") });
+                    maxdepthUi.Add(new A(Tr.PgMonthly.SubAcctsAll) { href = Request.Url.WithoutQuery("MaxDepth").ToHref() });
             }
 
             // Group months UI
@@ -96,9 +96,9 @@ namespace AccountsWeb
                     if (GroupMonths == len)
                         groupMonthsUi.Add(new SPAN(len) { class_ = "aw-current" });
                     else if (len == 1)
-                        groupMonthsUi.Add(new A(len) { href = Request.SameUrlExceptRemove("Group") });
+                        groupMonthsUi.Add(new A(len) { href = Request.Url.WithoutQuery("Group").ToHref() });
                     else
-                        groupMonthsUi.Add(new A(len) { href = Request.SameUrlExceptSet("Group", len.ToString()) });
+                        groupMonthsUi.Add(new A(len) { href = Request.Url.WithQuery("Group", len.ToString()).ToHref() });
                 }
             }
 
@@ -113,9 +113,9 @@ namespace AccountsWeb
                     if (pastYears == yrs)
                         yearsUi.Add(new SPAN(Tr.PgMonthly.YearsMonths.Fmt(Tr.Ns, yrs, GroupMonths)) { class_ = "aw-current" });
                     else if (yrs == 1)
-                        yearsUi.Add(new A(yrs) { href = Request.SameUrlExceptRemove("Years") });
+                        yearsUi.Add(new A(yrs) { href = Request.Url.WithoutQuery("Years").ToHref() });
                     else
-                        yearsUi.Add(new A(yrs) { href = Request.SameUrlExceptSet("Years", yrs.ToString()) });
+                        yearsUi.Add(new A(yrs) { href = Request.Url.WithQuery("Years", yrs.ToString()).ToHref() });
                 }
             }
 
@@ -124,12 +124,12 @@ namespace AccountsWeb
             if (this is PageMonthlyTotals)
                 modeUi.Add(new SPAN(Tr.PgMonthly.ViewModeTotals) { class_ = "aw-current" });
             else
-                modeUi.Add(new A(Tr.PgMonthly.ViewModeTotals) { href = "/MonthlyTotals" + Request.Query });
+                modeUi.Add(new A(Tr.PgMonthly.ViewModeTotals) { href = "/MonthlyTotals" + Request.Url.QueryString });
             modeUi.Add(" · ");
             if (this is PageMonthlyBalances)
                 modeUi.Add(new SPAN(Tr.PgMonthly.ViewModeBalances) { class_ = "aw-current" });
             else
-                modeUi.Add(new A(Tr.PgMonthly.ViewModeBalances) { href = "/MonthlyBalances" + Request.Query });
+                modeUi.Add(new A(Tr.PgMonthly.ViewModeBalances) { href = "/MonthlyBalances" + Request.Url.QueryString });
 
             var html = new DIV(
                 new P(Tr.PgMonthly.CurAccount, GetAccountBreadcrumbs("Acct", Account)),

@@ -10,7 +10,7 @@ namespace AccountsWeb
 {
     public class PageMonthlyTotals : PageMonthly
     {
-        public PageMonthlyTotals(UrlPathRequest request, WebInterface iface)
+        public PageMonthlyTotals(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageMonthlyTotals.Load");

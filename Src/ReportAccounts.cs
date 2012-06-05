@@ -12,7 +12,7 @@ namespace AccountsWeb
     public class ReportAccounts
     {
         private GncAccount _baseAcct;
-        private UrlPathRequest _request;
+        private HttpRequest _request;
         private bool _autoAddAcct;
         private bool _autoAddCol;
 
@@ -22,7 +22,7 @@ namespace AccountsWeb
         private Dictionary<object, ReportTable.Col> _colMap;
         private ReportTable.Col _colAcctName;
 
-        public ReportAccounts(GncAccount baseacct, UrlPathRequest request, bool autoAddAcct, bool autoAddCol)
+        public ReportAccounts(GncAccount baseacct, HttpRequest request, bool autoAddAcct, bool autoAddCol)
         {
             _baseAcct = baseacct;
             _request = request;
@@ -44,7 +44,7 @@ namespace AccountsWeb
             string indent = "\u2003\u2003".Repeat(acct.Depth - _baseAcct.Depth - 1);
             string name = (acct == _baseAcct) ? (Program.Tr.ReportTable_GrandTotal.Fmt(acct.Name)) : acct.Name;
             if (acct.EnumChildren().Any())
-                row.SetValue(_colAcctName, new object[] { indent, new A(name) { class_ = "nocolor", href = _request.SameUrlExceptSet("Acct", acct.Path(":")) } });
+                row.SetValue(_colAcctName, new object[] { indent, new A(name) { class_ = "nocolor", href = _request.Url.WithQuery("Acct", acct.Path(":")).ToHref() } });
             else
                 row.SetValue(_colAcctName, indent + name);
         }

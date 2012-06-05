@@ -7,7 +7,7 @@ namespace AccountsWeb
 {
     public class PageWarnings: WebPage
     {
-        public PageWarnings(UrlPathRequest request, WebInterface iface)
+        public PageWarnings(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageWarnings.Load");

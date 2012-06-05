@@ -16,7 +16,7 @@ namespace AccountsWeb
     {
         private GncAccount _account;
 
-        public PageReconcile(UrlPathRequest request, WebInterface iface)
+        public PageReconcile(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageReconcile.Load");
@@ -46,7 +46,7 @@ namespace AccountsWeb
 
         public override object GetContent()
         {
-            if (Request.Method == HttpMethod.Get && !Request.Get.ContainsKey("Acct"))
+            if (Request.Method == HttpMethod.Get && Request.Url["Acct"] == null)
                 return renderAccountSelection();
             else if (Request.Method == HttpMethod.Get)
                 return renderInitialForm();
@@ -65,7 +65,7 @@ namespace AccountsWeb
 
         private IEnumerable<object> listAccount(GncAccount acct, int depth)
         {
-            yield return new P("\u2003\u2003".Repeat(depth), new A(acct.Name) { href = Request.SameUrlExceptSet("Acct", acct.Path(":")) });
+            yield return new P("\u2003\u2003".Repeat(depth), new A(acct.Name) { href = Request.Url.WithQuery("Acct", acct.Path(":")).ToHref() });
             foreach (var subacct in acct.EnumChildren())
                 yield return listAccount(subacct, depth + 1);
         }
@@ -331,7 +331,7 @@ namespace AccountsWeb
 
         private object generateForm(string statementText, string regexName, string regexText)
         {
-            return new FORM() { action = Request.SameUrlExcept(), method = method.post }._(
+            return new FORM() { action = Request.Url.WithoutQuery().ToHref(), method = method.post }._(
                 new TEXTAREA(statementText) { cols = 100, rows = 20, name = "stmt" },
 
                 new BR(),

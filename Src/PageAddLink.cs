@@ -8,7 +8,7 @@ namespace AccountsWeb
 {
     public class PageAddLink: WebPage
     {
-        public PageAddLink(UrlPathRequest request, WebInterface iface)
+        public PageAddLink(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageAddLink.Load");

@@ -12,7 +12,7 @@ namespace AccountsWeb
     {
         DateTime _dateFr, _dateTo;
 
-        public PageTotalsBetween(UrlPathRequest request, WebInterface iface)
+        public PageTotalsBetween(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             EqatecAnalytics.Monitor.TrackFeature("PageTotalsBetween.Load");

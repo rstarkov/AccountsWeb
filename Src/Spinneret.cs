@@ -12,7 +12,7 @@ namespace AccountsWeb
 {
     public abstract class WebPage : SpinneretPage
     {
-        public WebPage(UrlPathRequest request, WebInterface iface)
+        public WebPage(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
             Program.CurFile.ReloadSessionIfNecessary();
@@ -46,11 +46,11 @@ namespace AccountsWeb
                 yield return new SPAN(account.Book.AccountRoot.Name) { class_ = "aw-breadcrumbs aw-current" };
             else
             {
-                yield return new A(account.Book.AccountRoot.Name) { class_ = "aw-breadcrumbs", href = Request.SameUrlExceptSet(acctArgName, "") };
+                yield return new A(account.Book.AccountRoot.Name) { class_ = "aw-breadcrumbs", href = Request.Url.WithQuery(acctArgName, "").ToHref() };
                 yield return " : ";
                 foreach (var item in path.Take(path.Count - 1))
                 {
-                    yield return new A(item.Name) { class_ = "aw-breadcrumbs", href = Request.SameUrlExceptSet(acctArgName, item.Path(":")) };
+                    yield return new A(item.Name) { class_ = "aw-breadcrumbs", href = Request.Url.WithQuery(acctArgName, item.Path(":")).ToHref() };
                     yield return " : ";
                 }
                 yield return new SPAN(path.Last().Name) { class_ = "aw-breadcrumbs aw-current" };
@@ -106,7 +106,7 @@ namespace AccountsWeb
 
         protected override IEnumerable<A> GetFloatingLinks(SpinneretPage page)
         {
-            yield return new A(Program.Tr.AddLink) { href = "/AddLink?Href=" + page.Request.OriginalUrl.UrlEscape() };
+            yield return new A(Program.Tr.AddLink) { href = "/AddLink?Href=" + page.Request.Url.ToHref().UrlEscape() };
             foreach (var a in baseGetFloatingLinks(page))
                 yield return a;
         }
