@@ -23,7 +23,7 @@ namespace AccountsWeb
             return new object[]
             {
                 new P(Tr.PgAbout.Version.Fmt(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version)),
-                new P("Copyright © 2009-2011 Roman Starkov")
+                new P("Copyright © 2009-2012 Roman Starkov")
             };
         }
 

@@ -331,7 +331,7 @@ namespace AccountsWeb
 
         private object generateForm(string statementText, string regexName, string regexText)
         {
-            return new FORM() { action = Request.Url.WithoutQuery().ToHref(), method = method.post }._(
+            return new FORM() { action = Request.Url.ToHref(), method = method.post }._(
                 new TEXTAREA(statementText) { cols = 100, rows = 20, name = "stmt" },
 
                 new BR(),
@@ -385,12 +385,14 @@ namespace AccountsWeb
                     "d MMM", "dd MMM",
                     "d MMMM", "dd MMMM",
                 }, null, DateTimeStyles.None, out result))
-            {
-                var curYear = new DateTime(DateTime.Today.Year, result.Month, result.Day);
-                var prevYear = new DateTime(DateTime.Today.Year - 1, result.Month, result.Day);
-                return Math.Abs((curYear - DateTime.Today).TotalDays) <= Math.Abs((prevYear - DateTime.Today).TotalDays)
-                    ? curYear : prevYear;
-            }
+                try
+                {
+                    var curYear = new DateTime(DateTime.Today.Year, result.Month, result.Day);
+                    var prevYear = new DateTime(DateTime.Today.Year - 1, result.Month, result.Day);
+                    return Math.Abs((curYear - DateTime.Today).TotalDays) <= Math.Abs((prevYear - DateTime.Today).TotalDays)
+                        ? curYear : prevYear;
+                }
+                catch { return result; }
             return DateTime.Parse(match.Value);
         }
 
