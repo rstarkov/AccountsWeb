@@ -213,19 +213,29 @@ namespace AccountsWeb
             [LingoInGroup(TrGroup.PageTrns)]
             public TrString Title = "Transactions";
             [LingoInGroup(TrGroup.PageTrns)]
-            public TrString ShowingAll = "Showing all transactions.";
+            public TrString ModeCaption = "Mode: ";
             [LingoInGroup(TrGroup.PageTrns)]
-            public TrString ShowingOnOrBefore = "Showing all transactions on or before {0}.";
+            public TrString ModeWithBalance = "show this account, with balance";
             [LingoInGroup(TrGroup.PageTrns)]
-            public TrString ShowingOnOrAfter = "Showing all transactions on or after {0}.";
+            public TrString ModeWithSubaccts = "include sub-accounts, hiding balance";
             [LingoInGroup(TrGroup.PageTrns)]
-            public TrString ShowingBetween = "Showing transactions between {0} and {1}, inclusive.";
+            public TrString RoundingCaption = "Rounding: ";
             [LingoInGroup(TrGroup.PageTrns)]
-            public TrString ShowingSubaccts = "Subaccounts shown: ";
+            public TrString RoundingWhole = "whole numbers";
             [LingoInGroup(TrGroup.PageTrns)]
-            public TrString ShowingSubacctsYes = "yes";
+            public TrString RoundingDecimals = "with decimals";
             [LingoInGroup(TrGroup.PageTrns)]
-            public TrString ShowingSubacctsNo = "no";
+            public TrString DateCaption = "Date filter: ";
+            [LingoInGroup(TrGroup.PageTrns)]
+            public TrString DateRemove = "remove";
+            [LingoInGroup(TrGroup.PageTrns)]
+            public TrString ShowingAll = "showing all transactions";
+            [LingoInGroup(TrGroup.PageTrns)]
+            public TrString ShowingOnOrBefore = "showing all transactions on or before {0}";
+            [LingoInGroup(TrGroup.PageTrns)]
+            public TrString ShowingOnOrAfter = "showing all transactions on or after {0}";
+            [LingoInGroup(TrGroup.PageTrns)]
+            public TrString ShowingBetween = "showing transactions between {0} and {1}, inclusive";
             [LingoInGroup(TrGroup.PageTrns)]
             public TrString ThisAccount = "this";
 

@@ -36,7 +36,7 @@ namespace AccountsWeb
 
             _interval = new DateInterval(frDate.Date, toDate.Date + TimeSpan.FromDays(1) - TimeSpan.FromTicks(1));
             _account = GetAccount("Acct");
-            _subaccts = Request.GetValidated("SubAccts", false);
+            var subAccts = _subaccts = Request.GetValidated("SubAccts", false);
             var showBalance = Request.GetValidated("ShowBal", false, val => !(val && _subaccts), Tr.PgTrns.Validation_ShowBalVsSubAccts);
 
             _subaccts &= _account.EnumChildren().Any();
@@ -86,22 +86,33 @@ namespace AccountsWeb
                     catch (GncBalsnapParseException) { row.CssClass = "balsnap_error"; }
             }
 
-            DIV filterInfo = new DIV() { class_ = "filter_info" };
-            if (frDate == minDate && toDate == maxDate)
-                filterInfo.Add(new P(Tr.PgTrns.ShowingAll));
-            else if (frDate == minDate)
-                filterInfo.Add(new P(Tr.PgTrns.ShowingOnOrBefore.FmtEnumerable(new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" })));
-            else if (toDate == maxDate)
-                filterInfo.Add(new P(Tr.PgTrns.ShowingOnOrAfter.FmtEnumerable(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" })));
-            else
-                filterInfo.Add(new P(Tr.PgTrns.ShowingBetween.FmtEnumerable(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" }, new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" })));
-            filterInfo.Add(new P(Tr.PgTrns.ShowingSubaccts, new SPAN(_subaccts ? Tr.PgTrns.ShowingSubacctsYes : Tr.PgTrns.ShowingSubacctsNo) { class_ = "filter_hilite" }));
-
-            return new object[]
-            {
-                filterInfo,
+            return Ut.NewArray(
+                new P(Tr.PgMonthly.CurAccount, GetAccountBreadcrumbs("Acct", _account)),
+                new P(Tr.PgTrns.ModeCaption,
+                    showBalance && !subAccts ? (object) new SPAN(Tr.PgTrns.ModeWithBalance) { class_ = "aw-current" } : new A(Tr.PgTrns.ModeWithBalance) { href = Request.Url.WithQuery("ShowBal", "true").WithoutQuery("SubAccts").ToHref() },
+                    " · ",
+                    !showBalance && subAccts ? (object) new SPAN(Tr.PgTrns.ModeWithSubaccts) { class_ = "aw-current" } : new A(Tr.PgTrns.ModeWithSubaccts) { href = Request.Url.WithoutQuery("ShowBal").WithQuery("SubAccts", "true").ToHref() }
+                ),
+                new P(Tr.PgTrns.RoundingCaption,
+                    amtFmt == "#,0" ? (object) new SPAN(Tr.PgTrns.RoundingWhole) { class_ = "aw-current" } : new A(Tr.PgTrns.RoundingWhole) { href = Request.Url.WithoutQuery("AmtFmt").ToHref() },
+                    " · ",
+                    amtFmt == "#,0.00" ? (object) new SPAN(Tr.PgTrns.RoundingDecimals) { class_ = "aw-current" } : new A(Tr.PgTrns.RoundingDecimals) { href = Request.Url.WithQuery("AmtFmt", "#,0.00").ToHref() }
+                ),
+                new P(Tr.PgTrns.DateCaption,
+                    (frDate == minDate && toDate == maxDate) ? (object) Tr.PgTrns.ShowingAll :
+                    (frDate == minDate) ? Tr.PgTrns.ShowingOnOrBefore.FmtEnumerable(
+                        (object) Ut.NewArray<object>(new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" }, " (", new A(Tr.PgTrns.DateRemove) { href = Request.Url.WithoutQuery("To").ToHref() }, ")")
+                    ) :
+                    (toDate == maxDate) ? Tr.PgTrns.ShowingOnOrAfter.FmtEnumerable(
+                        (object) Ut.NewArray<object>(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" }, " (", new A(Tr.PgTrns.DateRemove) { href = Request.Url.WithoutQuery("Fr").ToHref() }, ")")
+                    ) :
+                    Tr.PgTrns.ShowingBetween.FmtEnumerable(
+                        Ut.NewArray<object>(new SPAN(frDate.ToShortDateString()) { class_ = "filter_hilite" }, " (", new A(Tr.PgTrns.DateRemove) { href = Request.Url.WithoutQuery("Fr").ToHref() }, ")"),
+                        Ut.NewArray<object>(new SPAN(toDate.ToShortDateString()) { class_ = "filter_hilite" }, " (", new A(Tr.PgTrns.DateRemove) { href = Request.Url.WithoutQuery("To").ToHref() }, ")")
+                    )
+                ),
                 table.GetHtml()
-            };
+            );
         }
 
         private IEnumerable<object> generateAcctPath(GncAccount acct)
