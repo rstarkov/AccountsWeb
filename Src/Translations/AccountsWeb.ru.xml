@@ -234,34 +234,58 @@
       <Translation>Проводки</Translation>
       <Old>Transactions</Old>
     </Title>
+    <ModeCaption>
+      <Translation>Режим: </Translation>
+      <Old>Mode: </Old>
+    </ModeCaption>
+    <ModeWithBalance>
+      <Translation>только этот счет, с балансом</Translation>
+      <Old>show this account, with balance</Old>
+    </ModeWithBalance>
+    <ModeWithSubaccts>
+      <Translation>включая под-счета, без баланса</Translation>
+      <Old>include sub-accounts, hiding balance</Old>
+    </ModeWithSubaccts>
+    <RoundingCaption>
+      <Translation>Округление: </Translation>
+      <Old>Rounding: </Old>
+    </RoundingCaption>
+    <RoundingWhole>
+      <Translation>убрать мелочь</Translation>
+      <Old>whole numbers</Old>
+    </RoundingWhole>
+    <RoundingDecimals>
+      <Translation>показывать мелочь</Translation>
+      <Old>with decimals</Old>
+    </RoundingDecimals>
+    <DateCaption>
+      <Translation>Фильтр по дате: </Translation>
+      <Old>Date filter: </Old>
+    </DateCaption>
+    <DateRemove>
+      <Translation>убрать</Translation>
+      <Old>remove</Old>
+    </DateRemove>
     <ShowingAll>
-      <Translation>Отображаются все проводки.</Translation>
-      <Old>Showing all transactions.</Old>
+      <Translation>отображаются все проводки</Translation>
+      <Old>showing all transactions</Old>
     </ShowingAll>
     <ShowingOnOrBefore>
-      <Translation>Отображаются проводки за {0} либо ранее.</Translation>
-      <Old>Showing all transactions on or before {0}.</Old>
+      <Translation>отображаются проводки за {0} либо ранее</Translation>
+      <Old>showing all transactions on or before {0}</Old>
     </ShowingOnOrBefore>
     <ShowingOnOrAfter>
-      <Translation>Отображаются проводки за {0} либо позднее.</Translation>
-      <Old>Showing all transactions on or after {0}.</Old>
+      <Translation>отображаются проводки за {0} либо позднее</Translation>
+      <Old>showing all transactions on or after {0}</Old>
     </ShowingOnOrAfter>
     <ShowingBetween>
-      <Translation>Отображаются проводки между {0} и {1}, включительно.</Translation>
-      <Old>Showing transactions between {0} and {1}, inclusive.</Old>
+      <Translation>отображаются проводки между {0} и {1}, включительно</Translation>
+      <Old>showing transactions between {0} and {1}, inclusive</Old>
     </ShowingBetween>
-    <ShowingSubaccts>
-      <Translation>Отображать под-счета: </Translation>
-      <Old>Subaccounts shown: </Old>
-    </ShowingSubaccts>
-    <ShowingSubacctsYes>
-      <Translation>да</Translation>
-      <Old>yes</Old>
-    </ShowingSubacctsYes>
-    <ShowingSubacctsNo>
-      <Translation>нет</Translation>
-      <Old>no</Old>
-    </ShowingSubacctsNo>
+    <ThisAccount>
+      <Translation>this</Translation>
+      <Old>this</Old>
+    </ThisAccount>
     <ColDate>
       <Translation>Дата</Translation>
       <Old>Date</Old>
