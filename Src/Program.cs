@@ -57,7 +57,6 @@ namespace AccountsWeb
                     g.TranslateControl(TrayForm.TrayMenu, defaultTr.TrayMenu);
                     g.TranslateControl(tempConfigForm, defaultTr.Config);
                 }
-                Lingo.WarnOfUnusedStrings(typeof(Translation), Assembly.GetEntryAssembly());
 #endif
 
                 Application.Run();
