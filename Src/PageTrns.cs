@@ -71,7 +71,7 @@ namespace AccountsWeb
                     ? trn.Description
                     : (trn.Description + " [" + split.Memo + "]"));
                 row.SetValue(colQty, split.Quantity.ToString(amtFmt), ReportTable.CssClassNumber(split.Quantity));
-                row.SetValue(colCcy, split.Account.Commodity, "ccy_name ccy_name_" + split.Account.Commodity);
+                row.SetValue(colCcy, split.Account.Commodity.Identifier, "ccy_name ccy_name_" + split.Account.Commodity.Identifier.Replace(":", "_"));
                 if (!showBalance)
                     row.SetValue(colInBase, split.Amount.ConvertTo(Program.CurFile.Book.BaseCurrency).Quantity.ToString(amtFmt), ReportTable.CssClassNumber(split.Quantity));
 

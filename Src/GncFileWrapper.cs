@@ -91,17 +91,21 @@ namespace AccountsWeb
                 GlobalErrorMessage = new P(Program.Tr.GncWrapper.Error_FileNotFound.Translation.Fmt(GnuCashFile));
             else
             {
+#if !DEBUG
                 try
+#endif
                 {
                     Session = new GncSession();
                     Session.LoadFromFile(GnuCashFile, BaseCurrency, BalsnapPrefix);
                     Book = Session.Book;
                 }
+#if !DEBUG
                 catch (Exception E)
                 {
                     Session = null;
                     GlobalErrorMessage = new P(Program.Tr.GncWrapper.Error_CouldNotLoadFile.Fmt(GnuCashFile, E.Message));
                 }
+#endif
             }
         }
 

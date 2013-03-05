@@ -82,17 +82,21 @@ namespace AccountsWeb
         {
             Program.CloseFile();
 
+#if !DEBUG
             try
+#endif
             {
                 CurFile = GncFileWrapper.LoadFromFile(filename);
                 CurFile.ReloadSession();
             }
+#if !DEBUG
             catch (Exception e)
             {
                 CurFile = null;
                 DlgMessage.ShowWarning(Tr.Warning_CouldNotOpenAccountsWeb.Fmt(filename, CurFile == null ? Tr.Warning_AccWeb_NA.Translation : (CurFile.GnuCashFile ?? "-"), e.Message));
                 return;
             }
+#endif
 
             Interface.StartServer(Program.CurFile.ServerOptions, Program.CurFile.FileSystemOptions);
 

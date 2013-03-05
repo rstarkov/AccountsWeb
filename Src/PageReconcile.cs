@@ -389,8 +389,7 @@ namespace AccountsWeb
                 {
                     var curYear = new DateTime(DateTime.Today.Year, result.Month, result.Day);
                     var prevYear = new DateTime(DateTime.Today.Year - 1, result.Month, result.Day);
-                    return Math.Abs((curYear - DateTime.Today).TotalDays) <= Math.Abs((prevYear - DateTime.Today).TotalDays)
-                        ? curYear : prevYear;
+                    return curYear > DateTime.Today + TimeSpan.FromDays(14) ? prevYear : curYear;
                 }
                 catch { return result; }
             return DateTime.Parse(match.Value);
