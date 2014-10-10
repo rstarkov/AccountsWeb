@@ -6,7 +6,7 @@ using RT.Servers;
 using RT.TagSoup;
 using RT.Util;
 using RT.Util.ExtensionMethods;
-using RT.Util.Xml;
+using RT.Util.Serialization;
 
 namespace AccountsWeb
 {
@@ -22,27 +22,27 @@ namespace AccountsWeb
         /// <summary>
         /// If not null, every web request will respond with this error message.
         /// </summary>
-        [XmlIgnore]
+        [ClassifyIgnore]
         public HtmlTag GlobalErrorMessage = null;
 
         /// <summary>
         /// Holds the currently opened GnuCash Session.
         /// "null" if the session hasn't been loaded (eg no GnuCashFile is configured).
         /// </summary>
-        [XmlIgnore]
+        [ClassifyIgnore]
         public GncSession Session;
 
         /// <summary>
         /// Holds the main book from the currently opened GnuCash <see cref="Session"/>.
         /// </summary>
-        [XmlIgnore]
+        [ClassifyIgnore]
         public GncBook Book;
 
         /// <summary>
         /// Holds the name of the file this class was loaded from.
         /// "null" if this is a new file that has never been saved.
         /// </summary>
-        [XmlIgnore]
+        [ClassifyIgnore]
         public string LoadedFromFile;
 
         public GncFileWrapper()
@@ -58,7 +58,7 @@ namespace AccountsWeb
         public void SaveToFile(string filename)
         {
             LoadedFromFile = filename;
-            XmlClassify.SaveObjectToXmlFile(this, filename);
+            ClassifyXml.SerializeToFile(this, filename);
         }
 
         public void SaveToFile()
@@ -68,7 +68,7 @@ namespace AccountsWeb
 
         public static GncFileWrapper LoadFromFile(string filename)
         {
-            var wrapper = XmlClassify.LoadObjectFromXmlFile<GncFileWrapper>(filename);
+            var wrapper = ClassifyXml.DeserializeFile<GncFileWrapper>(filename);
             wrapper.LoadedFromFile = filename;
             return wrapper;
         }
