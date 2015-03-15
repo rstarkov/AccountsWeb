@@ -58,7 +58,7 @@ namespace AccountsWeb
         {
             txtGnuCashFile.Text = _wrapper.GnuCashFile ?? "";
             txtBaseCurrency.Text = _wrapper.BaseCurrency ?? "";
-            txtListenPort.Text = _wrapper.ServerOptions.Port.ToString();
+            txtListenPort.Text = _wrapper.ServerOptions.Endpoints["main"].Port.ToString();
         }
 
         private bool SettingsFromGui()
@@ -73,13 +73,13 @@ namespace AccountsWeb
             }
 
             bool restartRequired =
-                _wrapper.ServerOptions.Port != port;
+                _wrapper.ServerOptions.Endpoints["main"].Port != port;
 
             bool reloadRequired =
                 _wrapper.BaseCurrency != txtBaseCurrency.Text ||
                 _wrapper.GnuCashFile != txtGnuCashFile.Text;
 
-            _wrapper.ServerOptions.Port = port;
+            _wrapper.ServerOptions.Endpoints["main"].Port = port;
             _wrapper.GnuCashFile = txtGnuCashFile.Text;
             _wrapper.BaseCurrency = txtBaseCurrency.Text;
 

@@ -48,7 +48,7 @@ namespace AccountsWeb
         public GncFileWrapper()
         {
             ServerOptions = new HttpServerOptions();
-            ServerOptions.Port = 1771;
+            ServerOptions.AddEndpoint("main", "127.0.0.1", 1771);
             FileSystemOptions = new FileSystemOptions();
             BaseCurrency = Program.Tr.GncWrapper.DefaultBaseCurrency;
             BalsnapPrefix = Program.Tr.GncWrapper.DefaultBalsnapPrefix;
