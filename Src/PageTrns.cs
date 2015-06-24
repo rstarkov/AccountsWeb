@@ -73,7 +73,7 @@ namespace AccountsWeb
                 row.SetValue(colQty, split.Quantity.ToString(amtFmt), ReportTable.CssClassNumber(split.Quantity));
                 row.SetValue(colCcy, split.Account.Commodity.Identifier, "ccy_name ccy_name_" + split.Account.Commodity.Identifier.Replace(":", "_"));
                 if (!showBalance)
-                    row.SetValue(colInBase, split.Amount.ConvertTo(Program.CurFile.Book.BaseCurrency).Quantity.ToString(amtFmt), ReportTable.CssClassNumber(split.Quantity));
+                    row.SetValue(colInBase, split.ConvertAmount(Program.CurFile.Book.BaseCurrency).Quantity.ToString(amtFmt), ReportTable.CssClassNumber(split.Quantity));
 
                 if (showBalance)
                     row.SetValue(colBal, split.AccountBalanceAfter.ToString(amtFmt), ReportTable.CssClassNumber(split.AccountBalanceAfter));
