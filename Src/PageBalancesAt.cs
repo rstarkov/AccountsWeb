@@ -34,7 +34,7 @@ namespace AccountsWeb
 
         protected override decimal GetAccountValue(GncAccount account, int depth)
         {
-            return account.GetBalance(_date, true, account.Book.BaseCurrency);
+            return account.GetBalance(_date, true).ConvertTo(account.Book.BaseCurrency).Quantity;
         }
     }
 }

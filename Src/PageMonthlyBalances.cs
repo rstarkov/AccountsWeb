@@ -24,7 +24,7 @@ namespace AccountsWeb
             var earliest = acct.Book.EarliestDate;
             foreach (var interval in EnumIntervals())
             {
-                decimal bal = acct.GetBalance(interval.End, true, acct.Book.GetCommodity(acct.Book.BaseCurrencyId));
+                decimal bal = acct.GetBalance(interval.End, true).ConvertTo(acct.Book.BaseCurrency).Quantity;
                 if (Negate)
                     bal = -bal;
 
