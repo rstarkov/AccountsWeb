@@ -371,8 +371,12 @@ namespace AccountsWeb
 
         private decimal parseapproxNumber(string num)
         {
-            num = num.Trim().Replace("£", "").Replace("$", "").Replace("€", "");
-            return decimal.Parse(num.Replace(",", ""));
+            num = num.Trim();
+            int sign = num.EndsWith("CR") ? -1 : 1;
+            if (sign < 0)
+                num = num.Substring(0, num.Length - 2).Trim();
+            num = num.Replace("£", "").Replace("$", "").Replace("€", "");
+            return decimal.Parse(num.Replace(",", "")) * sign;
         }
 
         private DateTime parseapproxDate(Group match)
