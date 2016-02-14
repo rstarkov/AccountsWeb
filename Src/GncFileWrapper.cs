@@ -103,7 +103,7 @@ namespace AccountsWeb
                 catch (Exception E)
                 {
                     Session = null;
-                    GlobalErrorMessage = new P(Program.Tr.GncWrapper.Error_CouldNotLoadFile.Fmt(GnuCashFile, E.Message));
+                    GlobalErrorMessage = new DIV(new P(Program.Tr.GncWrapper.Error_CouldNotLoadFile.Fmt(GnuCashFile, E.Message)), new P(new PRE(E.StackTrace)));
                 }
 #endif
             }
