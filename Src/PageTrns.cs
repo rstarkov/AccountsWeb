@@ -18,7 +18,6 @@ namespace AccountsWeb
         public PageTrns(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
-            EqatecAnalytics.Monitor.TrackFeature("PageTrns.Load");
         }
 
         public override string GetTitle()

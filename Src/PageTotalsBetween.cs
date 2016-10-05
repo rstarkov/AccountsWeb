@@ -15,7 +15,6 @@ namespace AccountsWeb
         public PageTotalsBetween(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
-            EqatecAnalytics.Monitor.TrackFeature("PageTotalsBetween.Load");
         }
 
         public override string GetTitle()

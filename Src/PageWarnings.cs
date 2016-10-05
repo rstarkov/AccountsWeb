@@ -10,7 +10,6 @@ namespace AccountsWeb
         public PageWarnings(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
-            EqatecAnalytics.Monitor.TrackFeature("PageWarnings.Load");
         }
 
         public override string GetTitle()

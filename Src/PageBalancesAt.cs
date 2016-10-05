@@ -14,7 +14,6 @@ namespace AccountsWeb
         public PageBalancesAt(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
-            EqatecAnalytics.Monitor.TrackFeature("PageBalancesAt.Load");
         }
 
         public override string GetTitle()

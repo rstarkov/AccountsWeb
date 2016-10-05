@@ -11,7 +11,6 @@ namespace AccountsWeb
         public PageAddLink(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
-            EqatecAnalytics.Monitor.TrackFeature("PageAddLink.Load");
         }
 
         public override string GetTitle()

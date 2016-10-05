@@ -10,7 +10,6 @@ namespace AccountsWeb
         public PageAbout(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
-            EqatecAnalytics.Monitor.TrackFeature("PageAbout.Load");
         }
 
         public override string GetTitle()

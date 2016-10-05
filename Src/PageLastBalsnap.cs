@@ -16,7 +16,6 @@ namespace AccountsWeb
         public PageLastBalsnap(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
-            EqatecAnalytics.Monitor.TrackFeature("PageLastBalsnap.Load");
         }
 
         public override string GetTitle()

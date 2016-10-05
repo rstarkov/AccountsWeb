@@ -13,7 +13,6 @@ namespace AccountsWeb
         public PageMonthlyTotals(HttpRequest request, WebInterface iface)
             : base(request, iface)
         {
-            EqatecAnalytics.Monitor.TrackFeature("PageMonthlyTotals.Load");
         }
 
         public override string GetTitle()

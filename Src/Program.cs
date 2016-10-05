@@ -36,8 +36,7 @@ namespace AccountsWeb
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            EqatecAnalytics.Settings = new EqatecAnalyticsSettings("E5204827FD9E422ABA13C49141BBF533");
-            EqatecAnalytics.RunMain(() =>
+            Ut.RunMain(() =>
             {
                 SettingsUtil.LoadSettings(out Settings);
                 Tr = Lingo.LoadTranslationOrDefault<Translation>("AccountsWeb", ref Settings.Language);
@@ -62,6 +61,16 @@ namespace AccountsWeb
                 Application.Run();
 
                 Settings.Save();
+            },
+            excp =>
+            {
+                var message = "\n" + "An internal error has occurred in RunLogged: ";
+                foreach (var ex in excp.SelectChain(ex => ex.InnerException))
+                {
+                    message += "\n" + ex.GetType() + ": " + ex.Message;
+                    message += "\n" + ex.StackTrace;
+                }
+                DlgMessage.ShowError(message);
             });
         }
 
