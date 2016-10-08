@@ -118,13 +118,23 @@ namespace AccountsWeb
 
         protected override object GetNavPanelBottom(SpinneretPage page)
         {
+            var sections = new List<object>();
+
+            var values = Program.CurFile.UserScripts.Values.Where(v => v.Location.HasFlag(ScriptDisplayLocation.Sidebar)).ToList();
+            if (values.Count > 0)
+                sections.Add(new object[] {
+                    new A(Program.Tr.PgCalculations.EditLink) { href="/CalculationsEdit", style="float: right; font-size: 10pt; margin-top: 1px; margin-right: 4px;" },
+                    new H2(Program.Tr.PgCalculations.Title),
+                    new UL(values.Select(v => new LI(v.Name, ": ", v.TagSoupValue)))
+                });
+
             if (Program.CurFile.Session != null && Program.CurFile.Session.EnumWarnings().Any())
-                return new object[] {
+                sections.Add(new object[] {
                     new H2(new IMG() { src = "/Static/warning_10.png" }, " ", Program.Tr.WarningsLink),
                     new UL(new LI(new A(Program.Tr.WarningsLink) { href = "/Warnings" }))
-                };
-            else
-                return null;
+                });
+
+            return sections;
         }
     }
 
@@ -148,6 +158,8 @@ namespace AccountsWeb
             RegisterPage("/Reconcile", Program.Tr.NavigationHeader, Program.Tr.PgReconcile.NavLink, req => new PageReconcile(req, this));
             RegisterPage("/BalancesAt", Program.Tr.NavigationHeader, Program.Tr.PgBalancesAt.NavLink, req => new PageBalancesAt(req, this));
             RegisterPage("/TotalsBetween", Program.Tr.NavigationHeader, Program.Tr.PgTotalsBetween.NavLink, req => new PageTotalsBetween(req, this));
+            RegisterPage("/Calculations", Program.Tr.NavigationHeader, Program.Tr.PgCalculations.Title, req => new PageCalculations(req, this));
+            RegisterPage("/CalculationsEdit", req => new PageCalculationsEdit(req, this));
             RegisterPage("/About", Program.Tr.NavigationHeader, Program.Tr.PgAbout.NavLink, req => new PageAbout(req, this));
             RegisterPage("/Warnings", req => new PageWarnings(req, this));
         }

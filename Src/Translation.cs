@@ -34,6 +34,8 @@ namespace AccountsWeb
         PageTotalsBetween,
         [LingoGroup("Page: Warnings", null)]
         PageWarnings,
+        [LingoGroup("Page: Calculations", null)]
+        PageCalculations,
 
         [LingoGroup("Settings dialog", null)]
         SettingsDialog,
@@ -339,8 +341,21 @@ namespace AccountsWeb
             [LingoInGroup(TrGroup.PageWarnings)]
             public TrString MessageNoWarnings = "There were no warnings.";
         }
-
         public PgWarningsTranslation PgWarnings = new PgWarningsTranslation();
+
+        [LingoStringClass]
+        [LingoInGroup(TrGroup.PageCalculations)]
+        public class PgCalculationsTranslation
+        {
+            public TrString Title = "Calculations";
+            public TrString UserScriptErrorsHeading = "User scripts errors:";
+            public TrString UserScriptWarningsHeading = "User scripts warnings:";
+            public TrString EditTitle = "Edit Calculations";
+            public TrString EditSaveButton = "Save & Update";
+            public TrString EditLink = "edit";
+        }
+        public PgCalculationsTranslation PgCalculations = new PgCalculationsTranslation();
+
         public ConfigFormTranslation Config = new ConfigFormTranslation();
         public TrayFormTranslation TrayForm = new TrayFormTranslation();
         public TrayMenuTranslation TrayMenu = new TrayMenuTranslation();

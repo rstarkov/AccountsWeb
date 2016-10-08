@@ -427,6 +427,32 @@
       <Old>There were no warnings.</Old>
     </MessageNoWarnings>
   </PgWarnings>
+  <PgCalculations>
+    <Title>
+      <Translation>Расчеты</Translation>
+      <Old>Calculations</Old>
+    </Title>
+    <UserScriptErrorsHeading>
+      <Translation>Ошибки в коде расчетов:</Translation>
+      <Old>User scripts errors:</Old>
+    </UserScriptErrorsHeading>
+    <UserScriptWarningsHeading>
+      <Translation>Предупреждения в коде расчетов:</Translation>
+      <Old>User scripts warnings:</Old>
+    </UserScriptWarningsHeading>
+    <EditTitle>
+      <Translation>Редактор расчетов</Translation>
+      <Old>Edit Calculations</Old>
+    </EditTitle>
+    <EditSaveButton>
+      <Translation>Сохранить и обновить</Translation>
+      <Old>Save &amp; Update</Old>
+    </EditSaveButton>
+    <EditLink>
+      <Translation>редактор</Translation>
+      <Old>edit</Old>
+    </EditLink>
+  </PgCalculations>
   <Config>
     <Warning_PortValue>
       <Translation>Поле "Порт сервера" должно содержать целое число от 1 до 65535.</Translation>

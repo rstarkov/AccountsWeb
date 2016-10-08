@@ -18,6 +18,7 @@ namespace AccountsWeb
         public string BaseCurrency;
         public string BalsnapPrefix;
         public List<UserLink> UserLinks;
+        public UserScripts UserScripts;
 
         /// <summary>
         /// If not null, every web request will respond with this error message.
@@ -53,6 +54,7 @@ namespace AccountsWeb
             BaseCurrency = Program.Tr.GncWrapper.DefaultBaseCurrency;
             BalsnapPrefix = Program.Tr.GncWrapper.DefaultBalsnapPrefix;
             UserLinks = new List<UserLink>() { new UserLink() { Name = Program.Tr.GncWrapper.DefaultExampleUserlink, Href = "/MonthlyTotals?MaxDepth=1" } };
+            UserScripts = new UserScripts();
         }
 
         public void SaveToFile(string filename)
@@ -98,6 +100,7 @@ namespace AccountsWeb
                     Session = new GncSession();
                     Session.LoadFromFile(GnuCashFile, BaseCurrency, BalsnapPrefix);
                     Book = Session.Book;
+                    UserScripts.Recompile(this);
                 }
 #if !DEBUG
                 catch (Exception E)
