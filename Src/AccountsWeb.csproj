@@ -162,7 +162,8 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
-xcopy /y /i $(ProjectDir)Static\* $(TargetDir)Static\
+xcopy /y /i /s $(ProjectDir)Static\* $(TargetDir)Static\
+xcopy /y /i ..\..\Spinneret\Src\Static\SnowWhite.css $(TargetDir)Static\
 xcopy /y /i $(ProjectDir)Translations\* $(TargetDir)Translations\</PostBuildEvent>
   </PropertyGroup>
 </Project>

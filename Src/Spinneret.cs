@@ -130,7 +130,7 @@ namespace AccountsWeb
 
             if (Program.CurFile.Session != null && Program.CurFile.Session.EnumWarnings().Any())
                 sections.Add(new object[] {
-                    new H2(new IMG() { src = "/Static/warning_10.png" }, " ", Program.Tr.WarningsLink),
+                    new H2(new IMG() { src = "/Static/warning_10.png", width = 14, style = "position: relative; top: 1px;" }, " ", Program.Tr.WarningsLink),
                     new UL(new LI(new A(Program.Tr.WarningsLink) { href = "/Warnings" }))
                 });
 
