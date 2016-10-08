@@ -59,6 +59,7 @@ namespace AccountsWeb
 
         private void TrayMenu_Opening(object sender, CancelEventArgs e)
         {
+            Lingo.TranslateControl(TrayMenu, Program.Tr.TrayMenu);
             if (Program.CurFile == null)
             {
                 miCurrentFileName.Text = "   " + Program.Tr.TrayForm.Title_NoFileOpen;
