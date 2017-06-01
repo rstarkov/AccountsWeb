@@ -32,17 +32,15 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSScriptLibrary, Version=3.14.0.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
-      <HintPath>..\packages\CS-Script.bin.3.14.0\lib\net45\CSScriptLibrary.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="CSScriptLibrary, Version=3.24.2.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
+      <HintPath>..\packages\CS-Script.bin.3.24.2.0\lib\net45\CSScriptLibrary.dll</HintPath>
     </Reference>
     <Reference Include="EQATEC.Analytics.Monitor, Version=2.0.41.0, Culture=neutral, PublicKeyToken=213c7c68adb58a17, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ThirdParty\EQATEC.Analytics.Monitor.dll</HintPath>
     </Reference>
     <Reference Include="Mono.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\CS-Script.bin.3.14.0\lib\net45\Mono.CSharp.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\CS-Script.bin.3.24.2.0\lib\net45\Mono.CSharp.dll</HintPath>
     </Reference>
     <Reference Include="RT.Servers, Version=1.0.1614.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RT.Servers.1.0.1614\lib\net45\RT.Servers.dll</HintPath>
