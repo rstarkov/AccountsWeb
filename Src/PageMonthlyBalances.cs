@@ -1,8 +1,5 @@
 ﻿using GnuCashSharp;
 using RT.Servers;
-using RT.Spinneret;
-using RT.Util;
-using RT.Util.ExtensionMethods;
 
 namespace AccountsWeb
 {
@@ -23,20 +20,11 @@ namespace AccountsWeb
             var earliest = acct.Book.EarliestDate;
             foreach (var interval in EnumIntervals())
             {
-                decimal bal = acct.GetBalance(interval.End, true).ConvertTo(acct.Book.BaseCurrency).Quantity;
+                var bal = ConvertTo == null ? acct.GetBalanceWithSubaccounts(interval.End) : acct.GetBalanceConverted(interval.End, true, ConvertTo);
                 if (Negate)
-                    bal = -bal;
+                    bal.NegateInplace();
 
-                if (bal == 0)
-                    Report.SetValue(acct, interval, "-", ReportTable.CssClassNumber(bal));
-                else
-                {
-                    if (bal > 0m && bal < 1m) bal = 1m;
-                    if (bal < 0m && bal > -1m) bal = -1m;
-                    Report.SetValue(acct, interval,
-                        "{0:#,#}".Fmt(bal),
-                        ReportTable.CssClassNumber(bal));
-                }
+                SetReportAmount(Report, acct, interval, bal, ConvertTo != null);
             }
         }
     }

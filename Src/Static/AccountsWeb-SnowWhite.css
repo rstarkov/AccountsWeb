@@ -75,16 +75,20 @@ td.aw-col-average {
     vertical-align: middle;
 }
 
-.ccy_name_USD {
+.ccy_USD {
     color: #2a4;
 }
 
-.ccy_name_UAH {
-    color: #00f;
+.ccy_UAH {
+    color: #33b;
 }
 
-.ccy_name_GBP {
-    color: #f00;
+.ccy_GBP {
+    color: #92e;
+}
+
+.ccy_EUR {
+    color: #d82;
 }
 
 /* Last balsnap */

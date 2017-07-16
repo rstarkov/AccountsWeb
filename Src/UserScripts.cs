@@ -94,16 +94,9 @@ namespace AccountsWeb
             return Book.GetAccountByPath(path);
         }
 
-        public string FmtCcy(GncAmount amount)
+        public object FmtCcy(GncMultiAmount amount, bool whole = false, bool isConverted = false)
         {
-            switch (amount.Commodity.Identifier)
-            {
-                case "GBP": return $"£{amount.Quantity:#,0.00}";
-                case "EUR": return $"€{amount.Quantity:#,0.00}";
-                case "USD": return $"${amount.Quantity:#,0.00}";
-                case "UAH": return $"{amount.Quantity:#,0} грн";
-                default: return $"{amount.Commodity.Identifier} {amount.Quantity:#,0.00}";
-            }
+            return WebPage.FormatCcys(amount, isConverted, whole);
         }
     }
 }

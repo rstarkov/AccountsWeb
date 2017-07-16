@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using GnuCashSharp;
 using RT.Servers;
 using RT.Spinneret;
@@ -9,10 +10,10 @@ namespace AccountsWeb
 {
     public abstract class PageAccountsValue : WebPage
     {
-        private string _amtFmt;
         protected ReportAccounts Report;
         protected int MaxDepth;
         protected GncAccount Account;
+        protected GncCommodity ConvertTo;
 
         public PageAccountsValue(HttpRequest request, WebInterface iface)
             : base(request, iface)
@@ -23,9 +24,13 @@ namespace AccountsWeb
 
         public override object GetContent()
         {
-            _amtFmt = Request.GetValidated("AmtFmt", "#,0");
             MaxDepth = Request.GetValidated<int>("MaxDepth", -1, x => x >= 0, Tr.PgMonthly.Validation_NonNegative);
             Account = GetAccount("Acct");
+            {
+                var ccys = Program.CurFile.Book.EnumCommodities();
+                var ccy = Request.GetValidated<string>("Ccy", null, x => x == null || ccys.Any(c => c.Identifier == x), Tr.PgMonthly.Validation_OneOfCommodities.Fmt(ccys.Select(c => c.Identifier).Order().JoinString(", ")));
+                ConvertTo = ccy == null ? null : ccys.Single(c => c.Identifier == ccy);
+            }
             InitRequestOptions();
 
             Report = new ReportAccounts(Account, Request, true, false);
@@ -53,11 +58,29 @@ namespace AccountsWeb
                     maxdepthUi.Add(new A(Tr.PgMonthly.SubAcctsAll) { href = Request.Url.WithoutQuery("MaxDepth").ToHref() });
             }
 
+            // ConvertTo currency UI
+            var convertToUI = new List<object>();
+            {
+                var ccys = Program.CurFile.Book.EnumCommodities().OrderBy(c => c.Identifier);
+                convertToUI.Add(Program.Tr.PgMonthly.ConvertTo);
+                foreach (var ccy in ((GncCommodity) null).Concat(ccys))
+                {
+                    if (ccy != null)
+                        convertToUI.Add(" · ");
+                    if (ConvertTo == ccy)
+                        convertToUI.Add(new SPAN(ccy?.Identifier ?? Program.Tr.PgMonthly.ConvertToNone) { class_ = "aw-current" });
+                    else if (ccy == null)
+                        convertToUI.Add(new A(Program.Tr.PgMonthly.ConvertToNone) { href = Request.Url.WithoutQuery("Ccy").ToHref() });
+                    else
+                        convertToUI.Add(new A(ccy) { href = Request.Url.WithQuery("Ccy", ccy.Identifier).ToHref() });
+                }
+            }
+
             var html = new DIV(
                 new P(Tr.PgMonthly.CurAccount, GetAccountBreadcrumbs("Acct", Account)),
                 new P(maxdepthUi),
-                Report.GetHtml(),
-                new P(Tr.PgMonthly.MessageExRatesUsed.FmtEnumerable(Program.CurFile.BaseCurrency, new A(Tr.PgMonthly.MessageExRatesUsedLink) { href = "/ExRates" }))
+                new P(convertToUI),
+                Report.GetHtml()
             );
 
             return html;
@@ -65,19 +88,9 @@ namespace AccountsWeb
 
         private void doAccount(GncAccount account, int depth)
         {
-            var tot = GetAccountValue(account, depth);
-            if (tot == 0)
-                Report.SetValue(account, GetColumnCaption(), "-", ReportTable.CssClassNumber(tot));
-            else
-            {
-                object content = ("{0:" + _amtFmt + "}").Fmt(tot);
-                var url = GetAccountValueUrl(account);
-                if (url != null)
-                    content = new A(content) { href = url };
-                Report.SetValue(account, GetColumnCaption(),
-                    content,
-                    ReportTable.CssClassNumber(tot));
-            }
+            var value = GetAccountValue(account, depth);
+
+            SetReportAmount(Report, account, GetColumnCaption(), value.Amount, ConvertTo != null, value.Url);
 
             if (depth < MaxDepth || MaxDepth == -1)
                 foreach (var acctChild in account.EnumChildren())
@@ -85,8 +98,12 @@ namespace AccountsWeb
         }
 
         protected virtual void InitRequestOptions() { }
-        protected abstract decimal GetAccountValue(GncAccount account, int depth);
-        protected virtual string GetAccountValueUrl(GncAccount account) { return null; }
-    }
+        protected abstract AccountValueInfo GetAccountValue(GncAccount account, int depth);
 
+        protected class AccountValueInfo
+        {
+            public GncMultiAmount Amount;
+            public string Url;
+        }
+    }
 }

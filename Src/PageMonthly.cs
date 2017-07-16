@@ -17,6 +17,7 @@ namespace AccountsWeb
         protected int MaxDepth;
         protected bool Negate;
         protected GncAccount Account;
+        protected GncCommodity ConvertTo;
 
         public PageMonthly(HttpRequest request, WebInterface iface)
             : base(request, iface)
@@ -38,7 +39,7 @@ namespace AccountsWeb
 
             // Default to the last N months such that we see M whole groups, where M = number of groups per year + 1
             var earliest = Program.CurFile.Book.EarliestDate;
-            var toDefault =GroupMonths == 1  // exclude current month iff it's incomplete for all groupings other than single month
+            var toDefault = GroupMonths == 1  // exclude current month iff it's incomplete for all groupings other than single month
                 ? DateTime.Today.EndOfMonth().AssumeUtc()
                 : DateTime.Today == DateTime.Today.EndOfMonth() ? DateTime.Today : DateTime.Today.AddMonths(-1).EndOfMonth().AssumeUtc();
             var frDefault = toDefault.AddMonths(1 - pastGroups * GroupMonths).StartOfMonth().AssumeUtc();
@@ -54,6 +55,12 @@ namespace AccountsWeb
             Interval = new DateInterval(fy, fm, 1, ty, tm, DateTime.DaysInMonth(ty, tm));
 
             Account = GetAccount("Acct");
+
+            {
+                var ccys = Program.CurFile.Book.EnumCommodities();
+                var ccy = Request.GetValidated<string>("Ccy", null, x => x == null || ccys.Any(c => c.Identifier == x), Tr.PgMonthly.Validation_OneOfCommodities.Fmt(ccys.Select(c => c.Identifier).Order().JoinString(", ")));
+                ConvertTo = ccy == null ? null : ccys.Single(c => c.Identifier == ccy);
+            }
 
             Report = new ReportAccounts(Account, Request, true, false);
             foreach (var interval in EnumIntervals())
@@ -119,6 +126,24 @@ namespace AccountsWeb
                 }
             }
 
+            // ConvertTo currency UI
+            var convertToUI = new List<object>();
+            {
+                var ccys = Program.CurFile.Book.EnumCommodities().OrderBy(c => c.Identifier);
+                convertToUI.Add(Program.Tr.PgMonthly.ConvertTo);
+                foreach (var ccy in ((GncCommodity) null).Concat(ccys))
+                {
+                    if (ccy != null)
+                        convertToUI.Add(" · ");
+                    if (ConvertTo == ccy)
+                        convertToUI.Add(new SPAN(ccy?.Identifier ?? Program.Tr.PgMonthly.ConvertToNone) { class_ = "aw-current" });
+                    else if (ccy == null)
+                        convertToUI.Add(new A(Program.Tr.PgMonthly.ConvertToNone) { href = Request.Url.WithoutQuery("Ccy").ToHref() });
+                    else
+                        convertToUI.Add(new A(ccy) { href = Request.Url.WithQuery("Ccy", ccy.Identifier).ToHref() });
+                }
+            }
+
             // Mode
             var modeUi = new List<object>();
             if (this is PageMonthlyTotals)
@@ -135,9 +160,8 @@ namespace AccountsWeb
                 new P(Tr.PgMonthly.CurAccount, GetAccountBreadcrumbs("Acct", Account)),
                 new P(maxdepthUi),
                 new P(groupMonthsUi, new RawTag("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), yearsUi),
-                new P(modeUi),
-                Report.GetHtml(),
-                new P(Tr.PgMonthly.MessageExRatesUsed.FmtEnumerable(Program.CurFile.BaseCurrency, new A(Tr.PgMonthly.MessageExRatesUsedLink) { href = "/ExRates" }))
+                new P(modeUi, new RawTag("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"), convertToUI),
+                Report.GetHtml()
             );
 
             return html;

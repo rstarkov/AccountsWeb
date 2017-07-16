@@ -33,18 +33,18 @@ namespace AccountsWeb
             return Tr.PgTotalsBetween.ColCaptionFmt.Fmt(_dateFr.ToIsoStringOptimal(), _dateTo.ToIsoStringOptimal());
         }
 
-        protected override decimal GetAccountValue(GncAccount account, int depth)
+        protected override AccountValueInfo GetAccountValue(GncAccount account, int depth)
         {
-            return account.GetTotal(new DateInterval(_dateFr, _dateTo), true, account.Book.BaseCurrency);
-        }
-
-        protected override string GetAccountValueUrl(GncAccount account)
-        {
-            return "/Trns?Acct={0}&Fr={1}&To={2}{3}".Fmt(
-                  account.Path(":").UrlEscape(),
-                  _dateFr.ToIsoStringOptimal(),
-                  _dateTo.ToIsoStringOptimal(),
-                  account.EnumChildren().Any() ? "&SubAccts=true" : "");
+            var interval = new DateInterval(_dateFr, _dateTo);
+            return new AccountValueInfo
+            {
+                Amount = ConvertTo == null ? account.GetTotalWithSubaccounts(interval) : account.GetTotalConverted(interval, true, ConvertTo),
+                Url = "/Trns?Acct={0}&Fr={1}&To={2}{3}".Fmt(
+                    account.Path(":").UrlEscape(),
+                    _dateFr.ToIsoStringOptimal(),
+                    _dateTo.ToIsoStringOptimal(),
+                    account.EnumChildren().Any() ? "&SubAccts=true" : ""),
+            };
         }
     }
 }

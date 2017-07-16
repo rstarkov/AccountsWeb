@@ -31,9 +31,12 @@ namespace AccountsWeb
             return Tr.PgBalancesAt.ColCaptionFmt.Fmt(_date.ToIsoStringOptimal());
         }
 
-        protected override decimal GetAccountValue(GncAccount account, int depth)
+        protected override AccountValueInfo GetAccountValue(GncAccount account, int depth)
         {
-            return account.GetBalance(_date, true).ConvertTo(account.Book.BaseCurrency).Quantity;
+            return new AccountValueInfo
+            {
+                Amount = ConvertTo == null ? account.GetBalanceWithSubaccounts(_date) : account.GetBalanceConverted(_date, true, ConvertTo),
+            };
         }
     }
 }

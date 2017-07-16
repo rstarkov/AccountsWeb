@@ -152,11 +152,11 @@ namespace AccountsWeb
             public TrString ViewModeTotals = "View totals";
             [LingoInGroup(TrGroup.PageMonthly)]
             public TrString ViewModeBalances = "View balances";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString ConvertTo = "Convert to: ";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            public TrString ConvertToNone = "none";
 
-            [LingoInGroup(TrGroup.PageMonthly)]
-            public TrString MessageExRatesUsed = "All values above are in {0}, converted where necessary using {1}.";
-            [LingoInGroup(TrGroup.PageMonthly)]
-            public TrString MessageExRatesUsedLink = "exchange rates";
             [LingoInGroup(TrGroup.PageMonthly)]
             [LingoNotes("Only used when highlighting columns which don't cover exactly as many months as requested. Added after the actual number of months covered by a column.")]
             public TrString MoSuffix = "mo";
@@ -182,6 +182,9 @@ namespace AccountsWeb
             [LingoInGroup(TrGroup.PageMonthly)]
             [LingoInGroup(TrGroup.MustBeValidation)]
             public TrString Validation_NonNegative = "non-negative";
+            [LingoInGroup(TrGroup.PageMonthly)]
+            [LingoInGroup(TrGroup.MustBeValidation)]
+            public TrString Validation_OneOfCommodities = "one of the commodities in this book: {0}";
         }
         public PgMonthlyTranslation PgMonthly = new PgMonthlyTranslation();
 

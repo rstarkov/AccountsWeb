@@ -56,6 +56,52 @@ namespace AccountsWeb
                 yield return new SPAN(path.Last().Name) { class_ = "aw-breadcrumbs aw-current" };
             }
         }
+
+        public static object FormatCcys(GncMultiAmount amount, bool isConverted, bool whole)
+        {
+            string stringify(decimal amt, bool whole2)
+            {
+                if (!whole2)
+                    return $"{amt:#,0.00}";
+
+                if (amt > 0 && amt < 1m)
+                    amt = 1m;
+                else if (amt < 0 && amt > -1m)
+                    amt = -1m;
+                return $"{amt:#,0}";
+            }
+
+            if (isConverted)
+                return stringify(amount.Single().Quantity, amount.Single().Commodity.Identifier == "UAH" ? true : whole);
+
+            var result = new List<object>();
+            foreach (var amt in amount.Where(a => a.Quantity != 0).OrderByDescending(a => a.Commodity.Identifier)) // because they are typically right-aligned, so the main currency should be the rightmost one
+            {
+                string str;
+                switch (amt.Commodity.Identifier)
+                {
+                    case "GBP": str = "£" + stringify(amt.Quantity, whole); break;
+                    case "EUR": str = "€" + stringify(amt.Quantity, whole); break;
+                    case "USD": str = "$" + stringify(amt.Quantity, whole); break;
+                    case "UAH": str = stringify(amt.Quantity, true) + " грн"; break;
+                    default: str = amt.Commodity.Identifier + " " + stringify(amt.Quantity, whole); break;
+                }
+                result.Add(new SPAN(str) { class_ = "ccy_" + amt.Commodity.Identifier.Replace(":", "_") });
+            }
+            return result.InsertBetween(" ");
+        }
+
+        protected static void SetReportAmount(ReportAccounts report, GncAccount acct, object colref, GncMultiAmount amount, bool isConverted, string url = null)
+        {
+            if (amount.Count == 0)
+                report.SetValue(acct, colref, "-", ReportTable.CssClassNumber(0));
+            else
+            {
+                var val = FormatCcys(amount, isConverted, whole: true);
+                report.SetValue(acct, colref, url == null ? val : new A(val) { href = url },
+                    isConverted ? ReportTable.CssClassNumber(amount.Single().Quantity) : "");
+            }
+        }
     }
 
     internal class WebLayout : SnowWhiteLayout
