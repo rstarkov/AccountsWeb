@@ -38,22 +38,23 @@ namespace AccountsWeb
             int pastGroups = (12 * pastYears) / GroupMonths + 1;
 
             // Default to the last N months such that we see M whole groups, where M = number of groups per year + 1
-            var earliest = Program.CurFile.Book.EarliestDate;
-            var toDefault = GroupMonths == 1  // exclude current month iff it's incomplete for all groupings other than single month
-                ? DateTime.Today.EndOfMonth().AssumeUtc()
-                : DateTime.Today == DateTime.Today.EndOfMonth() ? DateTime.Today : DateTime.Today.AddMonths(-1).EndOfMonth().AssumeUtc();
-            var frDefault = toDefault.AddMonths(1 - pastGroups * GroupMonths).StartOfMonth().AssumeUtc();
-            if (frDefault < earliest)
-                frDefault = earliest;
+            {
+                var earliest = Program.CurFile.Book.EarliestDate;
+                var toDefault = GroupMonths == 1  // exclude current month iff it's incomplete for all groupings other than single month
+                    ? DateTime.Today.EndOfMonth().AssumeUtc()
+                    : DateTime.Today == DateTime.Today.EndOfMonth() ? DateTime.Today : DateTime.Today.AddMonths(-1).EndOfMonth().AssumeUtc();
+                var frDefault = toDefault.AddMonths(1 - pastGroups * GroupMonths).StartOfMonth().AssumeUtc();
+                if (frDefault < earliest)
+                    frDefault = earliest;
+                var fy = Request.GetValidated<int>("FrYr", frDefault.Year);
+                var fm = Request.GetValidated<int>("FrMo", frDefault.Month, x => x >= 1 && x <= 12, Tr.PgMonthly.Validation_Between1and12);
+                var ty = Request.GetValidated<int>("ToYr", toDefault.Year, x => x >= fy, Tr.PgMonthly.Validation_NotSmallerYear.Fmt(fy));
+                var tm = Request.GetValidated<int>("ToMo", toDefault.Month, x => x >= 1 && x <= 12 && (fy < ty || x >= fm), Tr.PgMonthly.Validation_Between1and12_NotSmallerMonth.Fmt(fm));
+                Interval = new DateInterval(fy, fm, 1, ty, tm, DateTime.DaysInMonth(ty, tm));
+            }
 
-            var fy = Request.GetValidated<int>("FrYr", frDefault.Year);
-            var fm = Request.GetValidated<int>("FrMo", frDefault.Month, x => x >= 1 && x <= 12, Tr.PgMonthly.Validation_Between1and12);
-            var ty = Request.GetValidated<int>("ToYr", toDefault.Year, x => x >= fy, Tr.PgMonthly.Validation_NotSmallerYear.Fmt(fy));
-            var tm = Request.GetValidated<int>("ToMo", toDefault.Month, x => x >= 1 && x <= 12 && (fy < ty || x >= fm), Tr.PgMonthly.Validation_Between1and12_NotSmallerMonth.Fmt(fm));
             MaxDepth = Request.GetValidated<int>("MaxDepth", -1, x => x >= 0, Tr.PgMonthly.Validation_NonNegative);
             Negate = Request.GetValidated<bool>("Neg", false);
-            Interval = new DateInterval(fy, fm, 1, ty, tm, DateTime.DaysInMonth(ty, tm));
-
             Account = GetAccount("Acct");
 
             {
@@ -146,15 +147,17 @@ namespace AccountsWeb
 
             // Mode
             var modeUi = new List<object>();
-            if (this is PageMonthlyTotals)
-                modeUi.Add(new SPAN(Tr.PgMonthly.ViewModeTotals) { class_ = "aw-current" });
-            else
-                modeUi.Add(new A(Tr.PgMonthly.ViewModeTotals) { href = "/MonthlyTotals" + Request.Url.QueryString });
-            modeUi.Add(" · ");
-            if (this is PageMonthlyBalances)
-                modeUi.Add(new SPAN(Tr.PgMonthly.ViewModeBalances) { class_ = "aw-current" });
-            else
-                modeUi.Add(new A(Tr.PgMonthly.ViewModeBalances) { href = "/MonthlyBalances" + Request.Url.QueryString });
+            {
+                if (this is PageMonthlyTotals)
+                    modeUi.Add(new SPAN(Tr.PgMonthly.ViewModeTotals) { class_ = "aw-current" });
+                else
+                    modeUi.Add(new A(Tr.PgMonthly.ViewModeTotals) { href = "/MonthlyTotals" + Request.Url.QueryString });
+                modeUi.Add(" · ");
+                if (this is PageMonthlyBalances)
+                    modeUi.Add(new SPAN(Tr.PgMonthly.ViewModeBalances) { class_ = "aw-current" });
+                else
+                    modeUi.Add(new A(Tr.PgMonthly.ViewModeBalances) { href = "/MonthlyBalances" + Request.Url.QueryString });
+            }
 
             var html = new DIV(
                 new P(Tr.PgMonthly.CurAccount, GetAccountBreadcrumbs("Acct", Account)),
