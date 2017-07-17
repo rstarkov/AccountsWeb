@@ -141,14 +141,14 @@
       <Translation>Смотреть баланс</Translation>
       <Old>View balances</Old>
     </ViewModeBalances>
-    <MessageExRatesUsed>
-      <Translation>Все суммы в данной таблице указаны в валюте {0}. При необходимости используются {1}.</Translation>
-      <Old>All values above are in {0}, converted where necessary using {1}.</Old>
-    </MessageExRatesUsed>
-    <MessageExRatesUsedLink>
-      <Translation>курсы обмена валют</Translation>
-      <Old>exchange rates</Old>
-    </MessageExRatesUsedLink>
+    <ConvertTo>
+      <Translation>Конвертировать в: </Translation>
+      <Old>Convert to: </Old>
+    </ConvertTo>
+    <ConvertToNone>
+      <Translation>не конвертировать</Translation>
+      <Old>none</Old>
+    </ConvertToNone>
     <MoSuffix>
       <Translation>мес</Translation>
       <Old>mo</Old>
@@ -200,6 +200,10 @@
       <Translation>0 или более</Translation>
       <Old>non-negative</Old>
     </Validation_NonNegative>
+    <Validation_OneOfCommodities>
+      <Translation>одной из валют в данной книге: {0}</Translation>
+      <Old>one of the commodities in this book: {0}</Old>
+    </Validation_OneOfCommodities>
   </PgMonthly>
   <PgMonthlyTotals>
     <NavLink>
