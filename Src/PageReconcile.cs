@@ -168,10 +168,10 @@ namespace AccountsWeb
                             .ToDictionary(
                                 amount => amount,
                                 amount => new
-                                    {
-                                        InAccount = accountSplits.Where(spl => spl.Amount.Quantity == amount).ToList(),
-                                        InStatement = statementSplits.Where(spl => spl.Amount == amount).ToList()
-                                    });
+                                {
+                                    InAccount = accountSplits.Where(spl => spl.Amount.Quantity == amount).ToList(),
+                                    InStatement = statementSplits.Where(spl => spl.Amount == amount).ToList()
+                                });
 
                         // Match up the entries in each amount group and create a flat list
                         var entries = new List<entry>();
@@ -181,7 +181,7 @@ namespace AccountsWeb
                             val.InAccount.Sort((spl1, spl2) => spl1.Transaction.DatePosted.CompareTo(spl2.Transaction.DatePosted));
                             val.InStatement.Sort((spl1, spl2) => spl1.Timestamp.CompareTo(spl2.Timestamp));
 
-                            if (val.InAccount.Count == 1 && val.InStatement.Count == 1)
+                            if (val.InAccount.Count == 1 && val.InStatement.Count == 1 && Math.Abs((val.InAccount[0].Transaction.DatePosted - val.InStatement[0].Timestamp).TotalDays) < 30)
                             {
                                 // just treat as a match
                                 entries.Add(new entry { Amount = kvp.Key, InAccount = val.InAccount[0], InStatement = val.InStatement[0] });
@@ -217,9 +217,11 @@ namespace AccountsWeb
                                             val.InAccount.Select((inacc, index) =>
                                                 new { Index = index, Diff = Math.Abs((inacc.Transaction.DatePosted - inst.Timestamp).TotalDays) }
                                             )
+                                            .Where(v => v.Diff < 30)
                                             .OrderBy(v => v.Diff)
                                             .ToList()
                                         )
+                                        .Where(options => options.Count > 0)
                                         .Select(options => (options.Count == 1)
                                             ? options[0].Index
                                             : (options[1].Diff / options[0].Diff >= 2.5) ? options[0].Index : -1)
@@ -230,9 +232,11 @@ namespace AccountsWeb
                                             val.InStatement.Select((inst, index) =>
                                                 new { Index = index, Diff = Math.Abs((inacc.Transaction.DatePosted - inst.Timestamp).TotalDays) }
                                             )
+                                            .Where(v => v.Diff < 30)
                                             .OrderBy(v => v.Diff)
                                             .ToList()
                                         )
+                                        .Where(options => options.Count > 0)
                                         .Select(options => (options.Count == 1)
                                             ? options[0].Index
                                             : (options[1].Diff / options[0].Diff >= 2.5) ? options[0].Index : -1)
@@ -272,6 +276,9 @@ namespace AccountsWeb
                         var colAmount = table.AddCol(Tr.PgReconcile.ColAmount);
                         var colBalance = table.AddCol(Tr.PgReconcile.ColBalance);
 
+                        int nonMatches = 0;
+                        var lastMatchingBalance = default(DateTime);
+
                         foreach (var entry in entries)
                         {
                             string type;
@@ -281,6 +288,8 @@ namespace AccountsWeb
                                 type = "perfect";
                             else
                                 type = "uncertain";
+                            if (type == "none")
+                                nonMatches++;
                             var row = table.AddRow();
                             var cellcss = "reconcile-match-" + type;
                             if (entry.InAccount != null)
@@ -310,11 +319,15 @@ namespace AccountsWeb
                                     break;
                                 }
                                 row.SetValue(colBalance, balance.ToString(amtFmt), cellcss + (matchingBalance ? " reconcile-balance-match" : ""));
+                                if (matchingBalance && entry.InAccount.Transaction.DatePosted > lastMatchingBalance)
+                                    lastMatchingBalance = entry.InAccount.Transaction.DatePosted;
                             }
                         }
 
                         content.Add(new H1(Tr.PgReconcile.HeaderReconciledTransactions));
                         content.Add(table.GetHtml());
+                        var titleBalance = (lastMatchingBalance == default(DateTime) ? "no balance match" : $"balance match {(DateTime.Today - lastMatchingBalance).TotalDays:0} days ago");
+                        content.Add(new SCRIPTLiteral($"document.title = 'Reconcile – {nonMatches} non-matches remaining – {titleBalance}';"));
                     }
                 }
             }
