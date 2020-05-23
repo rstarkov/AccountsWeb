@@ -212,7 +212,7 @@ namespace AccountsWeb
                                 // If didn't work fall back onto a more generic algorithm that's prone to re-order matches
                                 if (!done)
                                 {
-                                    var bestmatches1 =
+                                    var bestmatchesS2A =
                                         val.InStatement.Select(inst =>
                                             val.InAccount.Select((inacc, index) =>
                                                 new { Index = index, Diff = Math.Abs((inacc.Transaction.DatePosted - inst.Timestamp).TotalDays) }
@@ -221,13 +221,12 @@ namespace AccountsWeb
                                             .OrderBy(v => v.Diff)
                                             .ToList()
                                         )
-                                        .Where(options => options.Count > 0)
-                                        .Select(options => (options.Count == 1)
+                                        .Select(options => (options.Count == 0) ? -1 : (options.Count == 1)
                                             ? options[0].Index
                                             : (options[1].Diff / options[0].Diff >= 2.5) ? options[0].Index : -1)
                                         .ToList();
 
-                                    var bestmatches2 =
+                                    var bestmatchesA2S =
                                         val.InAccount.Select(inacc =>
                                             val.InStatement.Select((inst, index) =>
                                                 new { Index = index, Diff = Math.Abs((inacc.Transaction.DatePosted - inst.Timestamp).TotalDays) }
@@ -236,16 +235,15 @@ namespace AccountsWeb
                                             .OrderBy(v => v.Diff)
                                             .ToList()
                                         )
-                                        .Where(options => options.Count > 0)
-                                        .Select(options => (options.Count == 1)
+                                        .Select(options => (options.Count == 0) ? -1 : (options.Count == 1)
                                             ? options[0].Index
                                             : (options[1].Diff / options[0].Diff >= 2.5) ? options[0].Index : -1)
                                         .ToList();
 
                                     // Pick any matches that were optimal in both directions
-                                    var bestmatches = bestmatches1
+                                    var bestmatches = bestmatchesS2A
                                         .Select((indexAcct, indexStmt) => new { indexAcct, indexStmt })
-                                        .Where(m => m.indexAcct >= 0 && bestmatches2[m.indexAcct] == m.indexStmt)
+                                        .Where(m => m.indexAcct >= 0 && bestmatchesA2S[m.indexAcct] == m.indexStmt)
                                         .ToList();
 
                                     entries.AddRange(bestmatches.Select(m => new entry { Amount = kvp.Key, InAccount = val.InAccount[m.indexAcct], InStatement = val.InStatement[m.indexStmt] }));
