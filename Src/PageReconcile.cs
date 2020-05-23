@@ -130,13 +130,25 @@ namespace AccountsWeb
                             if (m.Success)
                                 try
                                 {
-                                    statementSplits.Add(new statementSplit
+                                    var statementSplit = new statementSplit
                                     {
                                         Timestamp = parseapproxDate(m.Groups["date"]),
                                         Comment = m.Groups["comment"].Value,
                                         Amount = parseapproxAmount(m.Groups["dr"], m.Groups["cr"]),
                                         Balance = parseapproxBalance(m.Groups["balance"])
-                                    });
+                                    };
+                                    statementSplits.Add(statementSplit);
+                                    try
+                                    {
+                                        var stmtDateM = Regex.Match(statementSplit.Comment, @"(\d\d)(JAN|FEB|MAR|APR|MAY|JUN|JUL|AUG|SEP|OCT|NOV|DEC)(\d\d)");
+                                        if (stmtDateM.Success)
+                                        {
+                                            var stmtDate = DateTime.ParseExact(stmtDateM.Value, "ddMMMyy", null);
+                                            if (Math.Abs((stmtDate - statementSplit.Timestamp).TotalDays) < 7)
+                                                statementSplit.Timestamp = stmtDate;
+                                        }
+                                    }
+                                    catch { } // ignore: we already have the primary date
                                 }
                                 catch (Exception e)
                                 {
