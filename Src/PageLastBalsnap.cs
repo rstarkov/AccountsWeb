@@ -10,7 +10,7 @@ namespace AccountsWeb
 {
     public class PageLastBalsnap : WebPage
     {
-        private ReportAccounts _report;
+        private ReportAccounts _reportOutOfDate, _reportUpToDate, _reportNever;
         private GncAccount _account;
 
         public PageLastBalsnap(HttpRequest request, WebInterface iface)
@@ -27,10 +27,20 @@ namespace AccountsWeb
         {
             _account = GetAccount("Acct");
 
-            _report = new ReportAccounts(_account, Request, true, true);
+            _reportOutOfDate = new ReportAccounts(_account, Request, true, true);
+            _reportUpToDate = new ReportAccounts(_account, Request, true, true);
+            _reportNever = new ReportAccounts(_account, Request, true, true);
             processAccount(_account, 0);
 
-            return new DIV(_report.GetHtml());
+            return new[]
+            {
+                new H2("Out of date"),
+                _reportOutOfDate.GetHtml(),
+                new H2("Up to date"),
+                _reportUpToDate.GetHtml(),
+                new H2("Never"),
+                _reportNever.GetHtml(),
+            };
         }
 
         private void processAccount(GncAccount acct, int depth)
@@ -38,17 +48,18 @@ namespace AccountsWeb
             var balsnaps = acct.EnumSplits(false).Where(spl => spl.IsBalsnap).ToArray();
 
             if (!balsnaps.Any())
-                _report.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastNever, "lastbalsnap_never");
+                _reportNever.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastNever, "lastbalsnap_never");
             else
             {
                 var lastsnap = balsnaps.OrderBy(spl => spl.Transaction.DatePosted).Last();
                 var lastsplit = acct.EnumSplits(false).Last();
                 if (lastsnap.Balsnap == 0 && object.ReferenceEquals(lastsplit, lastsnap) && lastsnap.AccountBalanceAfter == 0)
-                    _report.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastZero, "lastbalsnap_zero");
+                    _reportUpToDate.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastZero, "lastbalsnap_zero");
                 else
                 {
-                    int days = (int) (DateTime.Today - lastsnap.Transaction.DatePosted).TotalDays;
-                    _report.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastNDaysAgo.Fmt(Tr.Language.GetNumberSystem(), days), makeCss(days));
+                    int days = (int)(DateTime.Today - lastsnap.Transaction.DatePosted).TotalDays;
+                    var rp = days < 35 ? _reportUpToDate : _reportOutOfDate;
+                    rp.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastNDaysAgo.Fmt(Tr.Language.GetNumberSystem(), days), makeCss(days));
                 }
             }
 
