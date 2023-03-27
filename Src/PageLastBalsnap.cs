@@ -10,7 +10,7 @@ namespace AccountsWeb
 {
     public class PageLastBalsnap : WebPage
     {
-        private ReportAccounts _reportOutOfDate, _reportUpToDate, _reportNever;
+        private ReportAccounts _reportOutOfDate, _reportUpToDate, _reportZeroBalance, _reportNever;
         private GncAccount _account;
 
         public PageLastBalsnap(HttpRequest request, WebInterface iface)
@@ -29,6 +29,7 @@ namespace AccountsWeb
 
             _reportOutOfDate = new ReportAccounts(_account, Request, true, true);
             _reportUpToDate = new ReportAccounts(_account, Request, true, true);
+            _reportZeroBalance = new ReportAccounts(_account, Request, true, true);
             _reportNever = new ReportAccounts(_account, Request, true, true);
             processAccount(_account, 0);
 
@@ -38,6 +39,8 @@ namespace AccountsWeb
                 _reportOutOfDate.GetHtml(),
                 new H2("Up to date"),
                 _reportUpToDate.GetHtml(),
+                new H2("Zero balance"),
+                _reportZeroBalance.GetHtml(),
                 new H2("Never"),
                 _reportNever.GetHtml(),
             };
@@ -54,7 +57,7 @@ namespace AccountsWeb
                 var lastsnap = balsnaps.OrderBy(spl => spl.Transaction.DatePosted).Last();
                 var lastsplit = acct.EnumSplits(false).Last();
                 if (lastsnap.Balsnap == 0 && object.ReferenceEquals(lastsplit, lastsnap) && lastsnap.AccountBalanceAfter == 0)
-                    _reportUpToDate.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastZero, "lastbalsnap_zero");
+                    _reportZeroBalance.SetValue(acct, Tr.PgLastBalsnap.ColLast, Tr.PgLastBalsnap.LastZero, "lastbalsnap_zero");
                 else
                 {
                     int days = (int)(DateTime.Today - lastsnap.Transaction.DatePosted).TotalDays;
