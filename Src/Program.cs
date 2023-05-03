@@ -33,8 +33,7 @@ namespace AccountsWeb
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            ApplicationConfiguration.Initialize();
 
             Ut.RunMain(() =>
             {
