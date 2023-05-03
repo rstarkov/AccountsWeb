@@ -1,0 +1,6 @@
+[submodule "External/GnuCashSharp"]
+	path = External/GnuCashSharp
+	url = git@github.com:rstarkov/GnuCashSharp.git
+[submodule "External/Spinneret"]
+	path = External/Spinneret
+	url = git@github.com:rstarkov/Spinneret.git
