@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using csscript;
-using CSScriptLibrary;
+using CSScriptLib;
 using GnuCashSharp;
 using RT.Serialization;
 
@@ -26,7 +25,7 @@ namespace AccountsWeb
             try
             {
                 var usings = "using AccountsWeb; using GnuCashSharp; using System; using System.Collections.Generic; using System.Linq; using RT.TagSoup; ";
-                CompiledCode = CSScript.Evaluator.LoadCode<AccountsWebScript>(usings + Code);
+                CompiledCode = CSScript.RoslynEvaluator.LoadCode<AccountsWebScript>(usings + Code);
                 CompiledCode.File = file;
                 Errors.Clear();
                 Warnings.Clear();

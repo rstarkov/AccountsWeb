@@ -1,18 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net4.8</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>disable</Nullable>
     <ApplicationIcon>Graphics\gnucash-icon.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CS-Script.bin" Version="3.24.2" />
-    <PackageReference Include="RT.Lingo" Version="2.0.1737" />
-    <PackageReference Include="RT.Serialization" Version="2.0.1737" />
-    <PackageReference Include="RT.Util" Version="2.0.1737" />
+    <PackageReference Include="CS-Script" Version="4.6.5" />
+    <PackageReference Include="RT.Lingo" Version="2.0.1739" />
+    <PackageReference Include="RT.Serialization" Version="2.0.1739" />
+    <PackageReference Include="RT.Util" Version="2.0.1739" />
   </ItemGroup>
 
   <ItemGroup>
