@@ -90,7 +90,7 @@ namespace AccountsWeb
             if (_autoAddAcct)
                 AddAcct(acct);
             else
-                throw new RTException("ReportAccounts: account \"{0}\" not yet defined and AutoAdd is disabled.".Fmt(acct.Path(":")));
+                throw new InternalErrorException("ReportAccounts: account \"{0}\" not yet defined and AutoAdd is disabled.".Fmt(acct.Path(":")));
         }
 
         private void ensureCol(object colref)
@@ -100,7 +100,7 @@ namespace AccountsWeb
             if (_autoAddCol)
                 AddCol(colref);
             else
-                throw new RTException("ReportAccounts: column \"{0}\" not yet defined and AutoAdd is disabled.".Fmt(colref));
+                throw new InternalErrorException("ReportAccounts: column \"{0}\" not yet defined and AutoAdd is disabled.".Fmt(colref));
         }
 
         public object GetHtml()

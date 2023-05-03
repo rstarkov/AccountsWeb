@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using RT.Lingo;
 using RT.Util;
 using RT.Util.Forms;
-using RT.Util.Lingo;
 
 namespace AccountsWeb
 {

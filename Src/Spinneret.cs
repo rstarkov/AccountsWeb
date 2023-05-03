@@ -35,7 +35,7 @@ namespace AccountsWeb
         {
             var acct = Request.GetValidated(acctArgName, "");
             try { return Program.CurFile.Book.GetAccountByPath(acct); }
-            catch (RTException) { throw new ValidationException(acctArgName, acct, Tr.Spinneret_Validation_AcctMustExist); }
+            catch (InternalErrorException) { throw new ValidationException(acctArgName, acct, Tr.Spinneret_Validation_AcctMustExist); }
         }
 
         public IEnumerable<object> GetAccountBreadcrumbs(string acctArgName, GncAccount account)

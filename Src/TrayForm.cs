@@ -3,11 +3,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using RT.Lingo;
 using RT.Util;
 using RT.Util.Controls;
-using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
-using RT.Util.Lingo;
+using RT.Util.Forms;
 
 namespace AccountsWeb
 {

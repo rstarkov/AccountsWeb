@@ -1,4 +1,4 @@
-using RT.Util.Lingo;
+using RT.Lingo;
 
 namespace AccountsWeb
 {

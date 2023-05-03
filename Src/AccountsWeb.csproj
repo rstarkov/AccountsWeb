@@ -1,163 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3960B5F3-07ED-4714-B6EC-49F81F943993}</ProjectGuid>
+    <TargetFramework>net4.8</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AccountsWeb</RootNamespace>
-    <AssemblyName>AccountsWeb</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <OutputPath>..\Builds\$(Configuration)</OutputPath>
-    <IntermediateOutputPath>..\Builds\$(Configuration)\obj-$(AssemblyName)</IntermediateOutputPath>
-    <BaseIntermediateOutputPath>..\Builds\$(Configuration)\obj-$(AssemblyName)</BaseIntermediateOutputPath>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <ApplicationIcon>Graphics\gnucash-icon.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE</DefineConstants>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="CSScriptLibrary, Version=3.24.2.0, Culture=neutral, PublicKeyToken=70fcc3d18c749033, processorArchitecture=MSIL">
-      <HintPath>..\packages\CS-Script.bin.3.24.2.0\lib\net45\CSScriptLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.CSharp, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\CS-Script.bin.3.24.2.0\lib\net45\Mono.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="RT.Servers, Version=1.0.1614.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RT.Servers.1.0.1614\lib\net45\RT.Servers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RT.TagSoup, Version=1.0.1610.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RT.TagSoup.1.0.1610.0\lib\net40-Client\RT.TagSoup.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RT.Util, Version=1.0.1542.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RT.Util.1.0.1542\lib\net40-client\RT.Util.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.XML" />
-    <Reference Include="System.Xml.Linq" />
+    <PackageReference Include="CS-Script.bin" Version="3.24.2" />
+    <PackageReference Include="RT.Lingo" Version="2.0.1737" />
+    <PackageReference Include="RT.Serialization" Version="2.0.1737" />
+    <PackageReference Include="RT.Util" Version="2.0.1737" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="ConfigForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConfigForm.Designer.cs">
-      <DependentUpon>ConfigForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PageAccountsValue.cs" />
-    <Compile Include="PageBalancesAt.cs" />
-    <Compile Include="PageCalculationsEdit.cs" />
-    <Compile Include="PageReconcile.cs" />
-    <Compile Include="PageMonthly.cs" />
-    <Compile Include="PageMonthlyBalances.cs" />
-    <Compile Include="PageAddLink.cs" />
-    <Compile Include="GncFileWrapper.cs" />
-    <Compile Include="PageAbout.cs" />
-    <Compile Include="PageExRates.cs" />
-    <Compile Include="PageLastBalsnap.cs" />
-    <Compile Include="PageMain.cs" />
-    <Compile Include="PageMonthlyTotals.cs" />
-    <Compile Include="PageTotalsBetween.cs" />
-    <Compile Include="PageTrns.cs" />
-    <Compile Include="PageCalculations.cs" />
-    <Compile Include="PageWarnings.cs" />
-    <Compile Include="UserScripts.cs" />
-    <Compile Include="Spinneret.cs" />
-    <Compile Include="Translation.cs" />
-    <Compile Include="Translation.g.cs" />
-    <Compile Include="TrayForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TrayForm.Designer.cs">
-      <DependentUpon>TrayForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ConfigForm.resx">
-      <DependentUpon>ConfigForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrayForm.resx">
-      <DependentUpon>TrayForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="ReportAccounts.cs" />
-    <Compile Include="Settings.cs" />
+    <ProjectReference Include="..\External\GnuCashSharp\Src\GnuCashSharp.csproj" />
+    <ProjectReference Include="..\External\Spinneret\Src\Spinneret.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\..\Spinneret\Src\Spinneret.csproj">
-      <Project>{E0EA5785-4ECC-4BD2-8C26-753B53203C4A}</Project>
-      <Name>Spinneret</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\GnuCashSharp\Src\GnuCashSharp.csproj">
-      <Project>{E7757AA1-88FE-408B-BEC3-4C909B9EE24C}</Project>
-      <Name>GnuCashSharp</Name>
-    </ProjectReference>
+    <Content Include="Static\**" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="Translations\*.xml" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Graphics\gnucash-icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Graphics\gnucash-icon-16.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Graphics\gnucash-icon-16-gray.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Static\AccountsWeb-SnowWhite.css" />
-    <Content Include="Static\warning_10.png" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <PropertyGroup>
-    <PostBuildEvent>cd $(ProjectDir)
-xcopy /y /i /s $(ProjectDir)Static\* $(TargetDir)Static\
-xcopy /y /i ..\..\Spinneret\Src\Static\SnowWhite.css $(TargetDir)Static\
-xcopy /y /i $(ProjectDir)Translations\* $(TargetDir)Translations\</PostBuildEvent>
-  </PropertyGroup>
+
 </Project>

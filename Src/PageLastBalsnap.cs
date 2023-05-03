@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using GnuCashSharp;
+using RT.Lingo;
 using RT.Servers;
 using RT.TagSoup;
-using RT.Util;
-using RT.Util.Lingo;
 
 namespace AccountsWeb
 {

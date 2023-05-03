@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows.Forms;
 using GnuCashSharp;
+using RT.Lingo;
 using RT.Util;
-using RT.Util.Dialogs;
 using RT.Util.ExtensionMethods;
-using RT.Util.Lingo;
+using RT.Util.Forms;
 
 namespace AccountsWeb
 {
@@ -122,7 +122,7 @@ namespace AccountsWeb
         public static void SaveFile()
         {
             if (CurFile == null)
-                throw new RTException("Internal Error: Cannot SaveFile because no file is currently open.");
+                throw new InternalErrorException("Internal Error: Cannot SaveFile because no file is currently open.");
 
             CurFile.SaveToFile();
         }

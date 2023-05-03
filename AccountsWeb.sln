@@ -2,13 +2,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GnuCashSharp", "..\GnuCashSharp\Src\GnuCashSharp.csproj", "{E7757AA1-88FE-408B-BEC3-4C909B9EE24C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountsWeb", "Src\AccountsWeb.csproj", "{3960B5F3-07ED-4714-B6EC-49F81F943993}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spinneret", "..\Spinneret\Src\Spinneret.csproj", "{E0EA5785-4ECC-4BD2-8C26-753B53203C4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GnuCashSharp", "External\GnuCashSharp\Src\GnuCashSharp.csproj", "{E7757AA1-88FE-408B-BEC3-4C909B9EE24C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "..\Spinneret\Lib\DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spinneret", "External\Spinneret\Src\Spinneret.csproj", "{E0EA5785-4ECC-4BD2-8C26-753B53203C4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicQuery", "External\Spinneret\Lib\DynamicQuery\DynamicQuery.csproj", "{F285CEB0-4108-440C-AD94-1C1A7C159D7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

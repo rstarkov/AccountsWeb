@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using RT.Util.Dialogs;
+using RT.Lingo;
 using RT.Util.ExtensionMethods;
 using RT.Util.Forms;
-using RT.Util.Lingo;
 
 namespace AccountsWeb
 {

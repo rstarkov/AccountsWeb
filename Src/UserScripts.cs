@@ -4,7 +4,7 @@ using System.Linq;
 using csscript;
 using CSScriptLibrary;
 using GnuCashSharp;
-using RT.Util.Serialization;
+using RT.Serialization;
 
 namespace AccountsWeb
 {
