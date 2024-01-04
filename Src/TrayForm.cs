@@ -150,7 +150,7 @@ namespace AccountsWeb
                 if (choice == 0)
                 {
                     Program.Settings.RecentFiles.Remove(item.Text);
-                    Program.Settings.SaveQuiet();
+                    Program.SettingsFile.Save();
                 }
                 return;
             }

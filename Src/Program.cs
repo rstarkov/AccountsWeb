@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using GnuCashSharp;
 using RT.Lingo;
+using RT.Serialization.Settings;
 using RT.Util;
 using RT.Util.ExtensionMethods;
 using RT.Util.Forms;
@@ -13,7 +14,10 @@ namespace AccountsWeb
     static class Program
     {
         /// <summary>Stores all program settings.</summary>
-        public static Settings Settings;
+        public static Settings Settings => SettingsFile.Settings;
+
+        /// <summary>Settings file for <see cref="Settings"/>.</summary>
+        public static SettingsFile<Settings> SettingsFile;
 
         /// <summary>This represents the current "open file". Or null, if none.</summary>
         public static GncFileWrapper CurFile;
@@ -37,7 +41,7 @@ namespace AccountsWeb
 
             Ut.RunMain(() =>
             {
-                SettingsUtil.LoadSettings(out Settings);
+                SettingsFile = new SettingsFileXml<Settings>("AccountsWeb", SettingsLocation.User);
                 Tr = Lingo.LoadTranslationOrDefault<Translation>("AccountsWeb", ref Settings.Language);
 
                 Interface = new WebInterface();
@@ -59,7 +63,7 @@ namespace AccountsWeb
 
                 Application.Run();
 
-                Settings.Save();
+                SettingsFile.Save();
             },
             excp =>
             {
@@ -161,7 +165,7 @@ namespace AccountsWeb
                 Settings.RecentFiles.Remove(filename);
             Settings.RecentFiles.Insert(0, filename);
             Settings.LastFileName = filename;
-            Settings.SaveQuiet();
+            SettingsFile.Save();
         }
 
         #endregion

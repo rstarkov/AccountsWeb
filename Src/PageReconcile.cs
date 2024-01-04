@@ -111,12 +111,12 @@ namespace AccountsWeb
                 if (btnPressed == btn.ReconcileCustom)
                 {
                     Program.Settings.ReconcileRegexes[regexName] = regexValue;
-                    Program.Settings.SaveQuiet();
+                    Program.SettingsFile.Save();
                 }
                 else if (btnPressed == btn.DeletePreset)
                 {
                     Program.Settings.ReconcileRegexes.Remove(regexName);
-                    Program.Settings.SaveQuiet();
+                    Program.SettingsFile.Save();
                 }
 
                 if (btnPressed == btn.ReconcilePreset || btnPressed == btn.ReconcileCustom)

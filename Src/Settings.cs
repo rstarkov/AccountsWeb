@@ -5,8 +5,7 @@ using RT.Util.Forms;
 
 namespace AccountsWeb
 {
-    [Settings("AccountsWeb", SettingsKind.UserSpecific)]
-    class Settings : SettingsBase
+    class Settings
     {
         public string LastFileName;
         public List<string> RecentFiles = new List<string>();
