@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
-using RT.Lingo;
-using RT.Util;
+﻿using RT.Lingo;
 using RT.Util.Forms;
 
-namespace AccountsWeb
+namespace AccountsWeb;
+
+class Settings
 {
-    class Settings
-    {
-        public string LastFileName;
-        public List<string> RecentFiles = new List<string>();
-        public Language Language = Translation.DefaultLanguage;
+    public string LastFileName;
+    public List<string> RecentFiles = new List<string>();
+    public Language Language = Translation.DefaultLanguage;
 
-        public Dictionary<string, string> ReconcileRegexes = new Dictionary<string, string>() { { "Example", "^regex$" } };
+    public Dictionary<string, string> ReconcileRegexes = new Dictionary<string, string>() { { "Example", "^regex$" } };
 
-        public ManagedForm.Settings ConfigFormSettings = new ManagedForm.Settings();
-        public TranslationForm<Translation>.Settings TranslationFormSettings = new TranslationForm<Translation>.Settings();
-    }
+    public ManagedForm.Settings ConfigFormSettings = new ManagedForm.Settings();
+    public TranslationForm<Translation>.Settings TranslationFormSettings = new TranslationForm<Translation>.Settings();
 }

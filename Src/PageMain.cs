@@ -1,24 +1,22 @@
 ﻿using RT.Servers;
 using RT.TagSoup;
-using RT.Util;
 
-namespace AccountsWeb
+namespace AccountsWeb;
+
+public class PageMain : WebPage
 {
-    public class PageMain : WebPage
+    public PageMain(HttpRequest request, WebInterface iface)
+        : base(request, iface)
     {
-        public PageMain(HttpRequest request, WebInterface iface)
-            : base(request, iface)
-        {
-        }
+    }
 
-        public override string GetTitle()
-        {
-            return "GnuCash AccountsWeb";
-        }
+    public override string GetTitle()
+    {
+        return "GnuCash AccountsWeb";
+    }
 
-        public override object GetContent()
-        {
-            return new P(Tr.PgMain.WelcomeMessage);
-        }
+    public override object GetContent()
+    {
+        return new P(Tr.PgMain.WelcomeMessage);
     }
 }
