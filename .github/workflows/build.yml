@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           submodules: true
@@ -28,9 +28,9 @@ jobs:
           dotnet --version
 
       - name: Install dotnet
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '7.x'
+          dotnet-version: '8.x'
 
       - name: dotnet restore
         run: dotnet restore
@@ -40,7 +40,7 @@ jobs:
           dotnet publish --configuration Release --no-restore -p:Version=${{env.VER}} -p:FileVersion=${{env.VER}} -p:AssemblyVersion=${{env.VER}}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: AccountsWeb-v${{env.VER}}
           path: |
