@@ -33,6 +33,9 @@ public class UserScripts
             Values.Clear();
             Errors = (List<string>) e.Data["Errors"];
             Warnings = (List<string>) e.Data["Warnings"];
+            Errors ??= [];
+            Warnings ??= [];
+            Errors.Add(e.Message);
             Values.Clear();
             return;
         }
